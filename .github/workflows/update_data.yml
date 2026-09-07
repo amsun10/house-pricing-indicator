@@ -1,0 +1,42 @@
+name: Auto Update Housing Data
+
+on:
+  schedule:
+    # 每周一凌晨 03:00 (北京时间) 自动执行 (对应 UTC 周日 19:00)
+    - cron: '0 19 * * 0'
+  workflow_dispatch: # 支持在 GitHub Actions 页面手动点击 "Run workflow" 一键触发
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Python 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 执行数据采集与更新脚本
+        run: |
+          python scripts/update_data.py
+
+      - name: 提交并推送到仓库
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 检查是否有数据文件变动
+          if [ -n "$(git status --porcelain data.json)" ]; then
+            git add data.json
+            git commit -m "Auto-update Nanjing housing data [skip ci]"
+            git push
+            echo "最新房产数据已成功推送到仓库！"
+          else
+            echo "数据已是最新，无文件变更需要提交。"
+          fi
