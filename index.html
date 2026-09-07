@@ -277,60 +277,79 @@
       <div id="mainChart" class="chart-container"></div>
     </section>
 
-    <!-- 次图表区：两栏布局（议价空间趋势 + 预算目标楼盘追踪） -->
-    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-      <!-- 左侧：房东挂牌价 vs 真实成交价 议价折让走势 -->
-      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-          <div>
-            <h3 class="text-sm font-bold text-slate-900">买方议价空间（挂牌价 vs 成交价）</h3>
-            <p class="text-xs text-slate-500 mt-0.5">反映房东让价幅度与买方谈判空间</p>
-          </div>
-          <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded font-medium">实地看房参考</span>
+    <!-- 议价空间深度分析 (全宽独立行) -->
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-3">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
+            <span class="w-2 h-4 bg-amber-500 rounded-sm inline-block"></span>
+            买方议价空间与房东让价折让趋势（挂牌价 vs 成交价）
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+              实地看房谈价核心参考
+            </span>
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">量化房东挂牌虚高水分 · 左轴：挂牌与成交均价（元/㎡） | 右轴：当期平均砍价折让空间（%）</p>
         </div>
-        <div id="bargainChart" class="sub-chart-container"></div>
-      </div>
-
-      <!-- 右侧：重点改善楼盘速查池 (新房 + 次新二手双维度) -->
-      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-2">
-          <div>
-            <h3 class="text-sm font-bold text-slate-900 flex items-center flex-wrap gap-2">
-              江宁 350-450万 重点改善楼盘速查池
-              <span class="text-[10px] bg-rose-50 text-rose-600 border border-rose-200 px-2 py-0.5 rounded-full font-semibold">
-                在售新盘 & 标杆次新
-              </span>
-            </h3>
-            <p class="text-xs text-slate-500 mt-0.5">精选符合 120-140㎡ 主力户型 · 涵盖纯新盘、实景准现房与次新标杆</p>
+        <!-- 谈判参考胶囊 -->
+        <div class="flex items-center gap-2 flex-wrap self-start sm:self-auto">
+          <div class="px-3 py-1.5 rounded-xl bg-amber-50/80 border border-amber-200 text-xs">
+            <span class="text-slate-500">当期平均让价空间:</span>
+            <span id="bargainRateBadge" class="font-bold text-amber-700 ml-1">~6.0% - 8.5%</span>
           </div>
-          <!-- 维度筛选 Tabs -->
-          <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1 rounded-xl shrink-0">
-            <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs" data-type="all">全部 (11)</button>
-            <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="新房">🔥 在售新房 (5)</button>
-            <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="二手">🏢 标杆次新 (6)</button>
+          <div class="px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-xs">
+            <span class="text-slate-500">400万总价砍价参考:</span>
+            <span id="bargainMoneyBadge" class="font-bold text-indigo-700 ml-1">约 24 ~ 34 万元</span>
           </div>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead>
-              <tr class="border-b border-slate-100 text-slate-400 font-medium">
-                <th class="py-2.5 px-3">小区 / 楼盘</th>
-                <th class="py-2.5 px-2">属性</th>
-                <th class="py-2.5 px-2">板块</th>
-                <th class="py-2.5 px-2">户型 / 交付状态</th>
-                <th class="py-2.5 px-2">近期单价</th>
-                <th class="py-2.5 px-2">预估总价</th>
-                <th class="py-2.5 px-2 text-right">买房评价与核心看点</th>
-              </tr>
-            </thead>
-            <tbody id="communityTableBody" class="divide-y divide-slate-50">
-              <!-- 动态载入 -->
-            </tbody>
-          </table>
         </div>
       </div>
+      <div id="bargainChart" class="w-full h-80 sm:h-96"></div>
+      <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-600 gap-2">
+        <div class="flex items-center gap-2">
+          <span class="font-semibold text-amber-800 bg-amber-100 px-2 py-0.5 rounded shrink-0">💡 实战谈价心法</span>
+          <span>次新改善盘（如翡翠公园、百家湖核心）业主抗跌心理较强，议价幅度一般在 4%~6%；房龄超15年老旧小区或超大户型，可大胆按 8%~12% 争取让步。</span>
+        </div>
+        <span class="text-slate-400 text-[11px] shrink-0">数据源自江宁各板块真实网签核算</span>
+      </div>
+    </section>
 
+    <!-- 重点改善楼盘速查池 (全宽独立行 · 彻底舒展排版) -->
+    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-3">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
+            <span class="w-2 h-4 bg-rose-500 rounded-sm inline-block"></span>
+            江宁 350-450万 重点改善楼盘速查池
+            <span class="text-xs bg-rose-50 text-rose-600 border border-rose-200 px-2.5 py-0.5 rounded-full font-semibold">
+              在售新盘 & 标杆次新双维度
+            </span>
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">精选江宁符合 120-140㎡ 主力户型 · 涵盖纯新盘、实景现房与次新标杆，横向对比得房率、装标三大件与交付状态</p>
+        </div>
+        <!-- 维度筛选 Tabs -->
+        <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1.5 rounded-xl shrink-0">
+          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs" data-type="all">全部楼盘 (11)</button>
+          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="新房">🔥 在售新房 (5)</button>
+          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="二手">🏢 标杆次新 (6)</button>
+        </div>
+      </div>
+      <div class="overflow-x-auto rounded-xl border border-slate-100 shadow-2xs">
+        <table class="w-full text-left text-xs divide-y divide-slate-100">
+          <thead class="bg-slate-50 text-slate-500 font-semibold uppercase tracking-wider">
+            <tr>
+              <th class="py-3.5 px-4 w-44">小区 / 楼盘名称</th>
+              <th class="py-3.5 px-3 w-28">物业属性</th>
+              <th class="py-3.5 px-3 w-32">所属板块</th>
+              <th class="py-3.5 px-3 w-40">户型与交付状态</th>
+              <th class="py-3.5 px-3 w-32">近期参考单价</th>
+              <th class="py-3.5 px-3 w-32">预估总价区间</th>
+              <th class="py-3.5 px-4 text-left">买房评价与核心看点（装修标准 / 得房率 / 避坑建议）</th>
+            </tr>
+          </thead>
+          <tbody id="communityTableBody" class="divide-y divide-slate-50 bg-white">
+            <!-- 动态载入 -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
   </main>
@@ -571,7 +590,7 @@
     }
 
     // ==========================================
-    // 4. 渲染议价空间图表
+    // 4. 渲染议价空间图表 (全宽精美版)
     // ==========================================
     function renderBargainChart() {
       const reg = currentData.regions[activeRegionKey];
@@ -582,16 +601,31 @@
         return (((listP - dealP) / listP) * 100).toFixed(1);
       });
 
+      const len = reg.secondHandPrice.length;
+      const latestDeal = reg.secondHandPrice[len - 1];
+      const latestListing = reg.listingPrice[len - 1];
+      const latestDiscount = discountRates[len - 1];
+
+      const rateBadge = document.getElementById('bargainRateBadge');
+      if (rateBadge) rateBadge.innerText = `${latestDiscount}% (让步约 ${(latestListing - latestDeal).toLocaleString()} 元/㎡)`;
+
+      const moneyBadge = document.getElementById('bargainMoneyBadge');
+      if (moneyBadge) {
+        const savedWan = (400 * (parseFloat(latestDiscount) / 100)).toFixed(1);
+        moneyBadge.innerText = `约 ${savedWan} 万元`;
+      }
+
       const option = {
         tooltip: {
           trigger: 'axis',
+          axisPointer: { type: 'cross', crossStyle: { color: '#999' } },
           formatter: function(params) {
-            let res = params[0].name + '<br/>';
+            let res = `<div class="font-bold text-xs mb-1">${params[0].name} 行情测算</div>`;
             params.forEach(p => {
               if (p.seriesName === '议价折让率') {
-                res += `${p.marker} ${p.seriesName}: <b>${p.value}%</b> (房东平均让价)<br/>`;
+                res += `${p.marker} ${p.seriesName}: <span class="font-bold text-amber-600">${p.value}%</span> (房东平均让价幅度)<br/>`;
               } else {
-                res += `${p.marker} ${p.seriesName}: ${p.value.toLocaleString()} 元/㎡<br/>`;
+                res += `${p.marker} ${p.seriesName}: <span class="font-semibold">${p.value.toLocaleString()}</span> 元/㎡<br/>`;
               }
             });
             return res;
@@ -599,53 +633,76 @@
         },
         legend: {
           data: ['挂牌均价', '实际成交均价', '议价折让率'],
-          bottom: 5
+          bottom: 8
         },
         grid: {
-          left: '3%',
-          right: '4%',
+          left: '2%',
+          right: '3%',
           top: '12%',
-          bottom: '16%',
+          bottom: '18%',
           containLabel: true
         },
         xAxis: {
           type: 'category',
-          data: currentData.months
+          data: currentData.months,
+          axisPointer: { type: 'shadow' }
         },
         yAxis: [
           {
             type: 'value',
             name: '价格 (元/㎡)',
-            min: function(value) { return Math.floor(value.min / 1000) * 1000 - 1000; }
+            min: function(value) { return Math.floor(value.min / 1000) * 1000 - 1000; },
+            axisLabel: { formatter: '{value}' }
           },
           {
             type: 'value',
-            name: '折让率 (%)',
+            name: '砍价空间折让率 (%)',
             min: 0,
             max: 15,
             axisLabel: { formatter: '{value}%' }
           }
         ],
+        dataZoom: [
+          { type: 'inside', start: 0, end: 100 },
+          { type: 'slider', start: 0, end: 100, height: 18, bottom: 36 }
+        ],
         series: [
           {
             name: '挂牌均价',
             type: 'line',
-            lineStyle: { type: 'dashed', color: '#f59e0b', width: 2 },
+            smooth: true,
+            symbolSize: 6,
+            lineStyle: { type: 'dashed', color: '#f59e0b', width: 2.5 },
             itemStyle: { color: '#f59e0b' },
             data: reg.listingPrice
           },
           {
             name: '实际成交均价',
             type: 'line',
-            lineStyle: { color: '#4f46e5', width: 2.5 },
+            smooth: true,
+            symbolSize: 7,
+            lineStyle: { color: '#4f46e5', width: 3 },
             itemStyle: { color: '#4f46e5' },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: 'rgba(79, 70, 229, 0.18)' },
+                { offset: 1, color: 'rgba(79, 70, 229, 0.01)' }
+              ])
+            },
             data: reg.secondHandPrice
           },
           {
             name: '议价折让率',
             type: 'bar',
             yAxisIndex: 1,
-            itemStyle: { color: '#fed7aa', borderRadius: [3, 3, 0, 0] },
+            barMaxWidth: 24,
+            itemStyle: { 
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#fb923c' },
+                { offset: 1, color: '#fed7aa' }
+              ]),
+              borderRadius: [4, 4, 0, 0] 
+            },
             data: discountRates
           }
         ]
@@ -785,23 +842,23 @@
 
       tbody.innerHTML = list.map(item => {
         const typeBadge = item.type === '新房'
-          ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-50 text-rose-600 border border-rose-200 shadow-2xs">🔥 在售新盘</span>`
-          : `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-2xs">🏢 标杆次新</span>`;
+          ? `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-600 border border-rose-200">🔥 在售新盘</span>`
+          : `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">🏢 标杆次新</span>`;
 
         return `
-          <tr class="hover:bg-slate-50/90 transition group">
-            <td class="py-3 px-3 font-semibold text-slate-800 flex items-center gap-1.5">
+          <tr class="hover:bg-indigo-50/20 transition">
+            <td class="py-3.5 px-4 font-bold text-slate-800 text-sm whitespace-nowrap">
               ${item.name}
             </td>
-            <td class="py-3 px-2 whitespace-nowrap">${typeBadge}</td>
-            <td class="py-3 px-2 text-slate-500 font-medium whitespace-nowrap">${item.region}</td>
-            <td class="py-3 px-2 text-slate-700">
-              <div class="font-medium">${item.area}</div>
-              <div class="text-[10px] text-slate-400 mt-0.5">${item.status}</div>
+            <td class="py-3.5 px-3 whitespace-nowrap">${typeBadge}</td>
+            <td class="py-3.5 px-3 font-semibold text-slate-600 whitespace-nowrap">${item.region}</td>
+            <td class="py-3.5 px-3 whitespace-nowrap">
+              <div class="font-bold text-slate-800 text-xs">${item.area}</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">${item.status}</div>
             </td>
-            <td class="py-3 px-2 text-indigo-600 font-bold whitespace-nowrap">${item.price}</td>
-            <td class="py-3 px-2 text-emerald-600 font-bold whitespace-nowrap">${item.total}</td>
-            <td class="py-3 px-2 text-right text-slate-500 text-[11px] leading-relaxed max-w-xs">${item.comment}</td>
+            <td class="py-3.5 px-3 text-indigo-600 font-bold whitespace-nowrap text-sm">${item.price}</td>
+            <td class="py-3.5 px-3 text-emerald-600 font-bold whitespace-nowrap text-sm">${item.total}</td>
+            <td class="py-3.5 px-4 text-slate-600 text-xs leading-relaxed">${item.comment}</td>
           </tr>
         `;
       }).join('');
