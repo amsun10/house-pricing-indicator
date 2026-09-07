@@ -292,25 +292,36 @@
         <div id="bargainChart" class="sub-chart-container"></div>
       </div>
 
-      <!-- 右侧：重点对标楼盘 120-140㎡ 改善盘行情池 -->
+      <!-- 右侧：重点改善楼盘速查池 (新房 + 次新二手双维度) -->
       <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-2">
           <div>
-            <h3 class="text-sm font-bold text-slate-900">江宁 350-450万 重点改善楼盘速查池</h3>
-            <p class="text-xs text-slate-500 mt-0.5">精选符合 120-140㎡ 主力户型的一二梯队小区</p>
+            <h3 class="text-sm font-bold text-slate-900 flex items-center flex-wrap gap-2">
+              江宁 350-450万 重点改善楼盘速查池
+              <span class="text-[10px] bg-rose-50 text-rose-600 border border-rose-200 px-2 py-0.5 rounded-full font-semibold">
+                在售新盘 & 标杆次新
+              </span>
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">精选符合 120-140㎡ 主力户型 · 涵盖纯新盘、实景准现房与次新标杆</p>
           </div>
-          <span class="text-xs text-slate-400">更新于近期行情</span>
+          <!-- 维度筛选 Tabs -->
+          <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1 rounded-xl shrink-0">
+            <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs" data-type="all">全部 (11)</button>
+            <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="新房">🔥 在售新房 (5)</button>
+            <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="二手">🏢 标杆次新 (6)</button>
+          </div>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead>
               <tr class="border-b border-slate-100 text-slate-400 font-medium">
                 <th class="py-2.5 px-3">小区 / 楼盘</th>
+                <th class="py-2.5 px-2">属性</th>
                 <th class="py-2.5 px-2">板块</th>
-                <th class="py-2.5 px-2">主推面积</th>
+                <th class="py-2.5 px-2">户型 / 交付状态</th>
                 <th class="py-2.5 px-2">近期单价</th>
                 <th class="py-2.5 px-2">预估总价</th>
-                <th class="py-2.5 px-2 text-right">买房评价</th>
+                <th class="py-2.5 px-2 text-right">买房评价与核心看点</th>
               </tr>
             </thead>
             <tbody id="communityTableBody" class="divide-y divide-slate-50">
@@ -644,20 +655,156 @@
     }
 
     // ==========================================
-    // 5. 渲染楼盘池表格
+    // 5. 重点楼盘参考数据池 (120-140㎡ 改善：在售新房与标杆次新全覆盖)
     // ==========================================
+    const COMMUNITY_LIST = [
+      // 🔥 在售品质新房 / 准现房
+      { 
+        name: "招商·百家臻园", 
+        type: "新房", 
+        status: "纯新盘·现房/准现房", 
+        region: "百家湖/小龙湾", 
+        area: "125-143㎡", 
+        price: "3.5 ~ 3.9万", 
+        total: "430 - 550万", 
+        comment: "百家湖改善天花板，近景枫商圈，铝板外立面+高配会所，现房安全无烂尾顾虑" 
+      },
+      { 
+        name: "象屿华发·铂萃云湾", 
+        type: "新房", 
+        status: "在售新盘·高层", 
+        region: "百家湖西/胜太路", 
+        area: "120-135㎡", 
+        price: "3.1 ~ 3.5万", 
+        total: "370 - 460万", 
+        comment: "胜太西路地铁口，超感科技改善，带三大件恒温恒湿新风地暖，年轻轻奢风格" 
+      },
+      { 
+        name: "中海·观山樾", 
+        type: "新房", 
+        status: "实景现房·电梯洋房", 
+        region: "方山低密", 
+        area: "115-130㎡", 
+        price: "2.4 ~ 2.8万", 
+        total: "280 - 360万", 
+        comment: "低密电梯洋房，得房率高达84%-86%，现房即买即办证，性价比改善首选" 
+      },
+      { 
+        name: "武夷·七曜极光", 
+        type: "新房", 
+        status: "在售新盘·成熟老城", 
+        region: "东山老城核心", 
+        area: "120-131㎡", 
+        price: "2.7 ~ 3.1万", 
+        total: "320 - 400万", 
+        comment: "东山核心区稀缺新盘，配套成熟烟火气足，紧邻地铁5号线新亭路站" 
+      },
+      { 
+        name: "海玥华府 (现房)", 
+        type: "新房", 
+        status: "科技住宅·实景现房", 
+        region: "东山/杨家圩", 
+        area: "125-135㎡", 
+        price: "2.8 ~ 3.2万", 
+        total: "350 - 430万", 
+        comment: "杨家圩市民中心旁，恒温恒湿恒氧高舒适度科技现房，改善体验感好" 
+      },
+
+      // 🏢 标杆成熟次新二手房
+      { 
+        name: "万科翡翠公园", 
+        type: "二手", 
+        status: "次新品质·满5年", 
+        region: "九龙湖核心", 
+        area: "120-142㎡", 
+        price: "3.2 ~ 3.5万", 
+        total: "380 - 450万", 
+        comment: "九龙湖次新品质标杆，紧邻3号线殷巷商业街，保值与自住舒适度双高" 
+      },
+      { 
+        name: "保利中央公园", 
+        type: "二手", 
+        status: "地铁熟盘·满5年", 
+        region: "九龙湖核心", 
+        area: "123-138㎡", 
+        price: "2.8 ~ 3.1万", 
+        total: "350 - 420万", 
+        comment: "双地铁交汇，成熟大型改善社区，四房实用率高，江宁二手流动性好" 
+      },
+      { 
+        name: "新城玖珑湖", 
+        type: "二手", 
+        status: "一线湖景·小高层", 
+        region: "九龙湖", 
+        area: "125-140㎡", 
+        price: "2.7 ~ 3.0万", 
+        total: "340 - 410万", 
+        comment: "一线依傍九龙湖湿地公园，居住密度低，适合注重生态景观的家庭" 
+      },
+      { 
+        name: "万科金域蓝湾", 
+        type: "二手", 
+        status: "经典大盘·品质园林", 
+        region: "百家湖/小龙湾", 
+        area: "120-135㎡", 
+        price: "3.1 ~ 3.5万", 
+        total: "380 - 450万", 
+        comment: "经典改善标杆，万科物业口碑顶格，绿化极佳，生活成熟度高" 
+      },
+      { 
+        name: "龙湖春江郦城", 
+        type: "二手", 
+        status: "天街TOD·商业上盖", 
+        region: "小龙湾", 
+        area: "122-132㎡", 
+        price: "3.2 ~ 3.6万", 
+        total: "390 - 450万", 
+        comment: "天街综合体直达，下楼即逛街餐饮，通勤与带娃便利度极高" 
+      },
+      { 
+        name: "联发翡翠方山", 
+        type: "二手", 
+        status: "低密洋房·得房率高", 
+        region: "方山低密", 
+        area: "130-142㎡", 
+        price: "2.4 ~ 2.7万", 
+        total: "320 - 380万", 
+        comment: "电梯低密洋房，得房率超85%，赠送飘窗面积多，背靠方山空气宜人" 
+      }
+    ];
+
+    let currentCommunityFilter = 'all';
+
     function renderCommunityTable() {
       const tbody = document.getElementById('communityTableBody');
-      tbody.innerHTML = COMMUNITY_LIST.map(item => `
-        <tr class="hover:bg-slate-50/80 transition">
-          <td class="py-2.5 px-3 font-semibold text-slate-800">${item.name}</td>
-          <td class="py-2.5 px-2 text-slate-500">${item.region}</td>
-          <td class="py-2.5 px-2 text-slate-600 font-medium">${item.area}</td>
-          <td class="py-2.5 px-2 text-indigo-600 font-bold">${item.price}</td>
-          <td class="py-2.5 px-2 text-emerald-600 font-bold">${item.total}</td>
-          <td class="py-2.5 px-2 text-right text-slate-500 text-[11px]">${item.comment}</td>
-        </tr>
-      `).join('');
+      if (!tbody) return;
+
+      const list = currentCommunityFilter === 'all' 
+        ? COMMUNITY_LIST 
+        : COMMUNITY_LIST.filter(item => item.type === currentCommunityFilter);
+
+      tbody.innerHTML = list.map(item => {
+        const typeBadge = item.type === '新房'
+          ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-50 text-rose-600 border border-rose-200 shadow-2xs">🔥 在售新盘</span>`
+          : `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-2xs">🏢 标杆次新</span>`;
+
+        return `
+          <tr class="hover:bg-slate-50/90 transition group">
+            <td class="py-3 px-3 font-semibold text-slate-800 flex items-center gap-1.5">
+              ${item.name}
+            </td>
+            <td class="py-3 px-2 whitespace-nowrap">${typeBadge}</td>
+            <td class="py-3 px-2 text-slate-500 font-medium whitespace-nowrap">${item.region}</td>
+            <td class="py-3 px-2 text-slate-700">
+              <div class="font-medium">${item.area}</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">${item.status}</div>
+            </td>
+            <td class="py-3 px-2 text-indigo-600 font-bold whitespace-nowrap">${item.price}</td>
+            <td class="py-3 px-2 text-emerald-600 font-bold whitespace-nowrap">${item.total}</td>
+            <td class="py-3 px-2 text-right text-slate-500 text-[11px] leading-relaxed max-w-xs">${item.comment}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
     // ==========================================
@@ -809,6 +956,21 @@
           renderMainChart();
           renderBargainChart();
         }
+      });
+
+      // 楼盘分类筛选 (全部 / 在售新房 / 标杆次新)
+      document.querySelectorAll('.filter-community-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.filter-community-btn').forEach(b => {
+            b.classList.remove('bg-white', 'text-indigo-700', 'shadow-xs');
+            b.classList.add('text-slate-600');
+          });
+          e.target.classList.remove('text-slate-600');
+          e.target.classList.add('bg-white', 'text-indigo-700', 'shadow-xs');
+
+          currentCommunityFilter = e.target.dataset.type;
+          renderCommunityTable();
+        });
       });
 
       // 窗口拉伸重绘
