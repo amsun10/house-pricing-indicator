@@ -76,35 +76,66 @@
         <!-- 输入项 -->
         <div class="space-y-4 text-xs">
           <div>
-            <label class="block font-medium text-slate-700 mb-1">房屋总价 (万元)</label>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block font-medium text-slate-700">房屋总价 (万元)</label>
+              <span class="text-[10px] text-slate-400">滑动或直接输入</span>
+            </div>
             <div class="flex items-center space-x-2">
-              <input type="range" id="inputTotalBudget" min="300" max="500" step="5" value="400" class="w-full accent-indigo-600" />
-              <input type="number" id="numTotalBudget" value="400" class="w-20 px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 font-bold text-sm text-center" />
+              <input type="range" id="inputTotalBudget" min="200" max="650" step="5" value="400" class="w-full accent-indigo-600" />
+              <input type="number" id="numTotalBudget" value="400" step="5" class="w-20 px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 font-bold text-sm text-center" />
             </div>
             <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-              <span>300万</span>
-              <span class="text-indigo-600 font-medium">当前设定位：400万</span>
-              <span>500万</span>
+              <span>200万</span>
+              <span class="text-indigo-600 font-medium">当前设定总价：<span id="labelBudgetDisplay">400</span>万</span>
+              <span>650万</span>
+            </div>
+          </div>
+
+          <!-- 首付比例 与 自定义首付金额 (双向联动) -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="block font-medium text-slate-700">首付比例</label>
+                <span id="labelDownPayRatio" class="text-[10px] text-indigo-600 font-bold">20.0%</span>
+              </div>
+              <select id="selectDownPaymentRate" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-xs">
+                <option value="0.15">15% (首套最低)</option>
+                <option value="0.20" selected>20% (主流选择)</option>
+                <option value="0.25">25% (适度提高)</option>
+                <option value="0.30">30% (自住稳健)</option>
+                <option value="0.40">40%</option>
+                <option value="0.50">50%</option>
+                <option value="0.60">60%</option>
+                <option value="custom">✍️ 自定义具体金额</option>
+              </select>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="block font-medium text-slate-700">自定义首付 (万元)</label>
+                <span class="text-[10px] text-indigo-600 font-medium">可直接输入</span>
+              </div>
+              <div class="relative">
+                <input type="number" id="inputCustomDownPayment" value="80.0" step="1" min="0" class="w-full px-2.5 py-1.5 pr-7 rounded-lg border border-indigo-200 bg-indigo-50/30 text-indigo-900 font-bold text-xs focus:bg-white focus:border-indigo-500 transition" placeholder="首付金额" />
+                <span class="absolute right-2 top-1.5 text-xs text-slate-400 pointer-events-none">万</span>
+              </div>
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block font-medium text-slate-700 mb-1">首付比例</label>
-              <select id="selectDownPaymentRate" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700">
-                <option value="0.15">15% (首套最低)</option>
-                <option value="0.20" selected>20% (主流选择)</option>
-                <option value="0.30">30% (自住稳健)</option>
-                <option value="0.40">40%</option>
-                <option value="0.50">50%</option>
+              <label class="block font-medium text-slate-700 mb-1">贷款年限</label>
+              <select id="selectLoanYears" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-xs">
+                <option value="30" selected>30 年 (360期)</option>
+                <option value="25">25 年 (300期)</option>
+                <option value="20">20 年 (240期)</option>
+                <option value="15">15 年 (180期)</option>
               </select>
             </div>
             <div>
-              <label class="block font-medium text-slate-700 mb-1">贷款年限</label>
-              <select id="selectLoanYears" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700">
-                <option value="30" selected>30 年 (360期)</option>
-                <option value="25">25 年</option>
-                <option value="20">20 年</option>
+              <label class="block font-medium text-slate-700 mb-1">还款方式</label>
+              <select id="selectRepayType" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-xs">
+                <option value="acpi" selected>等额本息 (每月固定)</option>
+                <option value="acp">等额本金 (逐月递减)</option>
               </select>
             </div>
           </div>
@@ -112,7 +143,7 @@
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block font-medium text-slate-700 mb-1">公积金贷款额 (万)</label>
-              <input type="number" id="inputGjjAmount" value="100" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs" />
+              <input type="number" id="inputGjjAmount" value="100" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs font-semibold" />
             </div>
             <div>
               <label class="block font-medium text-slate-700 mb-1">公积金利率 (%)</label>
@@ -126,11 +157,10 @@
               <input type="number" id="inputBizRate" value="3.05" step="0.05" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs" />
             </div>
             <div>
-              <label class="block font-medium text-slate-700 mb-1">还款方式</label>
-              <select id="selectRepayType" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700">
-                <option value="acpi" selected>等额本息 (每月固定)</option>
-                <option value="acp">等额本金 (逐月递减)</option>
-              </select>
+              <label class="block font-medium text-slate-700 mb-1">商业贷款额 (自动测算)</label>
+              <div class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs" id="dispBizLoanWan">
+                220.0 万
+              </div>
             </div>
           </div>
         </div>
@@ -141,12 +171,12 @@
             <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">贷款与还款测算</div>
             <div class="mt-4">
               <div class="text-xs text-slate-500">首付金额</div>
-              <div class="text-2xl font-bold text-slate-900 mt-0.5"><span id="resDownPay">80.0</span> <span class="text-sm font-normal text-slate-400">万元</span></div>
+              <div class="text-2xl font-bold text-slate-900 mt-0.5"><span id="resDownPay">80.0</span> <span class="text-sm font-normal text-slate-400">万元 (<span id="resDownPayRatio">20.0%</span>)</span></div>
             </div>
 
             <div class="mt-4">
               <div class="text-xs text-slate-500">贷款总额</div>
-              <div class="text-lg font-bold text-indigo-700 mt-0.5"><span id="resLoanTotal">320.0</span> <span class="text-sm font-normal text-slate-400">万 (公积金 100 + 商贷 220)</span></div>
+              <div class="text-lg font-bold text-indigo-700 mt-0.5"><span id="resLoanTotal">320.0</span> <span id="resLoanBreakdown" class="text-sm font-normal text-slate-400">万 (公积金 100.0 + 商贷 220.0)</span></div>
             </div>
 
             <div class="mt-4 pt-3 border-t border-slate-200">
@@ -186,7 +216,7 @@
           </div>
 
           <div class="mt-4 p-3 bg-white/80 rounded-lg text-[11px] text-indigo-700 leading-relaxed">
-            💡 <strong>张翔 & 葛秀的买房建议</strong>：总价 400 万左右的房源，建议预留 90~95 万左右流动备用资金即可稳妥启动签约与过户。
+            💡 <strong>张翔 & 葛秀的买房建议</strong>：总价 <span id="resAdviceBudget">400</span> 万左右的房源，建议预留 <span id="resAdviceCash">90~95</span> 万左右流动备用资金即可稳妥启动签约与过户。
           </div>
         </div>
 
@@ -2911,20 +2941,62 @@
     // ==========================================
     function calculateMortgage() {
       const totalBudget = parseFloat(document.getElementById('numTotalBudget').value) || 400;
-      const downRate = parseFloat(document.getElementById('selectDownPaymentRate').value);
+      const budgetSlider = document.getElementById('inputTotalBudget');
+      if (budgetSlider && parseFloat(budgetSlider.value) !== totalBudget) {
+        budgetSlider.value = totalBudget;
+      }
+      const labelBudget = document.getElementById('labelBudgetDisplay');
+      if (labelBudget) labelBudget.innerText = totalBudget;
+
+      const downPaySelect = document.getElementById('selectDownPaymentRate');
+      const customDownInput = document.getElementById('inputCustomDownPayment');
+
+      let downPayment = 80;
+      if (customDownInput && customDownInput.value !== '') {
+        downPayment = parseFloat(customDownInput.value) || 0;
+      } else {
+        const downRate = parseFloat(downPaySelect.value) || 0.20;
+        downPayment = totalBudget * downRate;
+        if (customDownInput) customDownInput.value = downPayment.toFixed(1);
+      }
+
+      // 保证首付不大于总价，不小于 0
+      if (downPayment > totalBudget) {
+        downPayment = totalBudget;
+        if (customDownInput) customDownInput.value = downPayment.toFixed(1);
+      } else if (downPayment < 0) {
+        downPayment = 0;
+        if (customDownInput) customDownInput.value = '0';
+      }
+
+      const downRatePercent = totalBudget > 0 ? ((downPayment / totalBudget) * 100) : 0;
+      const labelRatio = document.getElementById('labelDownPayRatio');
+      if (labelRatio) labelRatio.innerText = `${downRatePercent.toFixed(1)}%`;
+
       const years = parseInt(document.getElementById('selectLoanYears').value);
       const gjjLoanWan = parseFloat(document.getElementById('inputGjjAmount').value) || 0;
       const gjjRateYear = (parseFloat(document.getElementById('inputGjjRate').value) || 2.85) / 100;
       const bizRateYear = (parseFloat(document.getElementById('inputBizRate').value) || 3.05) / 100;
       const repayType = document.getElementById('selectRepayType').value;
 
-      const downPayment = totalBudget * downRate;
       const totalLoanWan = Math.max(0, totalBudget - downPayment);
       const actualGjjWan = Math.min(gjjLoanWan, totalLoanWan);
       const actualBizWan = Math.max(0, totalLoanWan - actualGjjWan);
 
+      // 显示商业贷款本金测算
+      const dispBiz = document.getElementById('dispBizLoanWan');
+      if (dispBiz) dispBiz.innerText = `${actualBizWan.toFixed(1)} 万`;
+
+      // 结果卡片展示
       document.getElementById('resDownPay').innerText = downPayment.toFixed(1);
+      const resRatio = document.getElementById('resDownPayRatio');
+      if (resRatio) resRatio.innerText = `${downRatePercent.toFixed(1)}%`;
+
       document.getElementById('resLoanTotal').innerText = totalLoanWan.toFixed(1);
+      const resBreakdown = document.getElementById('resLoanBreakdown');
+      if (resBreakdown) {
+        resBreakdown.innerText = `万 (公积金 ${actualGjjWan.toFixed(1)} + 商贷 ${actualBizWan.toFixed(1)})`;
+      }
 
       // 月利率与总期数
       const monthsCount = years * 12;
@@ -2961,6 +3033,9 @@
         monthlyBiz = (pB / monthsCount) + (pB * rBiz);
         const monthlyTotal = monthlyGjj + monthlyBiz;
         document.getElementById('resMonthlyPay').innerText = `首月 ¥${Math.round(monthlyTotal).toLocaleString()}`;
+        // 同步房贷月供到 DTI 压力测试器
+        const dtiInput = document.getElementById('inputDtiMortgage');
+        if (dtiInput) { dtiInput.value = Math.round(monthlyTotal); calculateDTI(); }
         document.getElementById('resRepayDetail').innerText = `等额本金逐月递减，末月约 ¥${Math.round((pG+pB)/monthsCount).toLocaleString()}`;
 
         // 总利息
@@ -2971,7 +3046,7 @@
 
       document.getElementById('resTotalInterest').innerText = totalInterestWan.toFixed(1);
 
-      // 税费计算 (120-140㎡ 南京契税按 1% 估算，中介费约 1% 左右)
+      // 税费计算 (120-140㎡ 南京契税按 1% 估算，中介费约 1.2% 左右)
       const taxWan = totalBudget * 0.01;
       const agencyWan = totalBudget * 0.012;
       document.getElementById('resTax').innerText = taxWan.toFixed(1);
@@ -2979,6 +3054,11 @@
       
       const readyCash = downPayment + taxWan + agencyWan + 0.8;
       document.getElementById('resReadyCash').innerText = readyCash.toFixed(1);
+
+      const adviceBudget = document.getElementById('resAdviceBudget');
+      if (adviceBudget) adviceBudget.innerText = Math.round(totalBudget);
+      const adviceCash = document.getElementById('resAdviceCash');
+      if (adviceCash) adviceCash.innerText = `${(readyCash).toFixed(1)} ~ ${(readyCash + 5).toFixed(1)}`;
     }
 
     
@@ -3254,19 +3334,75 @@
       // 计算器输入事件
       const budgetSlider = document.getElementById('inputTotalBudget');
       const budgetNum = document.getElementById('numTotalBudget');
+      const downPaySelect = document.getElementById('selectDownPaymentRate');
+      const customDownInput = document.getElementById('inputCustomDownPayment');
 
-      budgetSlider.addEventListener('input', (e) => {
-        budgetNum.value = e.target.value;
+      function onBudgetChanged(newVal) {
+        const totalBudget = parseFloat(newVal) || 400;
+        budgetSlider.value = totalBudget;
+        budgetNum.value = totalBudget;
+        
+        // 若当前不是自定义模式，按所选比例自动更新首付金额
+        if (downPaySelect && downPaySelect.value !== 'custom') {
+          const rate = parseFloat(downPaySelect.value) || 0.2;
+          const down = totalBudget * rate;
+          if (customDownInput) customDownInput.value = down.toFixed(1);
+        } else if (customDownInput) {
+          // 自定义模式下，首付不能超过总价
+          let down = parseFloat(customDownInput.value) || 0;
+          if (down > totalBudget) {
+            customDownInput.value = totalBudget.toFixed(1);
+          }
+        }
+        calculateMortgage();
+      }
+
+      budgetSlider.addEventListener('input', (e) => onBudgetChanged(e.target.value));
+      budgetNum.addEventListener('input', (e) => onBudgetChanged(e.target.value));
+
+      // 首付比例下拉选择改变
+      downPaySelect.addEventListener('change', () => {
+        const totalBudget = parseFloat(budgetNum.value) || 400;
+        if (downPaySelect.value !== 'custom') {
+          const rate = parseFloat(downPaySelect.value) || 0.2;
+          const down = totalBudget * rate;
+          if (customDownInput) customDownInput.value = down.toFixed(1);
+        } else {
+          if (customDownInput) customDownInput.focus();
+        }
         calculateMortgage();
       });
-      budgetNum.addEventListener('input', (e) => {
-        budgetSlider.value = e.target.value;
-        calculateMortgage();
-      });
 
-      ['selectDownPaymentRate', 'selectLoanYears', 'inputGjjAmount', 'inputGjjRate', 'inputBizRate', 'selectRepayType'].forEach(id => {
-        document.getElementById(id).addEventListener('change', calculateMortgage);
-        document.getElementById(id).addEventListener('input', calculateMortgage);
+      // 自定义首付金额输入改变
+      if (customDownInput) {
+        customDownInput.addEventListener('input', () => {
+          const totalBudget = parseFloat(budgetNum.value) || 400;
+          const down = parseFloat(customDownInput.value) || 0;
+          const ratio = totalBudget > 0 ? (down / totalBudget) : 0;
+
+          // 智能匹配预设下拉项
+          let matched = false;
+          for (let i = 0; i < downPaySelect.options.length; i++) {
+            const optVal = parseFloat(downPaySelect.options[i].value);
+            if (!isNaN(optVal) && Math.abs(optVal - ratio) < 0.005) {
+              downPaySelect.selectedIndex = i;
+              matched = true;
+              break;
+            }
+          }
+          if (!matched) {
+            downPaySelect.value = 'custom';
+          }
+          calculateMortgage();
+        });
+      }
+
+      ['selectLoanYears', 'inputGjjAmount', 'inputGjjRate', 'inputBizRate', 'selectRepayType'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('change', calculateMortgage);
+          el.addEventListener('input', calculateMortgage);
+        }
       });
 
       // 数据弹窗事件
