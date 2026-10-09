@@ -616,7 +616,7 @@
             <div><span class="text-slate-400">400万总价让利:</span> <strong class="text-indigo-600">28 ~ 38 万元</strong></div>
           </div>
           <div class="text-[11px] text-slate-600 leading-relaxed bg-slate-100 p-2.5 rounded-lg">
-            🎯 <strong>房东心态与出价锦囊</strong>：老城区存量庞大，新房（武夷七里湖山、海玥华府）与次新盘竞争激烈，房东心态普遍分化，是挑拣好户型大杀价的理想战场。
+            🎯 <strong>房东心态与出价锦囊</strong>：老城区存量庞大，新房四代宅（中建东山樾府、海玥华府现房）与标杆次新（武夷七里湖山等）竞争分流，二手房东心态普遍分化，是挑拣好户型坚决议价的理想战场。
           </div>
         </div>
 
@@ -850,22 +850,31 @@
           </p>
         </div>
         <div class="text-xs text-slate-500">
-          已预载 3 个典型江宁对标样本 (新房 vs 次新 vs 洋房)
+          已预载 6 个典型江宁对标样本 (四代新盘 vs 顶奢科技 vs 标杆次新 vs 洋房)
         </div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
         <!-- 左侧打分调节器 (7列) -->
         <div class="lg:col-span-7 space-y-4">
-          <div class="flex items-center space-x-2 border-b border-slate-100 pb-2">
-            <span class="text-xs font-bold text-slate-700 mr-2">当前调分楼盘:</span>
-            <button class="radar-tab-btn px-3 py-1 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow-2xs" data-target="0">
+          <div class="flex items-center space-x-1.5 border-b border-slate-100 pb-2 flex-wrap gap-y-1.5">
+            <span class="text-xs font-bold text-slate-700 mr-1.5 shrink-0">当前调分楼盘:</span>
+            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow-2xs" data-target="0">
+              江宁金茂府
+            </button>
+            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="1">
+              中建·东山樾府
+            </button>
+            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="2">
+              嘉宏·万流江宁
+            </button>
+            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="3">
               招商·百家臻园
             </button>
-            <button class="radar-tab-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="1">
+            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="4">
               万科翡翠公园
             </button>
-            <button class="radar-tab-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="2">
+            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="5">
               中海·观山樾
             </button>
           </div>
@@ -875,71 +884,74 @@
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
               <div class="flex justify-between font-medium text-slate-700">
                 <span>🚇 地铁通勤与距离</span>
-                <span id="scoreVal0" class="font-bold text-indigo-600">9.0</span>
+                <span id="scoreVal0" class="font-bold text-indigo-600">8.5</span>
               </div>
-              <input type="range" id="sliderScore0" min="1" max="10" step="0.5" value="9.0" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">1号线/3号线/通勤时间</div>
+              <input type="range" id="sliderScore0" min="1" max="10" step="0.5" value="8.5" class="w-full accent-indigo-600" />
+              <div class="text-[10px] text-slate-400">1号线/3号线/5号线/通勤时间</div>
             </div>
 
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
               <div class="flex justify-between font-medium text-slate-700">
                 <span>🛍️ 商业烟火与配套</span>
-                <span id="scoreVal1" class="font-bold text-indigo-600">9.5</span>
+                <span id="scoreVal1" class="font-bold text-indigo-600">8.5</span>
               </div>
-              <input type="range" id="sliderScore1" min="1" max="10" step="0.5" value="9.5" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">景枫/金鹰/殷巷商街/医院</div>
+              <input type="range" id="sliderScore1" min="1" max="10" step="0.5" value="8.5" class="w-full accent-indigo-600" />
+              <div class="text-[10px] text-slate-400">百家湖商圈/万达/文靖路/医院</div>
             </div>
 
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
               <div class="flex justify-between font-medium text-slate-700">
-                <span>🏡 小区品质与物业</span>
-                <span id="scoreVal2" class="font-bold text-indigo-600">9.5</span>
+                <span>🏡 小区品质与科技物业</span>
+                <span id="scoreVal2" class="font-bold text-indigo-600">9.8</span>
               </div>
-              <input type="range" id="sliderScore2" min="1" max="10" step="0.5" value="9.5" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">铝板幕墙/万科招商物业/园林</div>
+              <input type="range" id="sliderScore2" min="1" max="10" step="0.5" value="9.8" class="w-full accent-indigo-600" />
+              <div class="text-[10px] text-slate-400">六恒科技/绿金科技/铝板外立面/园林</div>
             </div>
 
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
               <div class="flex justify-between font-medium text-slate-700">
                 <span>📐 得房率与空间格局</span>
-                <span id="scoreVal3" class="font-bold text-indigo-600">7.5</span>
+                <span id="scoreVal3" class="font-bold text-indigo-600">9.2</span>
               </div>
-              <input type="range" id="sliderScore3" min="1" max="10" step="0.5" value="7.5" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">套内真实面积/开间朝向</div>
+              <input type="range" id="sliderScore3" min="1" max="10" step="0.5" value="9.2" class="w-full accent-indigo-600" />
+              <div class="text-[10px] text-slate-400">空中错层露台/洋房高得房/四房开间</div>
             </div>
 
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
               <div class="flex justify-between font-medium text-slate-700">
                 <span>📈 保值与未来流通性</span>
-                <span id="scoreVal4" class="font-bold text-indigo-600">9.0</span>
+                <span id="scoreVal4" class="font-bold text-indigo-600">9.2</span>
               </div>
-              <input type="range" id="sliderScore4" min="1" max="10" step="0.5" value="9.0" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">江宁二手接盘认可度</div>
+              <input type="range" id="sliderScore4" min="1" max="10" step="0.5" value="9.2" class="w-full accent-indigo-600" />
+              <div class="text-[10px] text-slate-400">江宁改善接盘认可度与圈层属性</div>
             </div>
 
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
               <div class="flex justify-between font-medium text-slate-700">
                 <span>💰 预算匹配与议价空间</span>
-                <span id="scoreVal5" class="font-bold text-indigo-600">6.5</span>
+                <span id="scoreVal5" class="font-bold text-indigo-600">6.0</span>
               </div>
-              <input type="range" id="sliderScore5" min="1" max="10" step="0.5" value="6.5" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">350-450万预算/砍价容易度</div>
+              <input type="range" id="sliderScore5" min="1" max="10" step="0.5" value="6.0" class="w-full accent-indigo-600" />
+              <div class="text-[10px] text-slate-400">350-500万预算匹配/案场让利空间</div>
             </div>
           </div>
 
           <!-- 评分诊断简报 -->
           <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100 text-xs flex items-center justify-between">
             <span class="text-slate-600">当前选择楼盘综合加权得分：</span>
-            <span class="font-extrabold text-indigo-700 text-sm" id="radarTotalScoreText">招商·百家臻园：85.0 / 100 分</span>
+            <span class="font-extrabold text-indigo-700 text-sm" id="radarTotalScoreText">江宁金茂府：85.3 / 100 分</span>
           </div>
         </div>
 
         <!-- 右侧雷达图 (5列) -->
         <div class="lg:col-span-5 flex flex-col items-center justify-center">
           <div id="radarChart" class="w-full h-80 sm:h-96"></div>
-          <div class="flex items-center space-x-3 text-[11px] text-slate-500 mt-2">
+          <div class="flex items-center space-x-3 text-[11px] text-slate-500 mt-2 flex-wrap justify-center gap-y-1">
+            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-1"></span>金茂府</span>
+            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-indigo-600 mr-1"></span>东山樾府</span>
+            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-pink-500 mr-1"></span>万流江宁</span>
             <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 mr-1"></span>百家臻园</span>
-            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-indigo-600 mr-1"></span>翡翠公园</span>
+            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 mr-1"></span>翡翠公园</span>
             <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 mr-1"></span>观山樾</span>
           </div>
         </div>
@@ -947,17 +959,17 @@
 
       <!-- 决策参考结语 -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2">
-        <div class="p-3 rounded-xl bg-rose-50/50 border border-rose-100 space-y-1">
-          <div class="font-bold text-rose-900">招商·百家臻园 (高端新房)</div>
-          <div class="text-slate-600 text-[11px]">审美品质天花板，百家湖极佳商圈，但总价逼近 450-480万上限，月供压力较大。</div>
+        <div class="p-3 rounded-xl bg-emerald-50/50 border border-emerald-100 space-y-1">
+          <div class="font-bold text-emerald-900">顶格四代科技盘 (金茂府 / 万流江宁)</div>
+          <div class="text-slate-600 text-[11px]">六恒/绿金科技与空中庭院拉满，百家湖与九龙湖天花板，适合追求品质生活但需充裕预算。</div>
         </div>
         <div class="p-3 rounded-xl bg-indigo-50/50 border border-indigo-100 space-y-1">
-          <div class="font-bold text-indigo-900">万科翡翠公园 (次新综合王)</div>
-          <div class="text-slate-600 text-[11px]">3号线地铁+殷巷生活区成熟，万科物业顶级口碑，保值流通性最稳，380-420万首选。</div>
+          <div class="font-bold text-indigo-900">核心成熟四代与次新 (东山樾府 / 翡翠公园)</div>
+          <div class="text-slate-600 text-[11px]">地铁口烟火配套成熟，文靖路/殷巷地段硬核，兼顾居住实用度与资产流动性，主流稳健之选。</div>
         </div>
         <div class="p-3 rounded-xl bg-amber-50/50 border border-amber-100 space-y-1">
-          <div class="font-bold text-amber-900">中海·观山樾 (高性价洋房)</div>
-          <div class="text-slate-600 text-[11px]">得房率超 85%，总价仅 320-360万，月供压力极小，适合注重生活舒适度与现金流安全。</div>
+          <div class="font-bold text-amber-900">实景现房与高性价比 (观山樾 / 百家臻园次新)</div>
+          <div class="text-slate-600 text-[11px]">现房看得见摸得着，洋房高得房或核心区次新价格已挤干泡沫，月供可控无交付等待风险。</div>
         </div>
       </div>
     </section>
@@ -968,18 +980,18 @@
         <div>
           <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
             <span class="w-2 h-4 bg-rose-500 rounded-sm inline-block"></span>
-            江宁 350-450万 重点改善楼盘速查池
+            江宁核心板块 重点改善楼盘速查池
             <span class="text-xs bg-rose-50 text-rose-600 border border-rose-200 px-2.5 py-0.5 rounded-full font-semibold">
-              在售新盘 & 标杆次新双维度
+              在售新盘/四代宅 & 标杆次新双维度
             </span>
           </h2>
-          <p class="text-xs text-slate-500 mt-1">精选江宁符合 120-140㎡ 主力户型 · 涵盖纯新盘、实景现房与次新标杆，横向对比得房率、装标三大件与交付状态</p>
+          <p class="text-xs text-slate-500 mt-1">精选江宁 120-145㎡ 改善主力盘 · 覆盖当红四代新盘、科技恒温豪宅与经典标杆次新，横向对比实测单价、得房率与品质看点</p>
         </div>
         <!-- 维度筛选 Tabs -->
         <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1.5 rounded-xl shrink-0">
-          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs" data-type="all">全部楼盘 (11)</button>
-          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="新房">🔥 在售新房 (5)</button>
-          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="二手">🏢 标杆次新 (6)</button>
+          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs" data-type="all">全部楼盘 (<span id="countAll">16</span>)</button>
+          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="新房">🔥 在售新盘/四代 (<span id="countNew">8</span>)</button>
+          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="二手">🏢 标杆次新 (<span id="countSecond">8</span>)</button>
         </div>
       </div>
       <div class="overflow-x-auto rounded-xl border border-slate-100 shadow-2xs">
@@ -2784,121 +2796,171 @@
     }
 
     // ==========================================
-    // 5. 重点楼盘参考数据池 (120-140㎡ 改善：在售新房与标杆次新全覆盖)
+    // 5. 重点楼盘参考数据池 (改善主力：在售新盘/四代宅与标杆次新全覆盖)
     // ==========================================
     const COMMUNITY_LIST = [
-      // 🔥 在售品质新房 / 准现房
+      // 🔥 在售品质新盘 / 四代宅 / 准现房
       { 
-        name: "招商·百家臻园", 
+        name: "嘉宏·万流江宁", 
         type: "新房", 
-        status: "纯新盘·现房/准现房", 
+        status: "在售新盘·四代科技宅", 
         region: "百家湖/小龙湾", 
-        area: "125-143㎡", 
-        price: "3.5 ~ 3.9万", 
-        total: "430 - 550万", 
-        comment: "百家湖改善天花板，近景枫商圈，铝板外立面+高配会所，现房安全无烂尾顾虑" 
+        area: "143-235㎡", 
+        price: "3.9 ~ 4.2万", 
+        total: "560 - 950万", 
+        comment: "百家湖核心顶奢改善，全维六恒科技系统+空中错层大露台，挑高视野极佳，紧邻小龙湾地铁站" 
+      },
+      { 
+        name: "江宁金茂府", 
+        type: "新房", 
+        status: "在售新盘·四代科技宅", 
+        region: "九龙湖核心", 
+        area: "140-220㎡", 
+        price: "3.9 ~ 4.3万", 
+        total: "550 - 900万", 
+        comment: "九龙湖纯改善标杆天花板，1.8超低容积率洋房与小高层，金茂十二大绿金科技，空中花园户型" 
+      },
+      { 
+        name: "中建·东山樾府", 
+        type: "新房", 
+        status: "在售新盘·低密四代宅", 
+        region: "东山老城核心", 
+        area: "120-174㎡", 
+        price: "3.4 ~ 3.7万", 
+        total: "410 - 640万", 
+        comment: "紧邻5号线文靖路站约200米，1.8低密改善小高层，送错层空中露台，老城地缘换房首选" 
+      },
+      { 
+        name: "金茂·樾满云川", 
+        type: "新房", 
+        status: "在售新盘·四代奢宅", 
+        region: "竹山路/小龙湾", 
+        area: "105-139㎡", 
+        price: "2.9 ~ 3.2万", 
+        total: "350 - 440万", 
+        comment: "竹山路双地铁交汇，金茂满系四代产品，配备约2300㎡高端会所，139㎡主力四房总价与功能性兼备" 
       },
       { 
         name: "象屿华发·铂萃云湾", 
         type: "新房", 
-        status: "在售新盘·高层", 
+        status: "在售新盘·小高层", 
         region: "百家湖西/胜太路", 
-        area: "120-135㎡", 
-        price: "3.1 ~ 3.5万", 
-        total: "370 - 460万", 
-        comment: "胜太西路地铁口，超感科技改善，带三大件恒温恒湿新风地暖，年轻轻奢风格" 
+        area: "95-135㎡", 
+        price: "2.8 ~ 3.2万", 
+        total: "330 - 430万", 
+        comment: "3号线胜太西路地铁口，双国企超感科技住宅，带三大件恒温恒湿新风地暖，年轻轻奢风格" 
+      },
+      { 
+        name: "金隅华发·紫京四季", 
+        type: "新房", 
+        status: "实景现房·低密小高层", 
+        region: "上秦淮核心", 
+        area: "102-142㎡", 
+        price: "2.2 ~ 2.5万", 
+        total: "280 - 350万", 
+        comment: "上秦淮低密改善标杆，已实景交付即买即住，豪华下沉会所配露天泳池，得房率超80%" 
+      },
+      { 
+        name: "海玥华府 (现房)", 
+        type: "新房", 
+        status: "实景现房·科技大宅", 
+        region: "东山/杨家圩", 
+        area: "115-135㎡", 
+        price: "2.4 ~ 2.7万", 
+        total: "290 - 365万", 
+        comment: "上海建工高舒适度科技住宅，恒温恒湿免去装修等待，近江宁市民中心与万达成熟配套" 
       },
       { 
         name: "中海·观山樾", 
         type: "新房", 
         status: "实景现房·电梯洋房", 
         region: "方山低密", 
-        area: "115-130㎡", 
-        price: "2.4 ~ 2.8万", 
-        total: "280 - 360万", 
-        comment: "低密电梯洋房，得房率高达84%-86%，现房即买即办证，性价比改善首选" 
-      },
-      { 
-        name: "武夷·七曜极光", 
-        type: "新房", 
-        status: "在售新盘·成熟老城", 
-        region: "东山老城核心", 
-        area: "120-131㎡", 
-        price: "2.7 ~ 3.1万", 
-        total: "320 - 400万", 
-        comment: "东山核心区稀缺新盘，配套成熟烟火气足，紧邻地铁5号线新亭路站" 
-      },
-      { 
-        name: "海玥华府 (现房)", 
-        type: "新房", 
-        status: "科技住宅·实景现房", 
-        region: "东山/杨家圩", 
-        area: "125-135㎡", 
-        price: "2.8 ~ 3.2万", 
-        total: "350 - 430万", 
-        comment: "杨家圩市民中心旁，恒温恒湿恒氧高舒适度科技现房，改善体验感好" 
+        area: "89-130㎡", 
+        price: "1.9 ~ 2.2万", 
+        total: "220 - 285万", 
+        comment: "实景现房即买即办证，电梯洋房得房率约85%，价格大幅回调后总价门槛极具亲和力，还贷无压力" 
       },
 
       // 🏢 标杆成熟次新二手房
       { 
+        name: "招商·百家臻园", 
+        type: "二手", 
+        status: "标杆次新·实景交付", 
+        region: "百家湖/小龙湾", 
+        area: "125-143㎡", 
+        price: "3.0 ~ 3.4万", 
+        total: "380 - 485万", 
+        comment: "百家湖纯新一代铝板立面标杆，全配高端会所，已全面实景交付，品质与圈层纯粹，保值稳健" 
+      },
+      { 
+        name: "朗诗玲珑屿", 
+        type: "二手", 
+        status: "标杆次新·科技住宅", 
+        region: "百家湖核心", 
+        area: "118-140㎡", 
+        price: "2.9 ~ 3.3万", 
+        total: "350 - 460万", 
+        comment: "百家湖核心科技改善标杆，紧邻景枫金鹰商圈，恒温恒湿体感极佳，江宁自住改善口碑天花板" 
+      },
+      { 
         name: "万科翡翠公园", 
         type: "二手", 
-        status: "次新品质·满5年", 
+        status: "标杆次新·满5年", 
         region: "九龙湖核心", 
         area: "120-142㎡", 
-        price: "3.2 ~ 3.5万", 
-        total: "380 - 450万", 
-        comment: "九龙湖次新品质标杆，紧邻3号线殷巷商业街，保值与自住舒适度双高" 
+        price: "2.6 ~ 2.9万", 
+        total: "320 - 410万", 
+        comment: "九龙湖次新品质标杆，紧邻3号线地铁与殷巷商街，万科物业顶级口碑，保值流通与自住最均衡" 
+      },
+      { 
+        name: "龙湖春江郦城", 
+        type: "二手", 
+        status: "标杆次新·TOD商业", 
+        region: "小龙湾/竹山路", 
+        area: "122-132㎡", 
+        price: "2.8 ~ 3.1万", 
+        total: "340 - 410万", 
+        comment: "天街综合体直达，下楼即逛街餐饮，通勤带娃便利度极高，小高层外立面与景观保持良好" 
+      },
+      { 
+        name: "武夷·七里湖山", 
+        type: "二手", 
+        status: "标杆次新·已交付", 
+        region: "东山老城核心", 
+        area: "118-143㎡", 
+        price: "2.5 ~ 2.8万", 
+        total: "300 - 390万", 
+        comment: "文靖路老城成熟烟火气，新盘已全面交付转次新，户型方正使用率高，地缘自住实用之选" 
       },
       { 
         name: "保利中央公园", 
         type: "二手", 
-        status: "地铁熟盘·满5年", 
+        status: "标杆次新·双地铁", 
         region: "九龙湖核心", 
         area: "123-138㎡", 
-        price: "2.8 ~ 3.1万", 
-        total: "350 - 420万", 
-        comment: "双地铁交汇，成熟大型改善社区，四房实用率高，江宁二手流动性好" 
-      },
-      { 
-        name: "新城玖珑湖", 
-        type: "二手", 
-        status: "一线湖景·小高层", 
-        region: "九龙湖", 
-        area: "125-140㎡", 
-        price: "2.7 ~ 3.0万", 
-        total: "340 - 410万", 
-        comment: "一线依傍九龙湖湿地公园，居住密度低，适合注重生态景观的家庭" 
+        price: "2.2 ~ 2.5万", 
+        total: "270 - 345万", 
+        comment: "3号线/5号线辐射，成熟大型改善社区，四房实用率高，价格回归理性后性价比非常突出" 
       },
       { 
         name: "万科金域蓝湾", 
         type: "二手", 
         status: "经典大盘·品质园林", 
-        region: "百家湖/小龙湾", 
+        region: "百家湖/清水亭西路", 
         area: "120-135㎡", 
-        price: "3.1 ~ 3.5万", 
-        total: "380 - 450万", 
-        comment: "经典改善标杆，万科物业口碑顶格，绿化极佳，生活成熟度高" 
+        price: "2.2 ~ 2.5万", 
+        total: "270 - 335万", 
+        comment: "百家湖经典改善标杆，万科物业口碑顶格，内部绿化极佳生活成熟，真实成交已挤干泡沫" 
       },
       { 
-        name: "龙湖春江郦城", 
+        name: "新城玖珑湖", 
         type: "二手", 
-        status: "天街TOD·商业上盖", 
-        region: "小龙湾", 
-        area: "122-132㎡", 
-        price: "3.2 ~ 3.6万", 
-        total: "390 - 450万", 
-        comment: "天街综合体直达，下楼即逛街餐饮，通勤与带娃便利度极高" 
-      },
-      { 
-        name: "联发翡翠方山", 
-        type: "二手", 
-        status: "低密洋房·得房率高", 
-        region: "方山低密", 
-        area: "130-142㎡", 
-        price: "2.4 ~ 2.7万", 
-        total: "320 - 380万", 
-        comment: "电梯低密洋房，得房率超85%，赠送飘窗面积多，背靠方山空气宜人" 
+        status: "标杆次新·一线湖景", 
+        region: "九龙湖", 
+        area: "125-140㎡", 
+        price: "2.2 ~ 2.5万", 
+        total: "280 - 350万", 
+        comment: "一线依傍九龙湖湿地公园，居住密度低，视野开阔，适合注重生态景观的自住家庭" 
       }
     ];
 
@@ -2907,6 +2969,13 @@
     function renderCommunityTable() {
       const tbody = document.getElementById('communityTableBody');
       if (!tbody) return;
+
+      const countAllEl = document.getElementById('countAll');
+      const countNewEl = document.getElementById('countNew');
+      const countSecondEl = document.getElementById('countSecond');
+      if (countAllEl) countAllEl.innerText = COMMUNITY_LIST.length;
+      if (countNewEl) countNewEl.innerText = COMMUNITY_LIST.filter(i => i.type === '新房').length;
+      if (countSecondEl) countSecondEl.innerText = COMMUNITY_LIST.filter(i => i.type === '二手').length;
 
       const list = currentCommunityFilter === 'all' 
         ? COMMUNITY_LIST 
@@ -3202,21 +3271,39 @@
     // ==========================================
     const RADAR_CANDIDATES = [
       {
+        name: "江宁金茂府",
+        color: "#10b981",
+        scores: [8.5, 8.5, 9.8, 9.2, 9.2, 6.0],
+        desc: "九龙湖低密科技四代大平层，绿金科技与空中庭院顶格，居住舒适度极高但总价门槛偏高。"
+      },
+      {
+        name: "中建·东山樾府",
+        color: "#6366f1",
+        scores: [9.2, 9.2, 9.0, 9.5, 8.5, 7.5],
+        desc: "东山老城文靖路站旁1.8低密四代宅，错层露台与烟火配套俱佳，综合性价比与改善属性平衡。"
+      },
+      {
+        name: "嘉宏·万流江宁",
+        color: "#ec4899",
+        scores: [9.5, 9.8, 9.8, 8.8, 9.2, 5.5],
+        desc: "百家湖核心顶奢六恒科技住宅+挑高露台，地段商圈无敌，适合预算充裕追求极致品质家庭。"
+      },
+      {
         name: "招商·百家臻园",
         color: "#f43f5e",
-        scores: [9.0, 9.5, 9.5, 7.5, 9.0, 6.5],
-        desc: "百家湖核心纯新高端标杆，颜值会所与外立面顶格，但得房率约74%且总价偏高。"
+        scores: [9.0, 9.5, 9.5, 7.8, 9.0, 7.2],
+        desc: "百家湖核心纯铝板外立面会所标杆，实景交付现房无烂尾风险，圈层纯粹保值稳健。"
       },
       {
         name: "万科翡翠公园",
-        color: "#4f46e5",
-        scores: [9.5, 8.5, 9.0, 8.0, 9.2, 8.0],
-        desc: "九龙湖次新标杆王，3号线地铁紧邻，万科物业口碑第一，综合保值与自住最均衡。"
+        color: "#3b82f6",
+        scores: [9.5, 8.8, 9.2, 8.2, 9.0, 8.5],
+        desc: "九龙湖次新标杆王，紧邻3号线与商业街，万科物业口碑第一，综合保值流通与自住最均衡。"
       },
       {
         name: "中海·观山樾",
         color: "#f59e0b",
-        scores: [7.0, 7.0, 8.5, 9.5, 7.0, 9.5],
+        scores: [7.0, 7.0, 8.5, 9.5, 7.0, 9.8],
         desc: "方山低密生态洋房，得房率超85%，总价门槛极具亲和力，还款月供零压力。"
       }
     ];
@@ -3448,14 +3535,16 @@
       // 楼盘分类筛选 (全部 / 在售新房 / 标杆次新)
       document.querySelectorAll('.filter-community-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
+          const targetBtn = e.target.closest('.filter-community-btn');
+          if (!targetBtn) return;
           document.querySelectorAll('.filter-community-btn').forEach(b => {
             b.classList.remove('bg-white', 'text-indigo-700', 'shadow-xs');
             b.classList.add('text-slate-600');
           });
-          e.target.classList.remove('text-slate-600');
-          e.target.classList.add('bg-white', 'text-indigo-700', 'shadow-xs');
+          targetBtn.classList.remove('text-slate-600');
+          targetBtn.classList.add('bg-white', 'text-indigo-700', 'shadow-xs');
 
-          currentCommunityFilter = e.target.dataset.type;
+          currentCommunityFilter = targetBtn.dataset.type;
           renderCommunityTable();
         });
       });
@@ -3534,14 +3623,16 @@
       // 模块 4: 雷达图切换楼盘与滑块打分事件
       document.querySelectorAll('.radar-tab-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
+          const targetBtn = e.target.closest('.radar-tab-btn');
+          if (!targetBtn) return;
           document.querySelectorAll('.radar-tab-btn').forEach(b => {
             b.classList.remove('bg-indigo-600', 'text-white', 'shadow-2xs');
             b.classList.add('bg-slate-100', 'text-slate-600');
           });
-          e.target.classList.remove('bg-slate-100', 'text-slate-600');
-          e.target.classList.add('bg-indigo-600', 'text-white', 'shadow-2xs');
+          targetBtn.classList.remove('bg-slate-100', 'text-slate-600');
+          targetBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-2xs');
 
-          currentRadarIdx = parseInt(e.target.dataset.target);
+          currentRadarIdx = parseInt(targetBtn.dataset.target) || 0;
           renderRadarChart();
         });
       });
