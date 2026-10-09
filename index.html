@@ -247,13 +247,13 @@
           <div>
             <div class="flex justify-between items-center mb-1">
               <label class="font-bold text-slate-700">家庭月税后总收入 (万元/月)</label>
-              <span class="text-indigo-600 font-bold text-sm" id="labelFamilyIncome">3.5 万元 (¥35,000)</span>
+              <span class="text-indigo-600 font-bold text-sm" id="labelFamilyIncome">2.5 万元 (¥25,000)</span>
             </div>
-            <input type="range" id="inputFamilyIncome" min="1.8" max="6.0" step="0.1" value="3.5" class="w-full accent-indigo-600" />
+            <input type="range" id="inputFamilyIncome" min="1.2" max="6.0" step="0.1" value="2.5" class="w-full accent-indigo-600" />
             <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
-              <span>1.8万 (紧凑)</span>
-              <span>3.5万 (小家庭平稳期)</span>
-              <span>6.0万 (充裕晋升期)</span>
+              <span>1.2万 (紧凑期)</span>
+              <span>2.5万 (工薪改善期)</span>
+              <span>5.0万+ (充裕期)</span>
             </div>
           </div>
 
@@ -314,16 +314,16 @@
 
               <div class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-2xs">
                 <div class="text-[11px] text-slate-500 font-medium">综合负债率 (Total DTI)</div>
-                <div class="text-xl font-extrabold text-indigo-600 mt-1">
-                  <span id="dtiRatio">42.4</span>%
+                <div class="text-xl font-extrabold text-rose-600 mt-1">
+                  <span id="dtiRatio">59.4</span>%
                 </div>
-                <div class="text-[10px] text-slate-400 mt-0.5">纯房贷月供比: <span id="dtiMortgageRatio">38.5%</span></div>
+                <div class="text-[10px] text-slate-400 mt-0.5">纯房贷月供比: <span id="dtiMortgageRatio">53.9%</span></div>
               </div>
 
               <div class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-2xs">
                 <div class="text-[11px] text-slate-500 font-medium">税后每月自由结余</div>
                 <div class="text-xl font-bold text-emerald-600 mt-1">
-                  ¥<span id="dtiSurplus">20,160</span>
+                  ¥<span id="dtiSurplus">10,160</span>
                 </div>
                 <div class="text-[10px] text-slate-400 mt-0.5">用于餐饮日常与小家储蓄</div>
               </div>
@@ -333,12 +333,12 @@
             <div class="mt-4 space-y-1.5">
               <div class="flex justify-between items-center text-xs">
                 <span class="font-medium text-slate-700">家庭负债安全垫状态评估:</span>
-                <span id="dtiStatusBadge" class="px-2.5 py-0.5 rounded-md font-bold text-xs bg-emerald-100 text-emerald-800">
-                  🟢 绿灯 · 舒适稳健区
+                <span id="dtiStatusBadge" class="px-2.5 py-0.5 rounded-md font-bold text-xs bg-rose-100 text-rose-800">
+                  🔴 红灯 · 紧绷警戒区 (需慎重)
                 </span>
               </div>
               <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden flex">
-                <div id="dtiProgressBar" class="h-2.5 transition-all duration-500 bg-emerald-500" style="width: 42%;"></div>
+                <div id="dtiProgressBar" class="h-2.5 transition-all duration-500 bg-rose-500" style="width: 59%;"></div>
               </div>
               <div class="flex justify-between text-[10px] text-slate-400 pt-0.5">
                 <span>0%</span>
@@ -374,8 +374,8 @@
             </div>
           </div>
 
-          <div id="dtiAdviceText" class="text-[11px] text-slate-600 bg-indigo-50/50 p-3 rounded-lg border border-indigo-100/70 leading-relaxed">
-            💬 <strong>家庭现金流测算分析</strong>：当前收入与支出配比处于稳健平衡区间，自由结余足以支持高品质生活，建议购房交付后留存约 12~15 万独立避险金，从容应对未来支出。
+          <div id="dtiAdviceText" class="text-[11px] text-slate-600 bg-rose-50/50 p-3 rounded-lg border border-rose-100/70 leading-relaxed">
+            ⚠️ <strong>家庭现金流风险警示</strong>：综合负债率达 59.4% 超过了 50% 银行警戒线。每月超过一半收入被房屋绑定，抗职业转轨与失业风险偏弱。建议考虑将总价预算适度压缩至 350-380 万元，或增加首付降低贷款本金。
           </div>
         </div>
       </div>
@@ -3135,7 +3135,7 @@
     // 9. 模块 1: 家庭现金流与负债率 (DTI) 压力测试逻辑
     // ==========================================
     function calculateDTI() {
-      const familyIncomeWan = parseFloat(document.getElementById('inputFamilyIncome').value) || 3.5;
+      const familyIncomeWan = parseFloat(document.getElementById('inputFamilyIncome').value) || 2.5;
       const familyIncomeYuan = familyIncomeWan * 10000;
       document.getElementById('labelFamilyIncome').innerText = `${familyIncomeWan.toFixed(1)} 万元 (¥${Math.round(familyIncomeYuan).toLocaleString()})`;
 
