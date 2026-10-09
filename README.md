@@ -1,6 +1,6 @@
-# 张翔和葛秀的购房决策看板 (南京江宁 120-140㎡ 改善专版)
+# 南京房产购房决策看板 (江宁 120-140㎡ 改善置业专版)
 
-专为**张翔和葛秀**定制的南京（江宁核心板块）房产交易量价趋势与置业精算看板。
+专为南京（江宁核心板块）改善置业家庭定制的房产交易量价趋势与置业精算看板。
 基于纯前端（Tailwind CSS + Apache ECharts）与 GitHub Actions 自动化工作流构建，**零服务器成本、免装环境、自动云端更新**。
 
 ---
@@ -13,7 +13,7 @@
 4. **家庭现金流与负债率 (DTI) 压力测试器**：综合测算月供、物业、车位与能耗每月硬性总支出，评估收入负债率与 6-12 个月紧急避险金；
 5. **库存去化周期与房东心态博弈晴雨表**：江宁 5 大板块在售存量与月均流速测算，锁定谁急谁不急与深砍淘笋窗口；
 6. **得房率与隐藏账本换算器**：击破建面单价幻象，核算高层 vs 洋房真实套内单价、精装包及租房等待成本；
-7. **张翔 & 葛秀专属看房打分雷达图 (Radar Chart)**：6 大维度（地铁/商业/品质/得房/保值/预算）多边形量化对比与实地调分；
+7. **改善置业看房打分雷达图 (Radar Chart)**：6 大维度（地铁/商业/品质/得房/保值/预算）多边形量化对比与实地调分；
 8. **购房成本与月供精算器**：内置南京最新房贷利率、契税新政（120-140㎡ 统一 1%）及前期流动备用资金方案；
 9. **GitHub Actions 自动化流水线**：每周云端自动执行，同步最新月份行情，免人工维护。
 
@@ -30,7 +30,7 @@
 ```bash
 git init
 git add .
-git commit -m "feat: initial commit for Zhang Xiang & Ge Xiu housing indicator"
+git commit -m "feat: initial commit for housing pricing indicator"
 git branch -M main
 git remote add origin https://github.com/<你的GitHub用户名>/house-pricing-indicator.git
 git push -u origin main
@@ -48,7 +48,7 @@ git push -u origin main
    * 目录选择：`/ (root)`
 4. 点击 **Save** 保存。稍等 1~2 分钟，页面上方就会生成专属网址：
    `https://<你的GitHub用户名>.github.io/house-pricing-indicator/`
-   👉 张翔和葛秀收藏该链接即可随时查看！
+   👉 收藏该链接即可随时查看！
 
 ---
 
