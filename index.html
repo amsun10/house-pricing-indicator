@@ -384,194 +384,308 @@
       </div>
     </section>
 
-    <!-- 模块 1.5: 核心对决专项精算 —— 万流宁邸 vs 金茂府 (公积金月冲与全周期真实自费现金流看板) -->
-    <section class="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 rounded-2xl p-6 border-2 border-emerald-500/40 shadow-xl space-y-6 text-slate-100">
+    <!-- 模块 1.5: 双房源现金流与公积金对冲通用精算器 -->
+    <section class="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 rounded-2xl p-6 border-2 border-indigo-500/40 shadow-xl space-y-6 text-slate-100">
       <div class="border-b border-slate-800 pb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div>
           <div class="flex items-center gap-2 mb-1 flex-wrap">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-              💎 终局签约落地专项
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
+              ⚖️ 双房源现金流对标精算器
             </span>
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/40">
-              南京公积金月冲实战
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+              公积金逐月抵扣
             </span>
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-800 text-slate-400">
-              前三年物业费全免对冲
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700">
+              全周期真实净自费对比
             </span>
           </div>
           <h2 class="text-lg md:text-xl font-black text-white flex items-center gap-2">
-            <span>⚖️ 嘉宏·万流 1# 702 vs 江宁金茂府 3# 8楼：公积金还款压力与真实净自费对比</span>
+            <span>双房源全周期现金流与公积金抵扣通用精算</span>
           </h2>
           <p class="text-xs text-slate-400 mt-1">
-            穿透表面总价，结合<strong>夫妻公积金顶格 100万 @ 2.85% (30年) + 逐月提取划扣</strong>，还原未来每月从银行卡划出的真实现金流。
+            支持自定义两套备选房源的总价、面积、物业费及信贷参数，测算公积金逐月划扣后的<strong>真实银行卡月度净流出</strong>与全周期自费硬支出差异。
           </p>
         </div>
-        <div class="flex items-center gap-2 self-start md:self-auto shrink-0">
-          <div class="bg-slate-950/80 border border-slate-800 px-3 py-2 rounded-xl text-right">
-            <div class="text-[10px] text-slate-400">万流宁邸 702</div>
-            <div class="text-sm font-bold text-blue-400 font-mono">500万 (赠3年物业费+柜+保价)</div>
-          </div>
-          <div class="bg-slate-950/80 border border-slate-800 px-3 py-2 rounded-xl text-right">
-            <div class="text-[10px] text-slate-400">金茂府 3# 8楼</div>
-            <div class="text-sm font-bold text-rose-400 font-mono">480万 (特批底价)</div>
-          </div>
+        
+        <!-- 快速预设按钮组 -->
+        <div class="flex flex-wrap items-center gap-2 self-start md:self-auto shrink-0">
+          <span class="text-xs text-slate-400">快速对标预设:</span>
+          <button type="button" onclick="loadDualComparePreset('wanliu_vs_jinmao')" class="px-2.5 py-1 text-xs rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition font-medium">
+            万流 143㎡ vs 金茂 139㎡
+          </button>
+          <button type="button" onclick="loadDualComparePreset('baijia_vs_feicui')" class="px-2.5 py-1 text-xs rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition font-medium">
+            百家臻园 vs 翡翠公园
+          </button>
+          <button type="button" onclick="loadDualComparePreset('dongshan_vs_yueman')" class="px-2.5 py-1 text-xs rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition font-medium">
+            东山樾府 vs 樾满云川
+          </button>
         </div>
       </div>
 
-      <!-- 动态公积金对冲设置与对比卡片 -->
+      <!-- 参数输入区与对比看板 -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- 左侧参数调节 (4列) -->
-        <div class="lg:col-span-4 bg-slate-950/60 p-4 rounded-xl border border-slate-800/80 space-y-4 text-xs">
+        <!-- 公共信贷参数调节面板 (4列) -->
+        <div class="lg:col-span-4 bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-4 text-xs">
+          <div class="font-bold text-slate-200 text-sm flex items-center gap-2 pb-2 border-b border-slate-800">
+            <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+            公共信贷与公积金配置
+          </div>
+
+          <!-- 首付比例 -->
           <div>
             <div class="flex justify-between items-center mb-1">
-              <label class="font-bold text-slate-200">首付成数设定</label>
-              <span id="labelGjjDownPayRatio" class="text-indigo-400 font-bold">40% (自住稳健)</span>
+              <label class="font-bold text-slate-300">首付成数</label>
+              <span id="labelDualDownPayRatio" class="text-indigo-400 font-bold font-mono">40%</span>
             </div>
-            <select id="selectGjjDownRatio" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 text-xs focus:border-indigo-500">
-              <option value="0.30">30% (万流首付150万 / 金茂首付144万)</option>
-              <option value="0.40" selected>40% (万流首付200万 / 金茂首付192万)</option>
-              <option value="0.50">50% (万流首付250万 / 金茂首付240万)</option>
+            <select id="dualSelectDownRatio" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 text-xs focus:border-indigo-500">
+              <option value="0.20">20% (低首付杠杆)</option>
+              <option value="0.30">30% (首套稳健)</option>
+              <option value="0.40" selected>40% (自住改善)</option>
+              <option value="0.50">50% (低负债模式)</option>
+              <option value="0.60">60% (充裕自住)</option>
             </select>
           </div>
 
+          <!-- 公积金月缴存额 -->
           <div>
             <div class="flex justify-between items-center mb-1">
-              <label class="font-bold text-slate-200">夫妻每月公积金总缴存额 (元/月)</label>
-              <span id="labelGjjDepositMonthly" class="text-emerald-400 font-bold font-mono">4,000 元/月</span>
+              <label class="font-bold text-slate-300">每月公积金总缴存额 (元/月)</label>
+              <span id="labelDualGjjMonthly" class="text-emerald-400 font-bold font-mono">4,000 元/月</span>
             </div>
-            <input type="range" id="sliderGjjMonthly" min="2000" max="9000" step="200" value="4000" class="w-full accent-emerald-500" />
+            <div class="flex items-center gap-2">
+              <input type="range" id="dualSliderGjjMonthly" min="0" max="12000" step="200" value="4000" class="w-full accent-emerald-500" />
+              <input type="number" id="dualInputGjjMonthly" min="0" max="30000" step="100" value="4000" class="w-20 px-2 py-1 rounded border border-slate-700 bg-slate-900 text-slate-200 text-right font-mono text-xs focus:border-emerald-500" />
+            </div>
             <div class="flex justify-between text-[10px] text-slate-500 mt-0.5">
-              <span>2,000 (基础)</span>
-              <span>4,000 (中企/骨干)</span>
-              <span>7,000+ (体制/大厂)</span>
+              <span>0 (无缴存)</span>
+              <span>4,000 (企业/骨干)</span>
+              <span>8,000+ (双顶格)</span>
             </div>
           </div>
 
-          <div class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 text-[11px] text-slate-400 space-y-1.5 leading-relaxed">
-            <div class="text-slate-300 font-semibold flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              南京公积金直冲政策基准：
+          <!-- 公积金贷款额度与利率 -->
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="font-semibold text-slate-400 block mb-1">公积金贷款额 (万)</label>
+              <input type="number" id="dualInputGjjLoanLimit" value="100" min="0" max="200" step="10" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 font-mono text-xs focus:border-indigo-500" />
             </div>
-            <div>• 夫妻双缴存最高额度：<strong class="text-slate-200">100 万元</strong></div>
-            <div>• 公积金利率：<strong class="text-emerald-400 font-mono">2.85%</strong> (30年等额本息，月供 4,136元)</div>
-            <div>• 商业贷款利率基准：<strong class="text-indigo-300 font-mono">3.05%</strong> (30年等额本息)</div>
-            <div>• 逐月提取划扣：公积金账户资金自动对冲贷款，无需自己每月手动倒钱。</div>
+            <div>
+              <label class="font-semibold text-slate-400 block mb-1">公积金利率 (%)</label>
+              <input type="number" id="dualInputGjjRate" value="2.85" min="1.0" max="5.0" step="0.05" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 font-mono text-xs focus:border-indigo-500" />
+            </div>
+          </div>
+
+          <!-- 商贷利率与贷款期限 -->
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="font-semibold text-slate-400 block mb-1">商贷年利率 (%)</label>
+              <input type="number" id="dualInputBizRate" value="3.05" min="2.0" max="6.0" step="0.05" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 font-mono text-xs focus:border-indigo-500" />
+            </div>
+            <div>
+              <label class="font-semibold text-slate-400 block mb-1">贷款期限 (年)</label>
+              <select id="dualSelectLoanYears" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 text-xs focus:border-indigo-500">
+                <option value="30" selected>30年 (360期)</option>
+                <option value="25">25年 (300期)</option>
+                <option value="20">20年 (240期)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 说明备注 -->
+          <div class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 text-[11px] text-slate-400 space-y-1 leading-relaxed">
+            <div class="text-slate-300 font-medium">📌 计算口径说明：</div>
+            <div>• 还款方式：等额本息还款模型；优先使用低息公积金额度。</div>
+            <div>• <strong>逐月划扣规则</strong>：实际抵扣额 = min(每月公积金总缴存, 银行名义总月供)。</div>
+            <div>• <strong>每月银行卡净月供</strong> = 银行名义总月供 - 实际公积金抵扣额。</div>
+            <div>• <strong>初期每月硬支出</strong> = 净月供 + (免物业费期为0，免期后计入物业费)。</div>
           </div>
         </div>
 
-        <!-- 右侧三列对比看板 (8列) -->
+        <!-- 方案A 与 方案B 双列独立输入与测算看板 (8列) -->
         <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
           
-          <!-- 万流宁邸 702 -->
-          <div class="bg-slate-950/80 rounded-xl p-4 border border-blue-500/40 space-y-3 relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">
-              已选定方案
+          <!-- 方案 A 卡片 -->
+          <div class="bg-slate-950/80 rounded-xl p-4 border border-blue-500/40 space-y-3 relative">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-600/20 text-blue-300 border border-blue-500/40">方案 A</span>
+              <span class="text-[10px] text-slate-400">房源 1</span>
             </div>
-            <div>
-              <div class="text-sm font-bold text-blue-400 flex items-center gap-1.5">
-                <span>嘉宏·万流宁邸 1# 702 (143.32㎡)</span>
+
+            <!-- 房源 A 自定义输入项 -->
+            <div class="space-y-2">
+              <div>
+                <label class="text-[11px] text-slate-400 block mb-0.5">房源名称 / 楼栋房号</label>
+                <input type="text" id="propAName" value="嘉宏·万流宁邸 143㎡" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-blue-300 font-bold text-xs focus:border-blue-500" />
               </div>
-              <div class="text-[11px] text-slate-400 mt-0.5">
-                合同总价 500 万 | 折扣权益净等效 494.5 万
+              
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="text-[11px] text-slate-400 block mb-0.5">总价 (万元)</label>
+                  <input type="number" id="propATotal" value="500" min="10" max="5000" step="1" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-white font-mono font-bold text-xs focus:border-blue-500" />
+                </div>
+                <div>
+                  <label class="text-[11px] text-slate-400 block mb-0.5">建面 (㎡)</label>
+                  <input type="number" id="propAArea" value="143.32" min="10" max="1000" step="0.01" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 font-mono text-xs focus:border-blue-500" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="text-[11px] text-slate-400 block mb-0.5">物业费 (元/㎡/月)</label>
+                  <input type="number" id="propAFee" value="5.98" min="0" max="30" step="0.01" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 font-mono text-xs focus:border-blue-500" />
+                </div>
+                <div>
+                  <label class="text-[11px] text-slate-400 block mb-0.5">免物业费 (年)</label>
+                  <select id="propAFreeYears" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 text-xs focus:border-blue-500">
+                    <option value="0">0 年 (无赠送)</option>
+                    <option value="1">1 年</option>
+                    <option value="2">2 年</option>
+                    <option value="3" selected>3 年 (赠送)</option>
+                    <option value="5">5 年</option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            <!-- 数据明细 -->
-            <div class="space-y-1.5 border-t border-slate-800 pt-2">
+            <!-- 房源 A 测算明细输出 -->
+            <div class="space-y-1.5 border-t border-slate-800 pt-2.5">
               <div class="flex justify-between text-slate-300">
-                <span>总贷款金额 (首付 <span id="wlDownPayText">200</span>万)：</span>
-                <span id="wlLoanTotalText" class="font-mono text-white font-bold">300 万元</span>
+                <span>总贷款金额 (首付 <span id="propADownPayText" class="font-mono text-white">200</span>万)：</span>
+                <span id="propALoanTotalText" class="font-mono text-white font-bold">300 万元</span>
               </div>
               <div class="flex justify-between text-slate-400 pl-2">
-                <span>└ 公积金贷 100万 (2.85%)：</span>
-                <span class="font-mono text-slate-200">4,136 元/月</span>
+                <span>└ 公积金贷 <span id="propAGjjLoanText">100</span>万：</span>
+                <span id="propAGjjMonthlyText" class="font-mono text-slate-200">4,136 元/月</span>
               </div>
               <div class="flex justify-between text-slate-400 pl-2">
-                <span>└ 商业贷款 <span id="wlBizLoanText">200</span>万 (3.05%)：</span>
-                <span id="wlBizMonthText" class="font-mono text-slate-200">8,486 元/月</span>
+                <span>└ 商业贷款 <span id="propABizLoanText">200</span>万：</span>
+                <span id="propABizMonthlyText" class="font-mono text-slate-200">8,486 元/月</span>
               </div>
               <div class="flex justify-between text-slate-300 border-t border-slate-800/60 pt-1">
                 <span>银行名义总月供：</span>
-                <span id="wlGrossMonthText" class="font-mono text-blue-300 font-bold text-sm">12,622 元/月</span>
+                <span id="propAGrossMonthText" class="font-mono text-blue-300 font-bold text-sm">12,622 元/月</span>
               </div>
               <div class="flex justify-between text-emerald-400">
                 <span>减：公积金月充抵扣：</span>
-                <span id="wlGjjDeductText" class="font-mono font-bold">- 4,000 元/月</span>
+                <span id="propAGjjDeductText" class="font-mono font-bold">- 4,000 元/月</span>
               </div>
               <div class="flex justify-between text-white border-t border-slate-800 pt-1 font-bold">
                 <span>每月自付银行卡净月供：</span>
-                <span id="wlNetMonthText" class="font-mono text-blue-400 text-base">8,622 元/月</span>
+                <span id="propANetMonthText" class="font-mono text-blue-400 text-base">8,622 元/月</span>
               </div>
             </div>
 
-            <!-- 前三年物业费对冲爆点 -->
+            <!-- 房源 A 物业与全周期硬支出 -->
             <div class="bg-blue-950/40 border border-blue-500/30 rounded-lg p-2.5 space-y-1">
               <div class="flex justify-between items-center text-[11px]">
-                <span class="text-blue-300 font-bold">🎁 前 3 年免物业费 (143㎡×5.98元)：</span>
-                <span class="text-emerald-400 font-mono font-bold">每月省 857 元</span>
+                <span class="text-blue-300">常规月物业费 (<span id="propAPropFeeUnitText">5.98</span>元/㎡)：</span>
+                <span id="propAPropFeeMonthText" class="text-slate-300 font-mono">857 元/月</span>
+              </div>
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="text-slate-400">初期优惠期 (<span id="propAFreeYearsText">3</span>年) 减免：</span>
+                <span id="propAFreeDiscountText" class="text-emerald-400 font-mono font-semibold">- 857 元/月</span>
               </div>
               <div class="flex justify-between text-white font-bold text-xs pt-1 border-t border-blue-900/50">
-                <span>万流前3年每月硬支出：</span>
-                <span id="wlFinal3YearCost" class="font-mono text-emerald-400 text-sm">8,622 元/月</span>
+                <span>初期每月全口径硬支出：</span>
+                <span id="propAInitialHardCostText" class="font-mono text-emerald-400 text-sm">8,622 元/月</span>
               </div>
-              <div class="text-[10px] text-slate-400">第4年起加物业费约 857元/月，届时公积金缴存增长与薪资稳固，承压极低。</div>
+              <div class="flex justify-between text-slate-400 text-[11px] pt-0.5">
+                <span>优惠期后每月硬支出：</span>
+                <span id="propARegularHardCostText" class="font-mono text-slate-200">9,479 元/月</span>
+              </div>
             </div>
           </div>
 
-          <!-- 江宁金茂府 3# 8楼 -->
-          <div class="bg-slate-950/80 rounded-xl p-4 border border-rose-500/30 space-y-3 relative overflow-hidden">
-            <div class="absolute top-0 right-0 bg-slate-800 text-slate-300 text-[10px] font-medium px-2 py-0.5 rounded-bl">
-              竞品方案
+          <!-- 方案 B 卡片 -->
+          <div class="bg-slate-950/80 rounded-xl p-4 border border-rose-500/30 space-y-3 relative">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-600/20 text-rose-300 border border-rose-500/40">方案 B</span>
+              <span class="text-[10px] text-slate-400">房源 2</span>
             </div>
-            <div>
-              <div class="text-sm font-bold text-rose-400 flex items-center gap-1.5">
-                <span>江宁金茂府 3# 8楼 (139.21㎡)</span>
+
+            <!-- 房源 B 自定义输入项 -->
+            <div class="space-y-2">
+              <div>
+                <label class="text-[11px] text-slate-400 block mb-0.5">房源名称 / 楼栋房号</label>
+                <input type="text" id="propBName" value="江宁金茂府 139㎡" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-rose-300 font-bold text-xs focus:border-rose-500" />
               </div>
-              <div class="text-[11px] text-slate-400 mt-0.5">
-                特批底价 480 万 (名义总价少20万)
+              
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="text-[11px] text-slate-400 block mb-0.5">总价 (万元)</label>
+                  <input type="number" id="propBTotal" value="480" min="10" max="5000" step="1" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-white font-mono font-bold text-xs focus:border-rose-500" />
+                </div>
+                <div>
+                  <label class="text-[11px] text-slate-400 block mb-0.5">建面 (㎡)</label>
+                  <input type="number" id="propBArea" value="139.21" min="10" max="1000" step="0.01" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 font-mono text-xs focus:border-rose-500" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="text-[11px] text-slate-400 block mb-0.5">物业费 (元/㎡/月)</label>
+                  <input type="number" id="propBFee" value="5.30" min="0" max="30" step="0.01" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 font-mono text-xs focus:border-rose-500" />
+                </div>
+                <div>
+                  <label class="text-[11px] text-slate-400 block mb-0.5">免物业费 (年)</label>
+                  <select id="propBFreeYears" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 text-xs focus:border-rose-500">
+                    <option value="0" selected>0 年 (无赠送)</option>
+                    <option value="1">1 年</option>
+                    <option value="2">2 年</option>
+                    <option value="3">3 年</option>
+                    <option value="5">5 年</option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            <!-- 数据明细 -->
-            <div class="space-y-1.5 border-t border-slate-800 pt-2">
+            <!-- 房源 B 测算明细输出 -->
+            <div class="space-y-1.5 border-t border-slate-800 pt-2.5">
               <div class="flex justify-between text-slate-300">
-                <span>总贷款金额 (首付 <span id="jmDownPayText">192</span>万)：</span>
-                <span id="jmLoanTotalText" class="font-mono text-white font-bold">288 万元</span>
+                <span>总贷款金额 (首付 <span id="propBDownPayText" class="font-mono text-white">192</span>万)：</span>
+                <span id="propBLoanTotalText" class="font-mono text-white font-bold">288 万元</span>
               </div>
               <div class="flex justify-between text-slate-400 pl-2">
-                <span>└ 公积金贷 100万 (2.85%)：</span>
-                <span class="font-mono text-slate-200">4,136 元/月</span>
+                <span>└ 公积金贷 <span id="propBGjjLoanText">100</span>万：</span>
+                <span id="propBGjjMonthlyText" class="font-mono text-slate-200">4,136 元/月</span>
               </div>
               <div class="flex justify-between text-slate-400 pl-2">
-                <span>└ 商业贷款 <span id="jmBizLoanText">188</span>万 (3.05%)：</span>
-                <span id="jmBizMonthText" class="font-mono text-slate-200">7,977 元/月</span>
+                <span>└ 商业贷款 <span id="propBBizLoanText">188</span>万：</span>
+                <span id="propBBizMonthlyText" class="font-mono text-slate-200">7,977 元/月</span>
               </div>
               <div class="flex justify-between text-slate-300 border-t border-slate-800/60 pt-1">
                 <span>银行名义总月供：</span>
-                <span id="jmGrossMonthText" class="font-mono text-rose-300 font-bold text-sm">12,113 元/月</span>
+                <span id="propBGrossMonthText" class="font-mono text-rose-300 font-bold text-sm">12,113 元/月</span>
               </div>
               <div class="flex justify-between text-emerald-400">
                 <span>减：公积金月充抵扣：</span>
-                <span id="jmGjjDeductText" class="font-mono font-bold">- 4,000 元/月</span>
+                <span id="propBGjjDeductText" class="font-mono font-bold">- 4,000 元/月</span>
               </div>
               <div class="flex justify-between text-white border-t border-slate-800 pt-1 font-bold">
                 <span>每月自付银行卡净月供：</span>
-                <span id="jmNetMonthText" class="font-mono text-rose-400 text-base">8,113 元/月</span>
+                <span id="propBNetMonthText" class="font-mono text-rose-400 text-base">8,113 元/月</span>
               </div>
             </div>
 
-            <!-- 金茂物业费即交对比 -->
+            <!-- 房源 B 物业与全周期硬支出 -->
             <div class="bg-rose-950/30 border border-rose-500/20 rounded-lg p-2.5 space-y-1">
               <div class="flex justify-between items-center text-[11px]">
-                <span class="text-rose-300">⚠️ 入住即需缴纳物业费 (约5.3元/㎡)：</span>
-                <span class="text-rose-400 font-mono">+ 738 元/月</span>
+                <span class="text-rose-300">常规月物业费 (<span id="propBPropFeeUnitText">5.30</span>元/㎡)：</span>
+                <span id="propBPropFeeMonthText" class="text-slate-300 font-mono">738 元/月</span>
+              </div>
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="text-slate-400">初期优惠期 (<span id="propBFreeYearsText">0</span>年) 减免：</span>
+                <span id="propBFreeDiscountText" class="text-emerald-400 font-mono font-semibold">- 0 元/月</span>
               </div>
               <div class="flex justify-between text-white font-bold text-xs pt-1 border-t border-rose-900/50">
-                <span>金茂前3年每月硬支出：</span>
-                <span id="jmFinal3YearCost" class="font-mono text-rose-400 text-sm">8,851 元/月</span>
+                <span>初期每月全口径硬支出：</span>
+                <span id="propBInitialHardCostText" class="font-mono text-rose-400 text-sm">8,851 元/月</span>
               </div>
-              <div class="text-[10px] text-slate-400">总价虽少20万，但无免物业费权益，前3年家庭真实现金流支出并不占优。</div>
+              <div class="flex justify-between text-slate-400 text-[11px] pt-0.5">
+                <span>优惠期后每月硬支出：</span>
+                <span id="propBRegularHardCostText" class="font-mono text-slate-200">8,851 元/月</span>
+              </div>
             </div>
           </div>
 
@@ -579,20 +693,25 @@
 
       </div>
 
-      <!-- 核心穿透结论栏 -->
-      <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-        <div class="space-y-0.5">
-          <div class="font-bold text-emerald-300 flex items-center gap-1.5">
-            <span>💡 家庭现金流终极事实穿透：</span>
+      <!-- 核心差额量化看板与客观结论 -->
+      <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
+        <div class="space-y-1 flex-1">
+          <div class="font-bold text-indigo-300 flex items-center gap-1.5 text-sm">
+            <span>📊 方案 A vs 方案 B 真实自费量化对标：</span>
           </div>
-          <p class="text-slate-300 text-[11px] leading-relaxed">
-            ① <strong>公积金定海神针</strong>：100万低息公积金月供（4,136元）被夫妻每月缴存直接抵消，银行卡实际自费压力瞬间缩减至 6,000~8,000 元舒适区。<br>
-            ② <strong>前三年现金流大反转</strong>：万流因赠送 3 年物业费，<strong>前 3 年全口径硬支出（<span id="diff3YearCostText">8,622元 vs 8,851元</span>）反而比金茂每月还少掏约 229 元</strong>！
+          <p id="dualCompareSummaryText" class="text-slate-300 text-[11px] leading-relaxed">
+            正在计算...
           </p>
         </div>
-        <div class="shrink-0 bg-emerald-500/20 border border-emerald-500/40 px-3 py-2 rounded-lg text-center">
-          <div class="text-[10px] text-emerald-300 font-semibold">前3年月度体感</div>
-          <div class="text-emerald-300 font-bold font-mono text-sm">万流现金流更松</div>
+        <div class="flex gap-2 shrink-0">
+          <div class="bg-slate-900 border border-slate-700/80 px-3 py-2 rounded-lg text-center min-w-[110px]">
+            <div class="text-[10px] text-slate-400 font-medium">首付差额 (A - B)</div>
+            <div id="diffDownPayText" class="text-white font-bold font-mono text-sm">+8.0 万</div>
+          </div>
+          <div class="bg-slate-900 border border-slate-700/80 px-3 py-2 rounded-lg text-center min-w-[110px]">
+            <div class="text-[10px] text-slate-400 font-medium">初期每月硬支出差额</div>
+            <div id="diffInitialMonthlyText" class="text-emerald-400 font-bold font-mono text-sm">-229 元/月</div>
+          </div>
         </div>
       </div>
     </section>
@@ -3904,106 +4023,305 @@
       calculateHiddenCost();
       renderRadarChart();
       setupEvents();
-      setupWanliuVsJinmaoGjjEvents();
+      setupDualPropertyGjjEvents();
     }
 
     // ==========================================
-    // 10. 万流 vs 金茂 公积金月冲动态交互计算逻辑
+    // 10. 双房源现金流与公积金逐月抵扣通用交互精算
     // ==========================================
-    function calculateWanliuVsJinmaoGjj() {
-      const downRatio = parseFloat(document.getElementById('selectGjjDownRatio')?.value) || 0.40;
-      const gjjDeposit = parseFloat(document.getElementById('sliderGjjMonthly')?.value) || 4000;
-      
-      const labelDeposit = document.getElementById('labelGjjDepositMonthly');
-      if (labelDeposit) labelDeposit.innerText = `${gjjDeposit.toLocaleString()} 元/月`;
+    function calcEqualPrincipalInterestPMT(principalYuan, annualRatePct, totalMonths) {
+      if (principalYuan <= 0 || totalMonths <= 0) return 0;
+      if (annualRatePct <= 0) return principalYuan / totalMonths;
+      const r = (annualRatePct / 100) / 12;
+      return (principalYuan * r * Math.pow(1 + r, totalMonths)) / (Math.pow(1 + r, totalMonths) - 1);
+    }
 
-      const labelRatio = document.getElementById('labelGjjDownPayRatio');
+    function calculateDualPropertyGjj() {
+      // 公共信贷参数
+      const downRatio = parseFloat(document.getElementById('dualSelectDownRatio')?.value) || 0.40;
+      const gjjDeposit = parseFloat(document.getElementById('dualSliderGjjMonthly')?.value) || 0;
+      const gjjLoanLimit = parseFloat(document.getElementById('dualInputGjjLoanLimit')?.value) || 100; // 万元
+      const gjjRate = parseFloat(document.getElementById('dualInputGjjRate')?.value) || 2.85; // %
+      const bizRate = parseFloat(document.getElementById('dualInputBizRate')?.value) || 3.05; // %
+      const loanYears = parseInt(document.getElementById('dualSelectLoanYears')?.value, 10) || 30;
+      const loanMonths = loanYears * 12;
+
+      // 同步标签与输入框
+      const labelRatio = document.getElementById('labelDualDownPayRatio');
       if (labelRatio) {
-        labelRatio.innerText = `${Math.round(downRatio * 100)}% (${downRatio <= 0.3 ? '首套基准' : downRatio === 0.4 ? '自住稳健' : '充裕自住'})`;
+        labelRatio.innerText = `${Math.round(downRatio * 100)}% (${downRatio <= 0.2 ? '高杠杆' : downRatio <= 0.3 ? '首套基准' : downRatio <= 0.4 ? '自住改善' : '充裕首付'})`;
+      }
+      const labelDeposit = document.getElementById('labelDualGjjMonthly');
+      if (labelDeposit) {
+        labelDeposit.innerText = `${Math.round(gjjDeposit).toLocaleString()} 元/月`;
       }
 
-      // 公积金政策: 100万 @ 2.85%, 30年(360期)
-      const gjjRate = 0.0285 / 12;
-      const n = 360;
-      const gjjMonthly = (1000000 * gjjRate * Math.pow(1 + gjjRate, n)) / (Math.pow(1 + gjjRate, n) - 1); // 约 4,136元
-      
-      // 商贷政策: @ 3.05%, 30年
-      const bizRate = 0.0305 / 12;
+      // 方案 A 参数
+      const propAName = document.getElementById('propAName')?.value?.trim() || '方案 A';
+      const propATotal = parseFloat(document.getElementById('propATotal')?.value) || 0;
+      const propAArea = parseFloat(document.getElementById('propAArea')?.value) || 0;
+      const propAFee = parseFloat(document.getElementById('propAFee')?.value) || 0;
+      const propAFreeYears = parseInt(document.getElementById('propAFreeYears')?.value, 10) || 0;
 
-      // 1. 万流 (500万)
-      const wlTotal = 500;
-      const wlDown = wlTotal * downRatio;
-      const wlLoanTotal = wlTotal - wlDown;
-      const wlBizLoan = Math.max(0, wlLoanTotal - 100);
-      const wlBizMonthly = wlBizLoan > 0 ? (wlBizLoan * 10000 * bizRate * Math.pow(1 + bizRate, n)) / (Math.pow(1 + bizRate, n) - 1) : 0;
-      const wlGrossMonthly = gjjMonthly + wlBizMonthly;
-      const wlNetMonthly = Math.max(0, wlGrossMonthly - gjjDeposit);
-      const wl3YearCost = wlNetMonthly; // 前3年免物业费，每月0元
+      // 方案 B 参数
+      const propBName = document.getElementById('propBName')?.value?.trim() || '方案 B';
+      const propBTotal = parseFloat(document.getElementById('propBTotal')?.value) || 0;
+      const propBArea = parseFloat(document.getElementById('propBArea')?.value) || 0;
+      const propBFee = parseFloat(document.getElementById('propBFee')?.value) || 0;
+      const propBFreeYears = parseInt(document.getElementById('propBFreeYears')?.value, 10) || 0;
 
-      // 2. 金茂 (480万)
-      const jmTotal = 480;
-      const jmDown = jmTotal * downRatio;
-      const jmLoanTotal = jmTotal - jmDown;
-      const jmBizLoan = Math.max(0, jmLoanTotal - 100);
-      const jmBizMonthly = jmBizLoan > 0 ? (jmBizLoan * 10000 * bizRate * Math.pow(1 + bizRate, n)) / (Math.pow(1 + bizRate, n) - 1) : 0;
-      const jmGrossMonthly = gjjMonthly + jmBizMonthly;
-      const jmNetMonthly = Math.max(0, jmGrossMonthly - gjjDeposit);
-      const jmPropertyFee = 139.21 * 5.3; // 约 738元/月
-      const jm3YearCost = jmNetMonthly + jmPropertyFee;
+      // 计算方案 A
+      const propADown = propATotal * downRatio;
+      const propALoanTotal = Math.max(0, propATotal - propADown);
+      const propAGjjLoan = Math.min(propALoanTotal, gjjLoanLimit);
+      const propABizLoan = Math.max(0, propALoanTotal - propAGjjLoan);
 
-      // 更新 DOM - 万流
-      const wlDownEl = document.getElementById('wlDownPayText');
-      if (wlDownEl) wlDownEl.innerText = Math.round(wlDown);
-      const wlLoanEl = document.getElementById('wlLoanTotalText');
-      if (wlLoanEl) wlLoanEl.innerText = `${Math.round(wlLoanTotal)} 万元`;
-      const wlBizLoanEl = document.getElementById('wlBizLoanText');
-      if (wlBizLoanEl) wlBizLoanEl.innerText = Math.round(wlBizLoan);
-      const wlBizMonthEl = document.getElementById('wlBizMonthText');
-      if (wlBizMonthEl) wlBizMonthEl.innerText = `${Math.round(wlBizMonthly).toLocaleString()} 元/月`;
-      const wlGrossEl = document.getElementById('wlGrossMonthText');
-      if (wlGrossEl) wlGrossEl.innerText = `${Math.round(wlGrossMonthly).toLocaleString()} 元/月`;
-      const wlGjjDeductEl = document.getElementById('wlGjjDeductText');
-      if (wlGjjDeductEl) wlGjjDeductEl.innerText = `- ${Math.round(gjjDeposit).toLocaleString()} 元/月`;
-      const wlNetEl = document.getElementById('wlNetMonthText');
-      if (wlNetEl) wlNetEl.innerText = `${Math.round(wlNetMonthly).toLocaleString()} 元/月`;
-      const wl3YearEl = document.getElementById('wlFinal3YearCost');
-      if (wl3YearEl) wl3YearEl.innerText = `${Math.round(wl3YearCost).toLocaleString()} 元/月`;
+      const propAGjjMonthly = calcEqualPrincipalInterestPMT(propAGjjLoan * 10000, gjjRate, loanMonths);
+      const propABizMonthly = calcEqualPrincipalInterestPMT(propABizLoan * 10000, bizRate, loanMonths);
+      const propAGrossMonthly = propAGjjMonthly + propABizMonthly;
+      const propAGjjDeduct = Math.min(gjjDeposit, propAGrossMonthly);
+      const propANetMonthly = Math.max(0, propAGrossMonthly - propAGjjDeduct);
 
-      // 更新 DOM - 金茂
-      const jmDownEl = document.getElementById('jmDownPayText');
-      if (jmDownEl) jmDownEl.innerText = Math.round(jmDown);
-      const jmLoanEl = document.getElementById('jmLoanTotalText');
-      if (jmLoanEl) jmLoanEl.innerText = `${Math.round(jmLoanTotal)} 万元`;
-      const jmBizLoanEl = document.getElementById('jmBizLoanText');
-      if (jmBizLoanEl) jmBizLoanEl.innerText = Math.round(jmBizLoan);
-      const jmBizMonthEl = document.getElementById('jmBizMonthText');
-      if (jmBizMonthEl) jmBizMonthEl.innerText = `${Math.round(jmBizMonthly).toLocaleString()} 元/月`;
-      const jmGrossEl = document.getElementById('jmGrossMonthText');
-      if (jmGrossEl) jmGrossEl.innerText = `${Math.round(jmGrossMonthly).toLocaleString()} 元/月`;
-      const jmGjjDeductEl = document.getElementById('jmGjjDeductText');
-      if (jmGjjDeductEl) jmGjjDeductEl.innerText = `- ${Math.round(gjjDeposit).toLocaleString()} 元/月`;
-      const jmNetEl = document.getElementById('jmNetMonthText');
-      if (jmNetEl) jmNetEl.innerText = `${Math.round(jmNetMonthly).toLocaleString()} 元/月`;
-      const jm3YearEl = document.getElementById('jmFinal3YearCost');
-      if (jm3YearEl) jm3YearEl.innerText = `${Math.round(jm3YearCost).toLocaleString()} 元/月`;
+      const propAPropFeeMonth = propAArea * propAFee;
+      const propAFreeDiscount = propAFreeYears > 0 ? propAPropFeeMonth : 0;
+      const propAInitialHardCost = propANetMonthly + (propAFreeYears > 0 ? 0 : propAPropFeeMonth);
+      const propARegularHardCost = propANetMonthly + propAPropFeeMonth;
 
-      // 差额总结
-      const diffEl = document.getElementById('diff3YearCostText');
-      if (diffEl) {
-        diffEl.innerText = `${Math.round(wl3YearCost).toLocaleString()}元 vs ${Math.round(jm3YearCost).toLocaleString()}元`;
+      // 计算方案 B
+      const propBDown = propBTotal * downRatio;
+      const propBLoanTotal = Math.max(0, propBTotal - propBDown);
+      const propBGjjLoan = Math.min(propBLoanTotal, gjjLoanLimit);
+      const propBBizLoan = Math.max(0, propBLoanTotal - propBGjjLoan);
+
+      const propBGjjMonthly = calcEqualPrincipalInterestPMT(propBGjjLoan * 10000, gjjRate, loanMonths);
+      const propBBizMonthly = calcEqualPrincipalInterestPMT(propBBizLoan * 10000, bizRate, loanMonths);
+      const propBGrossMonthly = propBGjjMonthly + propBBizMonthly;
+      const propBGjjDeduct = Math.min(gjjDeposit, propBGrossMonthly);
+      const propBNetMonthly = Math.max(0, propBGrossMonthly - propBGjjDeduct);
+
+      const propBPropFeeMonth = propBArea * propBFee;
+      const propBFreeDiscount = propBFreeYears > 0 ? propBPropFeeMonth : 0;
+      const propBInitialHardCost = propBNetMonthly + (propBFreeYears > 0 ? 0 : propBPropFeeMonth);
+      const propBRegularHardCost = propBNetMonthly + propBPropFeeMonth;
+
+      // 更新方案 A DOM
+      const propADownEl = document.getElementById('propADownPayText');
+      if (propADownEl) propADownEl.innerText = propADown.toFixed(1).replace(/\.0$/, '');
+      const propALoanEl = document.getElementById('propALoanTotalText');
+      if (propALoanEl) propALoanEl.innerText = `${propALoanTotal.toFixed(1).replace(/\.0$/, '')} 万元`;
+      const propAGjjLoanEl = document.getElementById('propAGjjLoanText');
+      if (propAGjjLoanEl) propAGjjLoanEl.innerText = propAGjjLoan.toFixed(0);
+      const propAGjjMonthEl = document.getElementById('propAGjjMonthlyText');
+      if (propAGjjMonthEl) propAGjjMonthEl.innerText = `${Math.round(propAGjjMonthly).toLocaleString()} 元/月`;
+      const propABizLoanEl = document.getElementById('propABizLoanText');
+      if (propABizLoanEl) propABizLoanEl.innerText = propABizLoan.toFixed(1).replace(/\.0$/, '');
+      const propABizMonthEl = document.getElementById('propABizMonthlyText');
+      if (propABizMonthEl) propABizMonthEl.innerText = `${Math.round(propABizMonthly).toLocaleString()} 元/月`;
+      const propAGrossEl = document.getElementById('propAGrossMonthText');
+      if (propAGrossEl) propAGrossEl.innerText = `${Math.round(propAGrossMonthly).toLocaleString()} 元/月`;
+      const propAGjjDeductEl = document.getElementById('propAGjjDeductText');
+      if (propAGjjDeductEl) propAGjjDeductEl.innerText = `- ${Math.round(propAGjjDeduct).toLocaleString()} 元/月`;
+      const propANetEl = document.getElementById('propANetMonthText');
+      if (propANetEl) propANetEl.innerText = `${Math.round(propANetMonthly).toLocaleString()} 元/月`;
+
+      const propAPropFeeUnitEl = document.getElementById('propAPropFeeUnitText');
+      if (propAPropFeeUnitEl) propAPropFeeUnitEl.innerText = propAFee.toFixed(2);
+      const propAPropFeeMonthEl = document.getElementById('propAPropFeeMonthText');
+      if (propAPropFeeMonthEl) propAPropFeeMonthEl.innerText = `${Math.round(propAPropFeeMonth).toLocaleString()} 元/月`;
+      const propAFreeYearsEl = document.getElementById('propAFreeYearsText');
+      if (propAFreeYearsEl) propAFreeYearsEl.innerText = propAFreeYears;
+      const propAFreeDiscountEl = document.getElementById('propAFreeDiscountText');
+      if (propAFreeDiscountEl) propAFreeDiscountEl.innerText = `- ${Math.round(propAFreeDiscount).toLocaleString()} 元/月`;
+      const propAInitialHardEl = document.getElementById('propAInitialHardCostText');
+      if (propAInitialHardEl) propAInitialHardEl.innerText = `${Math.round(propAInitialHardCost).toLocaleString()} 元/月`;
+      const propARegularHardEl = document.getElementById('propARegularHardCostText');
+      if (propARegularHardEl) propARegularHardEl.innerText = `${Math.round(propARegularHardCost).toLocaleString()} 元/月`;
+
+      // 更新方案 B DOM
+      const propBDownEl = document.getElementById('propBDownPayText');
+      if (propBDownEl) propBDownEl.innerText = propBDown.toFixed(1).replace(/\.0$/, '');
+      const propBLoanEl = document.getElementById('propBLoanTotalText');
+      if (propBLoanEl) propBLoanEl.innerText = `${propBLoanTotal.toFixed(1).replace(/\.0$/, '')} 万元`;
+      const propBGjjLoanEl = document.getElementById('propBGjjLoanText');
+      if (propBGjjLoanEl) propBGjjLoanEl.innerText = propBGjjLoan.toFixed(0);
+      const propBGjjMonthEl = document.getElementById('propBGjjMonthlyText');
+      if (propBGjjMonthEl) propBGjjMonthEl.innerText = `${Math.round(propBGjjMonthly).toLocaleString()} 元/月`;
+      const propBBizLoanEl = document.getElementById('propBBizLoanText');
+      if (propBBizLoanEl) propBBizLoanEl.innerText = propBBizLoan.toFixed(1).replace(/\.0$/, '');
+      const propBBizMonthEl = document.getElementById('propBBizMonthlyText');
+      if (propBBizMonthEl) propBBizMonthEl.innerText = `${Math.round(propBBizMonthly).toLocaleString()} 元/月`;
+      const propBGrossEl = document.getElementById('propBGrossMonthText');
+      if (propBGrossEl) propBGrossEl.innerText = `${Math.round(propBGrossMonthly).toLocaleString()} 元/月`;
+      const propBGjjDeductEl = document.getElementById('propBGjjDeductText');
+      if (propBGjjDeductEl) propBGjjDeductEl.innerText = `- ${Math.round(propBGjjDeduct).toLocaleString()} 元/月`;
+      const propBNetEl = document.getElementById('propBNetMonthText');
+      if (propBNetEl) propBNetEl.innerText = `${Math.round(propBNetMonthly).toLocaleString()} 元/月`;
+
+      const propBPropFeeUnitEl = document.getElementById('propBPropFeeUnitText');
+      if (propBPropFeeUnitEl) propBPropFeeUnitEl.innerText = propBFee.toFixed(2);
+      const propBPropFeeMonthEl = document.getElementById('propBPropFeeMonthText');
+      if (propBPropFeeMonthEl) propBPropFeeMonthEl.innerText = `${Math.round(propBPropFeeMonth).toLocaleString()} 元/月`;
+      const propBFreeYearsEl = document.getElementById('propBFreeYearsText');
+      if (propBFreeYearsEl) propBFreeYearsEl.innerText = propBFreeYears;
+      const propBFreeDiscountEl = document.getElementById('propBFreeDiscountText');
+      if (propBFreeDiscountEl) propBFreeDiscountEl.innerText = `- ${Math.round(propBFreeDiscount).toLocaleString()} 元/月`;
+      const propBInitialHardEl = document.getElementById('propBInitialHardCostText');
+      if (propBInitialHardEl) propBInitialHardEl.innerText = `${Math.round(propBInitialHardCost).toLocaleString()} 元/月`;
+      const propBRegularHardEl = document.getElementById('propBRegularHardCostText');
+      if (propBRegularHardEl) propBRegularHardEl.innerText = `${Math.round(propBRegularHardCost).toLocaleString()} 元/月`;
+
+      // 差额对标指标
+      const diffDown = propADown - propBDown;
+      const diffInitialHard = propAInitialHardCost - propBInitialHardCost;
+      const diffRegularHard = propARegularHardCost - propBRegularHardCost;
+      const diffGross = propAGrossMonthly - propBGrossMonthly;
+      const diffNet = propANetMonthly - propBNetMonthly;
+
+      const diffDownEl = document.getElementById('diffDownPayText');
+      if (diffDownEl) {
+        const sign = diffDown > 0 ? '+' : '';
+        diffDownEl.innerText = `${sign}${diffDown.toFixed(1)} 万`;
+        diffDownEl.className = diffDown > 0 ? 'text-amber-400 font-bold font-mono text-sm' : diffDown < 0 ? 'text-emerald-400 font-bold font-mono text-sm' : 'text-slate-300 font-bold font-mono text-sm';
+      }
+
+      const diffInitialMonthlyEl = document.getElementById('diffInitialMonthlyText');
+      if (diffInitialMonthlyEl) {
+        const sign = diffInitialHard > 0 ? '+' : '';
+        diffInitialMonthlyEl.innerText = `${sign}${Math.round(diffInitialHard).toLocaleString()} 元/月`;
+        diffInitialMonthlyEl.className = diffInitialHard > 0 ? 'text-rose-400 font-bold font-mono text-sm' : diffInitialHard < 0 ? 'text-emerald-400 font-bold font-mono text-sm' : 'text-slate-300 font-bold font-mono text-sm';
+      }
+
+      // 生成客观对标总结
+      const summaryEl = document.getElementById('dualCompareSummaryText');
+      if (summaryEl) {
+        const nameA = propAName || '方案 A';
+        const nameB = propBName || '方案 B';
+        
+        let downAnalysis = '';
+        if (Math.abs(diffDown) < 0.1) {
+          downAnalysis = `两者在 ${Math.round(downRatio * 100)}% 首付成数下资金门槛相当（均为约 ${propADown.toFixed(1)} 万元）`;
+        } else if (diffDown > 0) {
+          downAnalysis = `【${nameA}】首付需多准备 <strong>${diffDown.toFixed(1)} 万元</strong>`;
+        } else {
+          downAnalysis = `【${nameB}】首付需多准备 <strong>${Math.abs(diffDown).toFixed(1)} 万元</strong>`;
+        }
+
+        let initialAnalysis = '';
+        if (Math.abs(diffInitialHard) < 10) {
+          initialAnalysis = `初期每月全口径硬支出基本持平（约 ${Math.round(propAInitialHardCost).toLocaleString()} 元/月）`;
+        } else if (diffInitialHard < 0) {
+          initialAnalysis = `受物业费赠送/减免等权益影响，初期阶段【${nameA}】全口径每月自费比【${nameB}】<strong>少掏 ${Math.round(Math.abs(diffInitialHard)).toLocaleString()} 元/月</strong>`;
+        } else {
+          initialAnalysis = `初期阶段【${nameA}】全口径每月自费比【${nameB}】<strong>多掏 ${Math.round(diffInitialHard).toLocaleString()} 元/月</strong>`;
+        }
+
+        let regularAnalysis = '';
+        if (Math.abs(diffRegularHard) < 10) {
+          regularAnalysis = `常规持有期每月自费亦相近`;
+        } else if (diffRegularHard > 0) {
+          regularAnalysis = `优惠期结束后，【${nameA}】常规每月自费高出 <strong>${Math.round(diffRegularHard).toLocaleString()} 元/月</strong>`;
+        } else {
+          regularAnalysis = `优惠期结束后，【${nameB}】常规每月自费高出 <strong>${Math.round(Math.abs(diffRegularHard)).toLocaleString()} 元/月</strong>`;
+        }
+
+        summaryEl.innerHTML = `
+          ① <strong>首期资金与负债</strong>：${downAnalysis}；名义银行月供差额为 <strong>${Math.abs(Math.round(diffGross)).toLocaleString()} 元/月</strong>。<br>
+          ② <strong>公积金月冲实效</strong>：两套方案均充分子女/夫妻每月 ${Math.round(gjjDeposit).toLocaleString()} 元公积金直冲，银行卡实际月供分别降至 <strong>${Math.round(propANetMonthly).toLocaleString()} 元/月</strong> 与 <strong>${Math.round(propBNetMonthly).toLocaleString()} 元/月</strong>。<br>
+          ③ <strong>全口径月度硬支出</strong>：${initialAnalysis}；${regularAnalysis}。
+        `;
       }
     }
 
-    function setupWanliuVsJinmaoGjjEvents() {
-      const selectRatio = document.getElementById('selectGjjDownRatio');
-      const sliderGjj = document.getElementById('sliderGjjMonthly');
-      if (selectRatio) {
-        selectRatio.addEventListener('change', calculateWanliuVsJinmaoGjj);
+    // 快捷预设加载函数
+    function loadDualComparePreset(presetKey) {
+      if (presetKey === 'wanliu_vs_jinmao') {
+        const propANameEl = document.getElementById('propAName'); if (propANameEl) propANameEl.value = '嘉宏·万流宁邸 143㎡';
+        const propATotalEl = document.getElementById('propATotal'); if (propATotalEl) propATotalEl.value = 500;
+        const propAAreaEl = document.getElementById('propAArea'); if (propAAreaEl) propAAreaEl.value = 143.32;
+        const propAFeeEl = document.getElementById('propAFee'); if (propAFeeEl) propAFeeEl.value = 5.98;
+        const propAFreeYearsEl = document.getElementById('propAFreeYears'); if (propAFreeYearsEl) propAFreeYearsEl.value = 3;
+
+        const propBNameEl = document.getElementById('propBName'); if (propBNameEl) propBNameEl.value = '江宁金茂府 139㎡';
+        const propBTotalEl = document.getElementById('propBTotal'); if (propBTotalEl) propBTotalEl.value = 480;
+        const propBAreaEl = document.getElementById('propBArea'); if (propBAreaEl) propBAreaEl.value = 139.21;
+        const propBFeeEl = document.getElementById('propBFee'); if (propBFeeEl) propBFeeEl.value = 5.30;
+        const propBFreeYearsEl = document.getElementById('propBFreeYears'); if (propBFreeYearsEl) propBFreeYearsEl.value = 0;
+      } else if (presetKey === 'baijia_vs_feicui') {
+        const propANameEl = document.getElementById('propAName'); if (propANameEl) propANameEl.value = '百家臻园 143㎡';
+        const propATotalEl = document.getElementById('propATotal'); if (propATotalEl) propATotalEl.value = 430;
+        const propAAreaEl = document.getElementById('propAArea'); if (propAAreaEl) propAAreaEl.value = 143;
+        const propAFeeEl = document.getElementById('propAFee'); if (propAFeeEl) propAFeeEl.value = 3.80;
+        const propAFreeYearsEl = document.getElementById('propAFreeYears'); if (propAFreeYearsEl) propAFreeYearsEl.value = 0;
+
+        const propBNameEl = document.getElementById('propBName'); if (propBNameEl) propBNameEl.value = '万科·翡翠公园 142㎡';
+        const propBTotalEl = document.getElementById('propBTotal'); if (propBTotalEl) propBTotalEl.value = 400;
+        const propBAreaEl = document.getElementById('propBArea'); if (propBAreaEl) propBAreaEl.value = 142;
+        const propBFeeEl = document.getElementById('propBFee'); if (propBFeeEl) propBFeeEl.value = 3.30;
+        const propBFreeYearsEl = document.getElementById('propBFreeYears'); if (propBFreeYearsEl) propBFreeYearsEl.value = 0;
+      } else if (presetKey === 'dongshan_vs_yueman') {
+        const propANameEl = document.getElementById('propAName'); if (propANameEl) propANameEl.value = '中建·东山樾府 128㎡';
+        const propATotalEl = document.getElementById('propATotal'); if (propATotalEl) propATotalEl.value = 360;
+        const propAAreaEl = document.getElementById('propAArea'); if (propAAreaEl) propAAreaEl.value = 128;
+        const propAFeeEl = document.getElementById('propAFee'); if (propAFeeEl) propAFeeEl.value = 3.20;
+        const propAFreeYearsEl = document.getElementById('propAFreeYears'); if (propAFreeYearsEl) propAFreeYearsEl.value = 1;
+
+        const propBNameEl = document.getElementById('propBName'); if (propBNameEl) propBNameEl.value = '金茂·樾满云川 125㎡';
+        const propBTotalEl = document.getElementById('propBTotal'); if (propBTotalEl) propBTotalEl.value = 330;
+        const propBAreaEl = document.getElementById('propBArea'); if (propBAreaEl) propBAreaEl.value = 125;
+        const propBFeeEl = document.getElementById('propBFee'); if (propBFeeEl) propBFeeEl.value = 2.90;
+        const propBFreeYearsEl = document.getElementById('propBFreeYears'); if (propBFreeYearsEl) propBFreeYearsEl.value = 0;
       }
-      if (sliderGjj) {
-        sliderGjj.addEventListener('input', calculateWanliuVsJinmaoGjj);
+      calculateDualPropertyGjj();
+    }
+
+    function setupDualPropertyGjjEvents() {
+      // 公共信贷参数监听
+      const selectDownRatio = document.getElementById('dualSelectDownRatio');
+      const sliderGjj = document.getElementById('dualSliderGjjMonthly');
+      const inputGjj = document.getElementById('dualInputGjjMonthly');
+      const inputGjjLimit = document.getElementById('dualInputGjjLoanLimit');
+      const inputGjjRate = document.getElementById('dualInputGjjRate');
+      const inputBizRate = document.getElementById('dualInputBizRate');
+      const selectLoanYears = document.getElementById('dualSelectLoanYears');
+
+      if (selectDownRatio) selectDownRatio.addEventListener('change', calculateDualPropertyGjj);
+      if (selectLoanYears) selectLoanYears.addEventListener('change', calculateDualPropertyGjj);
+      if (inputGjjLimit) inputGjjLimit.addEventListener('input', calculateDualPropertyGjj);
+      if (inputGjjRate) inputGjjRate.addEventListener('input', calculateDualPropertyGjj);
+      if (inputBizRate) inputBizRate.addEventListener('input', calculateDualPropertyGjj);
+
+      if (sliderGjj && inputGjj) {
+        sliderGjj.addEventListener('input', () => {
+          inputGjj.value = sliderGjj.value;
+          calculateDualPropertyGjj();
+        });
+        inputGjj.addEventListener('input', () => {
+          sliderGjj.value = inputGjj.value;
+          calculateDualPropertyGjj();
+        });
       }
-      calculateWanliuVsJinmaoGjj();
+
+      // 方案 A 监听
+      const propAIds = ['propAName', 'propATotal', 'propAArea', 'propAFee', 'propAFreeYears'];
+      propAIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', calculateDualPropertyGjj);
+          el.addEventListener('change', calculateDualPropertyGjj);
+        }
+      });
+
+      // 方案 B 监听
+      const propBIds = ['propBName', 'propBTotal', 'propBArea', 'propBFee', 'propBFreeYears'];
+      propBIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', calculateDualPropertyGjj);
+          el.addEventListener('change', calculateDualPropertyGjj);
+        }
+      });
+
+      calculateDualPropertyGjj();
     }
 
     window.addEventListener('DOMContentLoaded', initApp);
