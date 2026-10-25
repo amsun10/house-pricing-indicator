@@ -383,6 +383,219 @@
         </div>
       </div>
     </section>
+
+    <!-- 模块 1.5: 核心对决专项精算 —— 万流宁邸 vs 金茂府 (公积金月冲与全周期真实自费现金流看板) -->
+    <section class="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 rounded-2xl p-6 border-2 border-emerald-500/40 shadow-xl space-y-6 text-slate-100">
+      <div class="border-b border-slate-800 pb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2 mb-1 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+              💎 终局签约落地专项
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/40">
+              南京公积金月冲实战
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-800 text-slate-400">
+              前三年物业费全免对冲
+            </span>
+          </div>
+          <h2 class="text-lg md:text-xl font-black text-white flex items-center gap-2">
+            <span>⚖️ 嘉宏·万流 1# 702 vs 江宁金茂府 3# 8楼：公积金还款压力与真实净自费对比</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">
+            穿透表面总价，结合<strong>夫妻公积金顶格 100万 @ 2.85% (30年) + 逐月提取划扣</strong>，还原未来每月从银行卡划出的真实现金流。
+          </p>
+        </div>
+        <div class="flex items-center gap-2 self-start md:self-auto shrink-0">
+          <div class="bg-slate-950/80 border border-slate-800 px-3 py-2 rounded-xl text-right">
+            <div class="text-[10px] text-slate-400">万流宁邸 702</div>
+            <div class="text-sm font-bold text-blue-400 font-mono">500万 (赠3年物业费+柜+保价)</div>
+          </div>
+          <div class="bg-slate-950/80 border border-slate-800 px-3 py-2 rounded-xl text-right">
+            <div class="text-[10px] text-slate-400">金茂府 3# 8楼</div>
+            <div class="text-sm font-bold text-rose-400 font-mono">480万 (特批底价)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 动态公积金对冲设置与对比卡片 -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- 左侧参数调节 (4列) -->
+        <div class="lg:col-span-4 bg-slate-950/60 p-4 rounded-xl border border-slate-800/80 space-y-4 text-xs">
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="font-bold text-slate-200">首付成数设定</label>
+              <span id="labelGjjDownPayRatio" class="text-indigo-400 font-bold">40% (自住稳健)</span>
+            </div>
+            <select id="selectGjjDownRatio" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-200 text-xs focus:border-indigo-500">
+              <option value="0.30">30% (万流首付150万 / 金茂首付144万)</option>
+              <option value="0.40" selected>40% (万流首付200万 / 金茂首付192万)</option>
+              <option value="0.50">50% (万流首付250万 / 金茂首付240万)</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="font-bold text-slate-200">夫妻每月公积金总缴存额 (元/月)</label>
+              <span id="labelGjjDepositMonthly" class="text-emerald-400 font-bold font-mono">4,000 元/月</span>
+            </div>
+            <input type="range" id="sliderGjjMonthly" min="2000" max="9000" step="200" value="4000" class="w-full accent-emerald-500" />
+            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5">
+              <span>2,000 (基础)</span>
+              <span>4,000 (中企/骨干)</span>
+              <span>7,000+ (体制/大厂)</span>
+            </div>
+          </div>
+
+          <div class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 text-[11px] text-slate-400 space-y-1.5 leading-relaxed">
+            <div class="text-slate-300 font-semibold flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              南京公积金直冲政策基准：
+            </div>
+            <div>• 夫妻双缴存最高额度：<strong class="text-slate-200">100 万元</strong></div>
+            <div>• 公积金利率：<strong class="text-emerald-400 font-mono">2.85%</strong> (30年等额本息，月供 4,136元)</div>
+            <div>• 商业贷款利率基准：<strong class="text-indigo-300 font-mono">3.05%</strong> (30年等额本息)</div>
+            <div>• 逐月提取划扣：公积金账户资金自动对冲贷款，无需自己每月手动倒钱。</div>
+          </div>
+        </div>
+
+        <!-- 右侧三列对比看板 (8列) -->
+        <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          
+          <!-- 万流宁邸 702 -->
+          <div class="bg-slate-950/80 rounded-xl p-4 border border-blue-500/40 space-y-3 relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">
+              已选定方案
+            </div>
+            <div>
+              <div class="text-sm font-bold text-blue-400 flex items-center gap-1.5">
+                <span>嘉宏·万流宁邸 1# 702 (143.32㎡)</span>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">
+                合同总价 500 万 | 折扣权益净等效 494.5 万
+              </div>
+            </div>
+
+            <!-- 数据明细 -->
+            <div class="space-y-1.5 border-t border-slate-800 pt-2">
+              <div class="flex justify-between text-slate-300">
+                <span>总贷款金额 (首付 <span id="wlDownPayText">200</span>万)：</span>
+                <span id="wlLoanTotalText" class="font-mono text-white font-bold">300 万元</span>
+              </div>
+              <div class="flex justify-between text-slate-400 pl-2">
+                <span>└ 公积金贷 100万 (2.85%)：</span>
+                <span class="font-mono text-slate-200">4,136 元/月</span>
+              </div>
+              <div class="flex justify-between text-slate-400 pl-2">
+                <span>└ 商业贷款 <span id="wlBizLoanText">200</span>万 (3.05%)：</span>
+                <span id="wlBizMonthText" class="font-mono text-slate-200">8,486 元/月</span>
+              </div>
+              <div class="flex justify-between text-slate-300 border-t border-slate-800/60 pt-1">
+                <span>银行名义总月供：</span>
+                <span id="wlGrossMonthText" class="font-mono text-blue-300 font-bold text-sm">12,622 元/月</span>
+              </div>
+              <div class="flex justify-between text-emerald-400">
+                <span>减：公积金月充抵扣：</span>
+                <span id="wlGjjDeductText" class="font-mono font-bold">- 4,000 元/月</span>
+              </div>
+              <div class="flex justify-between text-white border-t border-slate-800 pt-1 font-bold">
+                <span>每月自付银行卡净月供：</span>
+                <span id="wlNetMonthText" class="font-mono text-blue-400 text-base">8,622 元/月</span>
+              </div>
+            </div>
+
+            <!-- 前三年物业费对冲爆点 -->
+            <div class="bg-blue-950/40 border border-blue-500/30 rounded-lg p-2.5 space-y-1">
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="text-blue-300 font-bold">🎁 前 3 年免物业费 (143㎡×5.98元)：</span>
+                <span class="text-emerald-400 font-mono font-bold">每月省 857 元</span>
+              </div>
+              <div class="flex justify-between text-white font-bold text-xs pt-1 border-t border-blue-900/50">
+                <span>万流前3年每月硬支出：</span>
+                <span id="wlFinal3YearCost" class="font-mono text-emerald-400 text-sm">8,622 元/月</span>
+              </div>
+              <div class="text-[10px] text-slate-400">第4年起加物业费约 857元/月，届时公积金缴存增长与薪资稳固，承压极低。</div>
+            </div>
+          </div>
+
+          <!-- 江宁金茂府 3# 8楼 -->
+          <div class="bg-slate-950/80 rounded-xl p-4 border border-rose-500/30 space-y-3 relative overflow-hidden">
+            <div class="absolute top-0 right-0 bg-slate-800 text-slate-300 text-[10px] font-medium px-2 py-0.5 rounded-bl">
+              竞品方案
+            </div>
+            <div>
+              <div class="text-sm font-bold text-rose-400 flex items-center gap-1.5">
+                <span>江宁金茂府 3# 8楼 (139.21㎡)</span>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">
+                特批底价 480 万 (名义总价少20万)
+              </div>
+            </div>
+
+            <!-- 数据明细 -->
+            <div class="space-y-1.5 border-t border-slate-800 pt-2">
+              <div class="flex justify-between text-slate-300">
+                <span>总贷款金额 (首付 <span id="jmDownPayText">192</span>万)：</span>
+                <span id="jmLoanTotalText" class="font-mono text-white font-bold">288 万元</span>
+              </div>
+              <div class="flex justify-between text-slate-400 pl-2">
+                <span>└ 公积金贷 100万 (2.85%)：</span>
+                <span class="font-mono text-slate-200">4,136 元/月</span>
+              </div>
+              <div class="flex justify-between text-slate-400 pl-2">
+                <span>└ 商业贷款 <span id="jmBizLoanText">188</span>万 (3.05%)：</span>
+                <span id="jmBizMonthText" class="font-mono text-slate-200">7,977 元/月</span>
+              </div>
+              <div class="flex justify-between text-slate-300 border-t border-slate-800/60 pt-1">
+                <span>银行名义总月供：</span>
+                <span id="jmGrossMonthText" class="font-mono text-rose-300 font-bold text-sm">12,113 元/月</span>
+              </div>
+              <div class="flex justify-between text-emerald-400">
+                <span>减：公积金月充抵扣：</span>
+                <span id="jmGjjDeductText" class="font-mono font-bold">- 4,000 元/月</span>
+              </div>
+              <div class="flex justify-between text-white border-t border-slate-800 pt-1 font-bold">
+                <span>每月自付银行卡净月供：</span>
+                <span id="jmNetMonthText" class="font-mono text-rose-400 text-base">8,113 元/月</span>
+              </div>
+            </div>
+
+            <!-- 金茂物业费即交对比 -->
+            <div class="bg-rose-950/30 border border-rose-500/20 rounded-lg p-2.5 space-y-1">
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="text-rose-300">⚠️ 入住即需缴纳物业费 (约5.3元/㎡)：</span>
+                <span class="text-rose-400 font-mono">+ 738 元/月</span>
+              </div>
+              <div class="flex justify-between text-white font-bold text-xs pt-1 border-t border-rose-900/50">
+                <span>金茂前3年每月硬支出：</span>
+                <span id="jmFinal3YearCost" class="font-mono text-rose-400 text-sm">8,851 元/月</span>
+              </div>
+              <div class="text-[10px] text-slate-400">总价虽少20万，但无免物业费权益，前3年家庭真实现金流支出并不占优。</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 核心穿透结论栏 -->
+      <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div class="space-y-0.5">
+          <div class="font-bold text-emerald-300 flex items-center gap-1.5">
+            <span>💡 家庭现金流终极事实穿透：</span>
+          </div>
+          <p class="text-slate-300 text-[11px] leading-relaxed">
+            ① <strong>公积金定海神针</strong>：100万低息公积金月供（4,136元）被夫妻每月缴存直接抵消，银行卡实际自费压力瞬间缩减至 6,000~8,000 元舒适区。<br>
+            ② <strong>前三年现金流大反转</strong>：万流因赠送 3 年物业费，<strong>前 3 年全口径硬支出（<span id="diff3YearCostText">8,622元 vs 8,851元</span>）反而比金茂每月还少掏约 229 元</strong>！
+          </p>
+        </div>
+        <div class="shrink-0 bg-emerald-500/20 border border-emerald-500/40 px-3 py-2 rounded-lg text-center">
+          <div class="text-[10px] text-emerald-300 font-semibold">前3年月度体感</div>
+          <div class="text-emerald-300 font-bold font-mono text-sm">万流现金流更松</div>
+        </div>
+      </div>
+    </section>
     
     <!-- 市场概览指标卡片 -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -3691,6 +3904,106 @@
       calculateHiddenCost();
       renderRadarChart();
       setupEvents();
+      setupWanliuVsJinmaoGjjEvents();
+    }
+
+    // ==========================================
+    // 10. 万流 vs 金茂 公积金月冲动态交互计算逻辑
+    // ==========================================
+    function calculateWanliuVsJinmaoGjj() {
+      const downRatio = parseFloat(document.getElementById('selectGjjDownRatio')?.value) || 0.40;
+      const gjjDeposit = parseFloat(document.getElementById('sliderGjjMonthly')?.value) || 4000;
+      
+      const labelDeposit = document.getElementById('labelGjjDepositMonthly');
+      if (labelDeposit) labelDeposit.innerText = `${gjjDeposit.toLocaleString()} 元/月`;
+
+      const labelRatio = document.getElementById('labelGjjDownPayRatio');
+      if (labelRatio) {
+        labelRatio.innerText = `${Math.round(downRatio * 100)}% (${downRatio <= 0.3 ? '首套基准' : downRatio === 0.4 ? '自住稳健' : '充裕自住'})`;
+      }
+
+      // 公积金政策: 100万 @ 2.85%, 30年(360期)
+      const gjjRate = 0.0285 / 12;
+      const n = 360;
+      const gjjMonthly = (1000000 * gjjRate * Math.pow(1 + gjjRate, n)) / (Math.pow(1 + gjjRate, n) - 1); // 约 4,136元
+      
+      // 商贷政策: @ 3.05%, 30年
+      const bizRate = 0.0305 / 12;
+
+      // 1. 万流 (500万)
+      const wlTotal = 500;
+      const wlDown = wlTotal * downRatio;
+      const wlLoanTotal = wlTotal - wlDown;
+      const wlBizLoan = Math.max(0, wlLoanTotal - 100);
+      const wlBizMonthly = wlBizLoan > 0 ? (wlBizLoan * 10000 * bizRate * Math.pow(1 + bizRate, n)) / (Math.pow(1 + bizRate, n) - 1) : 0;
+      const wlGrossMonthly = gjjMonthly + wlBizMonthly;
+      const wlNetMonthly = Math.max(0, wlGrossMonthly - gjjDeposit);
+      const wl3YearCost = wlNetMonthly; // 前3年免物业费，每月0元
+
+      // 2. 金茂 (480万)
+      const jmTotal = 480;
+      const jmDown = jmTotal * downRatio;
+      const jmLoanTotal = jmTotal - jmDown;
+      const jmBizLoan = Math.max(0, jmLoanTotal - 100);
+      const jmBizMonthly = jmBizLoan > 0 ? (jmBizLoan * 10000 * bizRate * Math.pow(1 + bizRate, n)) / (Math.pow(1 + bizRate, n) - 1) : 0;
+      const jmGrossMonthly = gjjMonthly + jmBizMonthly;
+      const jmNetMonthly = Math.max(0, jmGrossMonthly - gjjDeposit);
+      const jmPropertyFee = 139.21 * 5.3; // 约 738元/月
+      const jm3YearCost = jmNetMonthly + jmPropertyFee;
+
+      // 更新 DOM - 万流
+      const wlDownEl = document.getElementById('wlDownPayText');
+      if (wlDownEl) wlDownEl.innerText = Math.round(wlDown);
+      const wlLoanEl = document.getElementById('wlLoanTotalText');
+      if (wlLoanEl) wlLoanEl.innerText = `${Math.round(wlLoanTotal)} 万元`;
+      const wlBizLoanEl = document.getElementById('wlBizLoanText');
+      if (wlBizLoanEl) wlBizLoanEl.innerText = Math.round(wlBizLoan);
+      const wlBizMonthEl = document.getElementById('wlBizMonthText');
+      if (wlBizMonthEl) wlBizMonthEl.innerText = `${Math.round(wlBizMonthly).toLocaleString()} 元/月`;
+      const wlGrossEl = document.getElementById('wlGrossMonthText');
+      if (wlGrossEl) wlGrossEl.innerText = `${Math.round(wlGrossMonthly).toLocaleString()} 元/月`;
+      const wlGjjDeductEl = document.getElementById('wlGjjDeductText');
+      if (wlGjjDeductEl) wlGjjDeductEl.innerText = `- ${Math.round(gjjDeposit).toLocaleString()} 元/月`;
+      const wlNetEl = document.getElementById('wlNetMonthText');
+      if (wlNetEl) wlNetEl.innerText = `${Math.round(wlNetMonthly).toLocaleString()} 元/月`;
+      const wl3YearEl = document.getElementById('wlFinal3YearCost');
+      if (wl3YearEl) wl3YearEl.innerText = `${Math.round(wl3YearCost).toLocaleString()} 元/月`;
+
+      // 更新 DOM - 金茂
+      const jmDownEl = document.getElementById('jmDownPayText');
+      if (jmDownEl) jmDownEl.innerText = Math.round(jmDown);
+      const jmLoanEl = document.getElementById('jmLoanTotalText');
+      if (jmLoanEl) jmLoanEl.innerText = `${Math.round(jmLoanTotal)} 万元`;
+      const jmBizLoanEl = document.getElementById('jmBizLoanText');
+      if (jmBizLoanEl) jmBizLoanEl.innerText = Math.round(jmBizLoan);
+      const jmBizMonthEl = document.getElementById('jmBizMonthText');
+      if (jmBizMonthEl) jmBizMonthEl.innerText = `${Math.round(jmBizMonthly).toLocaleString()} 元/月`;
+      const jmGrossEl = document.getElementById('jmGrossMonthText');
+      if (jmGrossEl) jmGrossEl.innerText = `${Math.round(jmGrossMonthly).toLocaleString()} 元/月`;
+      const jmGjjDeductEl = document.getElementById('jmGjjDeductText');
+      if (jmGjjDeductEl) jmGjjDeductEl.innerText = `- ${Math.round(gjjDeposit).toLocaleString()} 元/月`;
+      const jmNetEl = document.getElementById('jmNetMonthText');
+      if (jmNetEl) jmNetEl.innerText = `${Math.round(jmNetMonthly).toLocaleString()} 元/月`;
+      const jm3YearEl = document.getElementById('jmFinal3YearCost');
+      if (jm3YearEl) jm3YearEl.innerText = `${Math.round(jm3YearCost).toLocaleString()} 元/月`;
+
+      // 差额总结
+      const diffEl = document.getElementById('diff3YearCostText');
+      if (diffEl) {
+        diffEl.innerText = `${Math.round(wl3YearCost).toLocaleString()}元 vs ${Math.round(jm3YearCost).toLocaleString()}元`;
+      }
+    }
+
+    function setupWanliuVsJinmaoGjjEvents() {
+      const selectRatio = document.getElementById('selectGjjDownRatio');
+      const sliderGjj = document.getElementById('sliderGjjMonthly');
+      if (selectRatio) {
+        selectRatio.addEventListener('change', calculateWanliuVsJinmaoGjj);
+      }
+      if (sliderGjj) {
+        sliderGjj.addEventListener('input', calculateWanliuVsJinmaoGjj);
+      }
+      calculateWanliuVsJinmaoGjj();
     }
 
     window.addEventListener('DOMContentLoaded', initApp);
