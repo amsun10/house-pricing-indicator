@@ -68,7 +68,7 @@
           <p class="text-xs text-slate-500 mt-1">支持南京首套/二套房贷、公积金与契税新政 · 真实呈现首付款、每月月供及总利息支出</p>
         </div>
         <div class="text-xs text-indigo-600 font-medium bg-indigo-50 px-2.5 py-1 rounded-lg self-start sm:self-auto border border-indigo-100">
-          商贷基准 ~3.00% | 公积金 ~2.85%
+          商贷基准 ~3.00% | 公积金 ~2.60%
         </div>
       </div>
 
@@ -147,14 +147,14 @@
             </div>
             <div>
               <label class="block font-medium text-slate-700 mb-1">公积金利率 (%)</label>
-              <input type="number" id="inputGjjRate" value="2.85" step="0.05" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs" />
+              <input type="number" id="inputGjjRate" value="2.60" step="0.05" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs" />
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block font-medium text-slate-700 mb-1">商业贷款利率 (%)</label>
-              <input type="number" id="inputBizRate" value="3.05" step="0.05" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs" />
+              <input type="number" id="inputBizRate" value="3.00" step="0.05" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs" />
             </div>
             <div>
               <label class="block font-medium text-slate-700 mb-1">商业贷款额 (自动测算)</label>
@@ -3058,8 +3058,8 @@
 
       const years = parseInt(document.getElementById('selectLoanYears').value);
       const gjjLoanWan = parseFloat(document.getElementById('inputGjjAmount').value) || 0;
-      const gjjRateYear = (parseFloat(document.getElementById('inputGjjRate').value) || 2.85) / 100;
-      const bizRateYear = (parseFloat(document.getElementById('inputBizRate').value) || 3.05) / 100;
+      const gjjRateYear = (parseFloat(document.getElementById('inputGjjRate').value) || 2.60) / 100;
+      const bizRateYear = (parseFloat(document.getElementById('inputBizRate').value) || 3.00) / 100;
       const repayType = document.getElementById('selectRepayType').value;
 
       const totalLoanWan = Math.max(0, totalBudget - downPayment);
