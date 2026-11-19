@@ -115,7 +115,7 @@
                 <span class="text-[10px] text-indigo-600 font-medium">可直接输入</span>
               </div>
               <div class="relative">
-                <input type="number" id="inputCustomDownPayment" value="80.0" step="1" min="0" class="w-full px-2.5 py-1.5 pr-7 rounded-lg border border-indigo-200 bg-indigo-50/30 text-indigo-900 font-bold text-xs focus:bg-white focus:border-indigo-500 transition" placeholder="首付金额" />
+                <input type="number" id="inputCustomDownPayment" value="80.0" step="0.1" min="0" max="650" class="w-full px-2.5 py-1.5 pr-7 rounded-lg border border-indigo-200 bg-indigo-50/30 text-indigo-900 font-bold text-xs focus:bg-white focus:border-indigo-500 transition" placeholder="首付金额" />
                 <span class="absolute right-2 top-1.5 text-xs text-slate-400 pointer-events-none">万</span>
               </div>
             </div>
@@ -3021,12 +3021,21 @@
       const customDownInput = document.getElementById('inputCustomDownPayment');
 
       let downPayment = 80;
-      if (customDownInput && customDownInput.value !== '') {
-        downPayment = parseFloat(customDownInput.value) || 0;
-      } else {
+      if (downPaySelect && downPaySelect.value !== 'custom') {
+        // 比例模式：严格以所选比例计算首付
         const downRate = parseFloat(downPaySelect.value) || 0.20;
         downPayment = totalBudget * downRate;
-        if (customDownInput) customDownInput.value = downPayment.toFixed(1);
+        if (customDownInput) {
+          customDownInput.value = downPayment.toFixed(1);
+        }
+      } else {
+        // 自定义金额模式：读取输入框数值
+        if (customDownInput && customDownInput.value !== '') {
+          downPayment = parseFloat(customDownInput.value);
+          if (isNaN(downPayment)) downPayment = totalBudget * 0.2;
+        } else {
+          downPayment = totalBudget * 0.2;
+        }
       }
 
       // 保证首付不大于总价，不小于 0
@@ -3035,7 +3044,12 @@
         if (customDownInput) customDownInput.value = downPayment.toFixed(1);
       } else if (downPayment < 0) {
         downPayment = 0;
-        if (customDownInput) customDownInput.value = '0';
+        if (customDownInput) customDownInput.value = '0.0';
+      }
+
+      // 同步设置输入框的 max 限制为当前房屋总价
+      if (customDownInput) {
+        customDownInput.max = totalBudget;
       }
 
       const downRatePercent = totalBudget > 0 ? ((downPayment / totalBudget) * 100) : 0;
@@ -3455,7 +3469,14 @@
           const down = totalBudget * rate;
           if (customDownInput) customDownInput.value = down.toFixed(1);
         } else {
-          if (customDownInput) customDownInput.focus();
+          // 切换到自定义模式时，如果输入框为空或数值异常，保持当前首付款作为基准
+          if (customDownInput && (!customDownInput.value || parseFloat(customDownInput.value) <= 0)) {
+            customDownInput.value = (totalBudget * 0.2).toFixed(1);
+          }
+          if (customDownInput) {
+            customDownInput.focus();
+            customDownInput.select();
+          }
         }
         calculateMortgage();
       });
@@ -3464,10 +3485,16 @@
       if (customDownInput) {
         customDownInput.addEventListener('input', () => {
           const totalBudget = parseFloat(budgetNum.value) || 400;
-          const down = parseFloat(customDownInput.value) || 0;
+          let down = parseFloat(customDownInput.value);
+          if (isNaN(down)) down = 0;
+          if (down > totalBudget) {
+            down = totalBudget;
+            customDownInput.value = totalBudget.toFixed(1);
+          }
+
           const ratio = totalBudget > 0 ? (down / totalBudget) : 0;
 
-          // 智能匹配预设下拉项
+          // 智能匹配预设下拉项 (0.5% 容差)
           let matched = false;
           for (let i = 0; i < downPaySelect.options.length; i++) {
             const optVal = parseFloat(downPaySelect.options[i].value);
@@ -3480,6 +3507,16 @@
           if (!matched) {
             downPaySelect.value = 'custom';
           }
+          calculateMortgage();
+        });
+
+        // 失焦时保证保留一位小数并防止留空
+        customDownInput.addEventListener('blur', () => {
+          const totalBudget = parseFloat(budgetNum.value) || 400;
+          let down = parseFloat(customDownInput.value);
+          if (isNaN(down) || down < 0) down = totalBudget * 0.2;
+          if (down > totalBudget) down = totalBudget;
+          customDownInput.value = down.toFixed(1);
           calculateMortgage();
         });
       }
