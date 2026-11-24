@@ -406,13 +406,13 @@
       </div>
 
       <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-        <div class="text-xs font-medium text-slate-500 mb-1">当前平均议价空间 (砍价率)</div>
+        <div class="text-xs font-medium text-slate-500 mb-1">当前板块·新房网签均价</div>
         <div class="flex items-baseline space-x-2">
-          <span id="cardDiscountRate" class="text-2xl font-bold text-indigo-600 tracking-tight">--</span>
-          <span class="text-xs text-slate-400">挂牌 vs 成交</span>
+          <span id="cardNewPrice" class="text-2xl font-bold text-emerald-600 tracking-tight">--</span>
+          <span class="text-xs text-slate-400">元/㎡</span>
         </div>
-        <div id="cardDiscountDesc" class="mt-2 text-xs text-slate-500">
-          400万总价房源约可谈 -- 万
+        <div id="cardNewPriceDiff" class="mt-2 text-xs text-slate-500 font-medium">
+          --
         </div>
       </div>
 
@@ -463,41 +463,6 @@
         </div>
       </div>
       <div id="mainChart" class="chart-container"></div>
-    </section>
-
-    <!-- 议价空间深度分析 (全宽独立行) -->
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-3">
-        <div>
-          <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
-            <span class="w-2 h-4 bg-amber-500 rounded-sm inline-block"></span>
-            买方议价空间与房东让价折让趋势（挂牌价 vs 成交价）
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
-              实地看房谈价核心参考
-            </span>
-          </h2>
-          <p class="text-xs text-slate-500 mt-1">量化房东挂牌虚高水分 · 左轴：挂牌与成交均价（元/㎡） | 右轴：当期平均砍价折让空间（%）</p>
-        </div>
-        <!-- 谈判参考胶囊 -->
-        <div class="flex items-center gap-2 flex-wrap self-start sm:self-auto">
-          <div class="px-3 py-1.5 rounded-xl bg-amber-50/80 border border-amber-200 text-xs">
-            <span class="text-slate-500">当期平均让价空间:</span>
-            <span id="bargainRateBadge" class="font-bold text-amber-700 ml-1">~6.0% - 8.5%</span>
-          </div>
-          <div class="px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-xs">
-            <span class="text-slate-500">400万总价砍价参考:</span>
-            <span id="bargainMoneyBadge" class="font-bold text-indigo-700 ml-1">约 24 ~ 34 万元</span>
-          </div>
-        </div>
-      </div>
-      <div id="bargainChart" class="w-full h-80 sm:h-96"></div>
-      <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-600 gap-2">
-        <div class="flex items-center gap-2">
-          <span class="font-semibold text-amber-800 bg-amber-100 px-2 py-0.5 rounded shrink-0">💡 实战谈价心法</span>
-          <span>次新改善盘（如翡翠公园、百家湖核心）业主抗跌心理较强，议价幅度一般在 4%~6%；房龄超15年老旧小区或超大户型，可大胆按 8%~12% 争取让步。</span>
-        </div>
-        <span class="text-slate-400 text-[11px] shrink-0">数据源自江宁各板块真实网签核算</span>
-      </div>
     </section>
 
     <!-- 模块 3: 江宁各板块「库存去化周期与房东心态博弈晴雨表」 -->
@@ -2417,7 +2382,6 @@
 
     // ECharts 实例
     let mainChart = echarts.init(document.getElementById('mainChart'));
-    let bargainChart = echarts.init(document.getElementById('bargainChart'));
 
     // ==========================================
     // 2. 渲染顶部指标卡片
@@ -2427,14 +2391,10 @@
       const len = reg.secondHandPrice.length;
       const latestPrice = reg.secondHandPrice[len - 1];
       const prevPrice = reg.secondHandPrice[len - 2];
-      const latestListing = reg.listingPrice[len - 1];
+      const latestNewPrice = reg.newHousePrice[len - 1];
       const latestSecVol = reg.secondHandVol[len - 1];
       const latestNewVol = reg.newHouseVol[len - 1];
       const totalVol = latestSecVol + latestNewVol;
-
-      // 砍价率 = (挂牌价 - 成交价) / 挂牌价
-      const discountRate = ((latestListing - latestPrice) / latestListing * 100).toFixed(1);
-      const bargainMoney = (400 * (discountRate / 100)).toFixed(0);
 
       document.getElementById('cardAvgPrice').innerText = latestPrice.toLocaleString();
       
@@ -2451,8 +2411,13 @@
       document.getElementById('cardVolume').innerText = totalVol.toLocaleString();
       document.getElementById('cardVolumeTrend').innerText = `二手房 ${latestSecVol} 套 | 新房 ${latestNewVol} 套`;
 
-      document.getElementById('cardDiscountRate').innerText = `${discountRate}%`;
-      document.getElementById('cardDiscountDesc').innerText = `400万预算约有 ${bargainMoney} 万砍价折让空间`;
+      const premium = latestNewPrice - latestPrice;
+      const cardNewPriceEl = document.getElementById('cardNewPrice');
+      if (cardNewPriceEl) cardNewPriceEl.innerText = latestNewPrice.toLocaleString();
+      const cardNewDiffEl = document.getElementById('cardNewPriceDiff');
+      if (cardNewDiffEl) {
+        cardNewDiffEl.innerText = `较二手房溢价约 ${premium >= 0 ? '+' : ''}${premium.toLocaleString()} 元/㎡`;
+      }
 
       // 预算参考
       const minTot = ((latestPrice * 120) / 10000).toFixed(0);
@@ -2549,129 +2514,7 @@
     }
 
     // ==========================================
-    // 4. 渲染议价空间图表 (全宽精美版)
-    // ==========================================
-    function renderBargainChart() {
-      const reg = currentData.regions[activeRegionKey];
-      
-      // 计算每个月的砍价空间百分比
-      const discountRates = reg.listingPrice.map((listP, idx) => {
-        const dealP = reg.secondHandPrice[idx];
-        return (((listP - dealP) / listP) * 100).toFixed(1);
-      });
-
-      const len = reg.secondHandPrice.length;
-      const latestDeal = reg.secondHandPrice[len - 1];
-      const latestListing = reg.listingPrice[len - 1];
-      const latestDiscount = discountRates[len - 1];
-
-      const rateBadge = document.getElementById('bargainRateBadge');
-      if (rateBadge) rateBadge.innerText = `${latestDiscount}% (让步约 ${(latestListing - latestDeal).toLocaleString()} 元/㎡)`;
-
-      const moneyBadge = document.getElementById('bargainMoneyBadge');
-      if (moneyBadge) {
-        const savedWan = (400 * (parseFloat(latestDiscount) / 100)).toFixed(1);
-        moneyBadge.innerText = `约 ${savedWan} 万元`;
-      }
-
-      const option = {
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: { type: 'cross', crossStyle: { color: '#999' } },
-          formatter: function(params) {
-            let res = `<div class="font-bold text-xs mb-1">${params[0].name} 行情测算</div>`;
-            params.forEach(p => {
-              if (p.seriesName === '议价折让率') {
-                res += `${p.marker} ${p.seriesName}: <span class="font-bold text-amber-600">${p.value}%</span> (房东平均让价幅度)<br/>`;
-              } else {
-                res += `${p.marker} ${p.seriesName}: <span class="font-semibold">${p.value.toLocaleString()}</span> 元/㎡<br/>`;
-              }
-            });
-            return res;
-          }
-        },
-        legend: {
-          data: ['挂牌均价', '实际成交均价', '议价折让率'],
-          bottom: 8
-        },
-        grid: {
-          left: '2%',
-          right: '3%',
-          top: '12%',
-          bottom: '18%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          data: currentData.months,
-          axisPointer: { type: 'shadow' }
-        },
-        yAxis: [
-          {
-            type: 'value',
-            name: '价格 (元/㎡)',
-            min: function(value) { return Math.floor(value.min / 1000) * 1000 - 1000; },
-            axisLabel: { formatter: '{value}' }
-          },
-          {
-            type: 'value',
-            name: '砍价空间折让率 (%)',
-            min: 0,
-            max: 15,
-            axisLabel: { formatter: '{value}%' }
-          }
-        ],
-        dataZoom: [
-          { type: 'inside', start: 0, end: 100 },
-          { type: 'slider', start: 0, end: 100, height: 18, bottom: 36 }
-        ],
-        series: [
-          {
-            name: '挂牌均价',
-            type: 'line',
-            smooth: true,
-            symbolSize: 6,
-            lineStyle: { type: 'dashed', color: '#f59e0b', width: 2.5 },
-            itemStyle: { color: '#f59e0b' },
-            data: reg.listingPrice
-          },
-          {
-            name: '实际成交均价',
-            type: 'line',
-            smooth: true,
-            symbolSize: 7,
-            lineStyle: { color: '#4f46e5', width: 3 },
-            itemStyle: { color: '#4f46e5' },
-            areaStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: 'rgba(79, 70, 229, 0.18)' },
-                { offset: 1, color: 'rgba(79, 70, 229, 0.01)' }
-              ])
-            },
-            data: reg.secondHandPrice
-          },
-          {
-            name: '议价折让率',
-            type: 'bar',
-            yAxisIndex: 1,
-            barMaxWidth: 24,
-            itemStyle: { 
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                { offset: 0, color: '#fb923c' },
-                { offset: 1, color: '#fed7aa' }
-              ]),
-              borderRadius: [4, 4, 0, 0] 
-            },
-            data: discountRates
-          }
-        ]
-      };
-
-      bargainChart.setOption(option, true);
-    }
-
-    // ==========================================
-    // 5. 重点楼盘参考数据池 (以南京网上房地产 njhouse 官方销许与网签备案为基准)
+    // 4. 重点楼盘参考数据池 (以南京网上房地产 njhouse 官方销许与网签备案为基准)
     // ==========================================
     const COMMUNITY_LIST = [
       // 🔥 在售品质新盘 / 四代宅 / 准现房 (官方备案数据源: njhouse.com.cn)
@@ -3236,7 +3079,6 @@
           activeRegionKey = e.target.dataset.region;
           updateTopCards();
           renderMainChart();
-          renderBargainChart();
         });
       });
 
@@ -3358,7 +3200,6 @@
           closeModal();
           updateTopCards();
           renderMainChart();
-          renderBargainChart();
           alert('数据更新成功！图表已同步重绘。');
         } catch (err) {
           alert('JSON 格式有误，请核对后再保存：' + err.message);
@@ -3373,7 +3214,6 @@
           closeModal();
           updateTopCards();
           renderMainChart();
-          renderBargainChart();
         }
       });
 
@@ -3442,7 +3282,6 @@
       // 窗口拉伸重绘
       window.addEventListener('resize', () => {
         if (mainChart) mainChart.resize();
-        if (bargainChart) bargainChart.resize();
         if (radarChart) radarChart.resize();
       });
 
@@ -3470,7 +3309,6 @@
 
       updateTopCards();
       renderMainChart();
-      renderBargainChart();
       renderCommunityTable();
       calculateMortgage();
       calculateDTI();
