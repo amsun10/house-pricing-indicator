@@ -647,193 +647,6 @@
     
 
     
-    <!-- 模块 2: 新房 vs 二手房「真实套内使用单价」与得房率隐藏账本换算器 -->
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
-      <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
-          <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
-            <span class="w-2 h-4 bg-purple-600 rounded-sm inline-block"></span>
-            新房 vs 二手房「真实套内使用单价」与得房率隐藏账本换算器
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200">
-              🔍 击破建面单价幻象 · 算清真实套内成本
-            </span>
-          </h2>
-          <p class="text-xs text-slate-500 mt-1">
-            同样 130㎡ 为何实际套内相差一个大卧室？加上精装包、期房租房支出与二手房中介费，算出真正的全口径落地账本
-          </p>
-        </div>
-        <!-- 预设方案切换 -->
-        <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1.5 rounded-xl shrink-0">
-          <button id="btnPresetCase1" class="px-2.5 py-1 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs">典型对比：百家湖新高层 vs 九龙湖次新</button>
-          <button id="btnPresetCase2" class="px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900">方山低密洋房 vs 核心超高层</button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-        <!-- 方案 A：在售新盘 (期房/高层) -->
-        <div class="p-5 rounded-2xl border-2 border-rose-100 bg-rose-50/20 space-y-4">
-          <div class="flex items-center justify-between pb-2 border-b border-rose-100">
-            <div class="font-bold text-rose-950 text-sm flex items-center">
-              <span class="w-2.5 h-2.5 rounded-full bg-rose-500 mr-2"></span>
-              方案 A：在售新盘 (典型期房/高层)
-            </div>
-            <span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-rose-100 text-rose-800">得房率偏低 · 有等待期</span>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">建筑面积 (㎡)</label>
-              <input type="number" id="calcAreaA" value="130" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-bold text-slate-800" />
-            </div>
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">建筑单价 (元/㎡)</label>
-              <input type="number" id="calcPriceA" value="32500" step="500" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-bold text-slate-800" />
-            </div>
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">预计得房率 (%)</label>
-              <select id="calcRateA" class="w-full px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800">
-                <option value="72">72% (超高层/公摊大)</option>
-                <option value="74" selected>74% (主流高层)</option>
-                <option value="78">78% (小高层)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs pt-1">
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">精装升级包 (元/㎡)</label>
-              <input type="number" id="calcPackA" value="2500" step="100" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800" />
-            </div>
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">期房交房等待期 (月)</label>
-              <input type="number" id="calcWaitA" value="18" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800" />
-            </div>
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">等待期月租金 (元/月)</label>
-              <input type="number" id="calcRentA" value="3500" step="100" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800" />
-            </div>
-          </div>
-
-          <!-- A 方案结果卡 -->
-          <div class="bg-white p-4 rounded-xl border border-rose-100 shadow-2xs space-y-2.5 text-xs">
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500">真实套内实际可用面积:</span>
-              <strong class="text-slate-900 text-sm"><span id="resNetAreaA">96.2</span> ㎡</strong>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500">裸房总价 + 装标包支出:</span>
-              <span class="text-slate-700 font-semibold"><span id="resRawTotalA">422.5</span> + <span id="resPackTotalA">32.5</span> = <span id="resHouseTotalA">455.0</span> 万</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500">期房等待期额外房租成本:</span>
-              <span class="text-rose-600 font-semibold"><span id="resRentTotalA">6.3</span> 万元</span>
-            </div>
-            <div class="pt-2 border-t border-rose-100 flex justify-between items-center">
-              <span class="font-bold text-slate-800">全口径实际落地总支出:</span>
-              <strong class="text-rose-600 text-base">约 <span id="resTotalCostA">461.3</span> 万元</strong>
-            </div>
-            <div class="p-2.5 bg-rose-50 rounded-lg flex justify-between items-center">
-              <span class="font-bold text-rose-900">真实套内实际使用单价:</span>
-              <strong class="text-rose-700 text-base font-extrabold"><span id="resNetUnitPriceA">47,952</span> 元/㎡</strong>
-            </div>
-          </div>
-        </div>
-
-        <!-- 方案 B：标杆次新房 (现房/洋房) -->
-        <div class="p-5 rounded-2xl border-2 border-indigo-100 bg-indigo-50/20 space-y-4">
-          <div class="flex items-center justify-between pb-2 border-b border-indigo-100">
-            <div class="font-bold text-indigo-950 text-sm flex items-center">
-              <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 mr-2"></span>
-              方案 B：标杆次新房 (现房/高得房洋房)
-            </div>
-            <span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-indigo-100 text-indigo-800">得房率高 · 即买即住</span>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">建筑面积 (㎡)</label>
-              <input type="number" id="calcAreaB" value="130" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-bold text-slate-800" />
-            </div>
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">成交单价 (元/㎡)</label>
-              <input type="number" id="calcPriceB" value="29800" step="500" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-bold text-slate-800" />
-            </div>
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">预计得房率 (%)</label>
-              <select id="calcRateB" class="w-full px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800">
-                <option value="80">80% (次新普通高层)</option>
-                <option value="84" selected>84% (次新小高层)</option>
-                <option value="88">88% (低密电梯洋房)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs pt-1">
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">软装翻新投入 (万元)</label>
-              <input type="number" id="calcRenoB" value="8" step="1" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800" title="已有精装，做保洁/换壁纸/买家具" />
-            </div>
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">交付等待期 (月)</label>
-              <input type="number" id="calcWaitB" value="0" readonly class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-100 text-slate-500 font-semibold" title="现房过户即交付" />
-            </div>
-            <div>
-              <label class="block font-medium text-slate-600 mb-1">中介服务费率 (%)</label>
-              <input type="number" id="calcAgencyB" value="1.2" step="0.1" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800" />
-            </div>
-          </div>
-
-          <!-- B 方案结果卡 -->
-          <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-2xs space-y-2.5 text-xs">
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500">真实套内实际可用面积:</span>
-              <strong class="text-slate-900 text-sm"><span id="resNetAreaB">109.2</span> ㎡</strong>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500">房屋成交总价:</span>
-              <span class="text-slate-700 font-semibold"><span id="resHouseTotalB">387.4</span> 万元</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500">二手房中介费 + 软装保洁:</span>
-              <span class="text-indigo-600 font-semibold"><span id="resAgencyTotalB">4.6</span> + <span id="resRenoTotalB">8.0</span> = <span id="resExtraTotalB">12.6</span> 万元</span>
-            </div>
-            <div class="pt-2 border-t border-indigo-100 flex justify-between items-center">
-              <span class="font-bold text-slate-800">全口径实际落地总支出:</span>
-              <strong class="text-indigo-600 text-base">约 <span id="resTotalCostB">400.0</span> 万元</strong>
-            </div>
-            <div class="p-2.5 bg-indigo-50 rounded-lg flex justify-between items-center">
-              <span class="font-bold text-indigo-900">真实套内实际使用单价:</span>
-              <strong class="text-indigo-700 text-base font-extrabold"><span id="resNetUnitPriceB">36,630</span> 元/㎡</strong>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- 最终差异对比与决策指引卡片 -->
-      <div class="p-4 bg-gradient-to-r from-indigo-50/70 via-purple-50/50 to-rose-50/50 rounded-xl border border-indigo-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div class="space-y-1">
-          <div class="text-xs font-bold text-slate-900 flex items-center gap-2">
-            <span>⚖️ 账本深度对比洞察：</span>
-            <span class="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded text-[11px]">
-              方案 B 实际多得使用面积 <span id="diffAreaBadge">+13.0 ㎡</span>
-            </span>
-            <span class="text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded text-[11px]">
-              全口径节约资金 <span id="diffCostBadge">~61.3 万元</span>
-            </span>
-          </div>
-          <p class="text-[11px] text-slate-600 leading-relaxed" id="diffConclusionText">
-            新房高层因公摊与精装包导致真实套内单价达到 4.79万/㎡；而高得房率次新房套内相当于多出一间标准次卧，同时免去一年半租房周转与利息空转成本。
-          </p>
-        </div>
-        <div class="shrink-0 text-right">
-          <span class="text-[10px] text-slate-400 block">套内使用单价差距</span>
-          <span class="text-lg font-black text-purple-700" id="diffUnitPriceBadge">11,322 元/㎡</span>
-        </div>
-      </div>
-    </section>
-
     <!-- 模块 4: 改善置业「看房打分与雷达对比矩阵 (Radar Chart)」 -->
     <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
       <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -982,10 +795,10 @@
             <span class="w-2 h-4 bg-rose-500 rounded-sm inline-block"></span>
             江宁核心板块 重点改善楼盘速查池
             <span class="text-xs bg-rose-50 text-rose-600 border border-rose-200 px-2.5 py-0.5 rounded-full font-semibold">
-              在售新盘/四代宅 & 标杆次新双维度
+              在售新盘/四代宅 (NJhouse备案基准) & 标杆次新双维度
             </span>
           </h2>
-          <p class="text-xs text-slate-500 mt-1">精选江宁 120-145㎡ 改善主力盘 · 覆盖当红四代新盘、科技恒温豪宅与经典标杆次新，横向对比实测单价、得房率与品质看点</p>
+          <p class="text-xs text-slate-500 mt-1">新盘数据已全面对齐「南京网上房地产 (njhouse.com.cn)」官方预售许可与楼幢销许备案单价 · 横向穿透实测单价、户型与品质看点</p>
         </div>
         <!-- 维度筛选 Tabs -->
         <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1.5 rounded-xl shrink-0">
@@ -2858,111 +2671,101 @@
     }
 
     // ==========================================
-    // 5. 重点楼盘参考数据池 (改善主力：在售新盘/四代宅与标杆次新全覆盖)
+    // 5. 重点楼盘参考数据池 (以南京网上房地产 njhouse 官方销许与网签备案为基准)
     // ==========================================
     const COMMUNITY_LIST = [
-      // 🔥 在售品质新盘 / 四代宅 / 准现房
+      // 🔥 在售品质新盘 / 四代宅 / 准现房 (官方备案数据源: njhouse.com.cn)
       { 
-        name: "嘉宏·万流江宁", 
+        name: "嘉宏·万流宁邸", 
         type: "新房", 
-        status: "在售新盘·四代科技宅", 
+        status: "在售·现售/预售四代宅 (官方销许: 2026200058W)", 
         region: "百家湖/小龙湾", 
         area: "143-235㎡", 
-        price: "3.9 ~ 4.2万", 
-        total: "560 - 950万", 
-        comment: "百家湖核心顶奢改善，全维六恒科技系统+空中错层大露台，挑高视野极佳，紧邻小龙湾地铁站" 
+        price: "36,372 ~ 42,528 元/㎡", 
+        total: "520 - 990万", 
+        comment: "【NJhouse官方】1#均价36,372元/㎡，2#大平层均价42,528元/㎡，6#均价38,536元/㎡。全维六恒科技系统+错层空中露台，紧邻小龙湾地铁站。" 
       },
       { 
-        name: "江宁金茂府", 
+        name: "江宁金茂府 (湖滨尊邸)", 
         type: "新房", 
-        status: "在售新盘·四代科技宅", 
+        status: "在售·科技四代宅 (官方销许: 2026200061)", 
         region: "九龙湖核心", 
         area: "140-220㎡", 
-        price: "3.9 ~ 4.3万", 
-        total: "550 - 900万", 
-        comment: "九龙湖纯改善标杆天花板，1.8超低容积率洋房与小高层，金茂十二大绿金科技，空中花园户型" 
+        price: "35,326 ~ 41,538 元/㎡", 
+        total: "495 - 910万", 
+        comment: "【NJhouse官方】项目备案名「湖滨尊邸」，3#均价35,326元/㎡，2#均价41,538元/㎡，4#均价39,700元/㎡。金茂绿金科技+1.8低密空中花园洋房。" 
       },
       { 
         name: "中建·东山樾府", 
         type: "新房", 
-        status: "在售新盘·低密四代宅", 
+        status: "在售·低密四代宅 (官方销许: 2026200051)", 
         region: "东山老城核心", 
         area: "120-174㎡", 
-        price: "3.4 ~ 3.7万", 
-        total: "410 - 640万", 
-        comment: "紧邻5号线文靖路站约200米，1.8低密改善小高层，送错层空中露台，老城地缘换房首选" 
+        price: "27,445 ~ 31,804 元/㎡", 
+        total: "330 - 550万", 
+        comment: "【NJhouse官方】3#均价27,445元/㎡，6#均价31,804元/㎡，10#均价28,125元/㎡。文靖路地铁口约200米，1.8容积率，送空中露台。" 
       },
       { 
-        name: "金茂·樾满云川", 
+        name: "金茂·樾满云川府", 
         type: "新房", 
-        status: "在售新盘·四代奢宅", 
+        status: "在售·四代奢宅 (官方销许: 2026200060)", 
         region: "竹山路/小龙湾", 
         area: "105-139㎡", 
-        price: "2.9 ~ 3.2万", 
-        total: "350 - 440万", 
-        comment: "竹山路双地铁交汇，金茂满系四代产品，配备约2300㎡高端会所，139㎡主力四房总价与功能性兼备" 
+        price: "30,835 ~ 34,481 元/㎡", 
+        total: "325 - 480万", 
+        comment: "【NJhouse官方】官方月报热销去化超7成，A4#均价30,835元/㎡，A7#均价34,481元/㎡，A9#均价31,130元/㎡。配2300㎡会所，双地铁交汇。" 
       },
       { 
         name: "象屿华发·铂萃云湾", 
         type: "新房", 
-        status: "在售新盘·小高层", 
+        status: "在售·科技住宅 (官方现售: 20262013)", 
         region: "百家湖西/胜太路", 
         area: "95-135㎡", 
-        price: "2.8 ~ 3.2万", 
-        total: "330 - 430万", 
-        comment: "3号线胜太西路地铁口，双国企超感科技住宅，带三大件恒温恒湿新风地暖，年轻轻奢风格" 
+        price: "30,301 ~ 34,529 元/㎡", 
+        total: "290 - 465万", 
+        comment: "【NJhouse官方】A-2#均价30,301元/㎡，A-4#均价34,529元/㎡，A-6#均价32,669元/㎡。3号线胜太西路地铁口，带三恒新风科技。" 
       },
       { 
         name: "金隅华发·紫京四季", 
         type: "新房", 
-        status: "实景现房·低密小高层", 
+        status: "实景现房 (官方现售: 20262008W)", 
         region: "上秦淮核心", 
         area: "102-142㎡", 
-        price: "2.2 ~ 2.5万", 
-        total: "280 - 350万", 
-        comment: "上秦淮低密改善标杆，已实景交付即买即住，豪华下沉会所配露天泳池，得房率超80%" 
+        price: "19,116 ~ 32,935 元/㎡", 
+        total: "200 - 460万", 
+        comment: "【NJhouse官方】12#均价19,116元/㎡，13#均价19,705元/㎡，3#均价32,935元/㎡（洋房与小高层梯次定价）。实景交付现房，带露天泳池会所。" 
       },
       { 
-        name: "海玥华府 (现房)", 
+        name: "上海建工·海玥华府", 
         type: "新房", 
-        status: "实景现房·科技大宅", 
+        status: "实景现房·科技大宅 (官方现售: 20252026W)", 
         region: "东山/杨家圩", 
         area: "115-135㎡", 
-        price: "2.4 ~ 2.7万", 
-        total: "290 - 365万", 
-        comment: "上海建工高舒适度科技住宅，恒温恒湿免去装修等待，近江宁市民中心与万达成熟配套" 
+        price: "29,092 ~ 35,254 元/㎡", 
+        total: "335 - 475万", 
+        comment: "【NJhouse官方】8#均价29,092元/㎡，9#均价35,254元/㎡，4#均价32,350元/㎡。恒温恒湿科技现房，即买即办证，近江宁市民中心与万达。" 
       },
       { 
-        name: "中海·观山樾", 
+        name: "招商·百家臻园 (一手批次)", 
         type: "新房", 
-        status: "实景现房·电梯洋房", 
-        region: "方山低密", 
-        area: "89-130㎡", 
-        price: "1.9 ~ 2.2万", 
-        total: "220 - 285万", 
-        comment: "实景现房即买即办证，电梯洋房得房率约85%，价格大幅回调后总价门槛极具亲和力，还贷无压力" 
+        status: "实景交付 (官方销许: 2023200063W)", 
+        region: "百家湖核心", 
+        area: "125-143㎡", 
+        price: "38,930 ~ 42,890 元/㎡", 
+        total: "485 - 610万", 
+        comment: "【NJhouse官方】1#均价38,930元/㎡，2#均价42,890元/㎡，5#均价41,938元/㎡。纯铝板立面会所标杆，目前已全期实景交付。" 
       },
 
-      // 🏢 标杆成熟次新二手房
+      // 🏢 标杆成熟次新二手房 (结合 NJhouse 活跃成交小区与真实行情)
       { 
-        name: "招商·百家臻园", 
+        name: "招商·百家臻园 (次新二手)", 
         type: "二手", 
-        status: "标杆次新·实景交付", 
+        status: "标杆次新·实景现房", 
         region: "百家湖/小龙湾", 
         area: "125-143㎡", 
         price: "3.0 ~ 3.4万", 
         total: "380 - 485万", 
-        comment: "百家湖纯新一代铝板立面标杆，全配高端会所，已全面实景交付，品质与圈层纯粹，保值稳健" 
-      },
-      { 
-        name: "朗诗玲珑屿", 
-        type: "二手", 
-        status: "标杆次新·科技住宅", 
-        region: "百家湖核心", 
-        area: "118-140㎡", 
-        price: "2.9 ~ 3.3万", 
-        total: "350 - 460万", 
-        comment: "百家湖核心科技改善标杆，紧邻景枫金鹰商圈，恒温恒湿体感极佳，江宁自住改善口碑天花板" 
+        comment: "百家湖新一代铝板立面标杆，二手挂牌已理性回落至3万初，圈层纯粹，实景品质可见。" 
       },
       { 
         name: "万科翡翠公园", 
@@ -2972,7 +2775,17 @@
         area: "120-142㎡", 
         price: "2.6 ~ 2.9万", 
         total: "320 - 410万", 
-        comment: "九龙湖次新品质标杆，紧邻3号线地铁与殷巷商街，万科物业顶级口碑，保值流通与自住最均衡" 
+        comment: "九龙湖次新品质标杆，紧邻3号线与殷巷商街，万科物业顶级口碑，保值流通与自住最均衡。" 
+      },
+      { 
+        name: "朗诗玲珑屿", 
+        type: "二手", 
+        status: "标杆次新·科技住宅", 
+        region: "百家湖核心", 
+        area: "118-140㎡", 
+        price: "2.9 ~ 3.3万", 
+        total: "350 - 460万", 
+        comment: "百家湖核心科技改善标杆，紧邻景枫金鹰商圈，恒温恒湿体感极佳，江宁自住改善口碑高地。" 
       },
       { 
         name: "龙湖春江郦城", 
@@ -2982,17 +2795,17 @@
         area: "122-132㎡", 
         price: "2.8 ~ 3.1万", 
         total: "340 - 410万", 
-        comment: "天街综合体直达，下楼即逛街餐饮，通勤带娃便利度极高，小高层外立面与景观保持良好" 
+        comment: "【NJhouse官方提及活跃商圈】天街综合体直达，下楼即逛街餐饮，小高层外立面与景观保持良好。" 
       },
       { 
-        name: "武夷·七里湖山", 
+        name: "托乐嘉花园", 
         type: "二手", 
-        status: "标杆次新·已交付", 
-        region: "东山老城核心", 
-        area: "118-143㎡", 
-        price: "2.5 ~ 2.8万", 
-        total: "300 - 390万", 
-        comment: "文靖路老城成熟烟火气，新盘已全面交付转次新，户型方正使用率高，地缘自住实用之选" 
+        status: "【NJhouse官方】月报主力活跃小区", 
+        region: "将军大道/胜太西路", 
+        area: "90-135㎡", 
+        price: "2.1 ~ 2.4万", 
+        total: "220 - 325万", 
+        comment: "【NJhouse官方多期连续点名活力小区】翠屏山地铁口，南师附中江宁分校辐射，成交体量极大，流动性之王。" 
       },
       { 
         name: "保利中央公园", 
@@ -3002,7 +2815,7 @@
         area: "123-138㎡", 
         price: "2.2 ~ 2.5万", 
         total: "270 - 345万", 
-        comment: "3号线/5号线辐射，成熟大型改善社区，四房实用率高，价格回归理性后性价比非常突出" 
+        comment: "3号线/5号线辐射，成熟大型改善社区，四房实用率高，价格回归理性后性价比非常突出。" 
       },
       { 
         name: "万科金域蓝湾", 
@@ -3012,7 +2825,7 @@
         area: "120-135㎡", 
         price: "2.2 ~ 2.5万", 
         total: "270 - 335万", 
-        comment: "百家湖经典改善标杆，万科物业口碑顶格，内部绿化极佳生活成熟，真实成交已挤干泡沫" 
+        comment: "百家湖经典改善标杆，万科物业口碑顶格，内部绿化极佳生活成熟，真实成交已挤干泡沫。" 
       },
       { 
         name: "新城玖珑湖", 
@@ -3022,7 +2835,7 @@
         area: "125-140㎡", 
         price: "2.2 ~ 2.5万", 
         total: "280 - 350万", 
-        comment: "一线依傍九龙湖湿地公园，居住密度低，视野开阔，适合注重生态景观的自住家庭" 
+        comment: "一线依傍九龙湖湿地公园，居住密度低，视野开阔，适合注重生态景观的自住家庭。" 
       }
     ];
 
@@ -3273,73 +3086,6 @@
       const reserve12Wan = reserve6Wan * 2;
       document.getElementById('resReserve6').innerText = reserve6Wan.toFixed(1);
       document.getElementById('resReserve12').innerText = reserve12Wan.toFixed(1);
-    }
-
-    // ==========================================
-    // 10. 模块 2: 新房 vs 二手房「套内实际单价」换算器
-    // ==========================================
-    function calculateHiddenCost() {
-      // 方案 A: 新房
-      const areaA = parseFloat(document.getElementById('calcAreaA').value) || 130;
-      const priceA = parseFloat(document.getElementById('calcPriceA').value) || 32500;
-      const rateA = (parseFloat(document.getElementById('calcRateA').value) || 74) / 100;
-      const packA = parseFloat(document.getElementById('calcPackA').value) || 2500;
-      const waitA = parseFloat(document.getElementById('calcWaitA').value) || 18;
-      const rentA = parseFloat(document.getElementById('calcRentA').value) || 3500;
-
-      const netAreaA = areaA * rateA;
-      const rawTotalA = (areaA * priceA) / 10000;
-      const packTotalA = (areaA * packA) / 10000;
-      const houseTotalA = rawTotalA + packTotalA;
-      const rentTotalA = (waitA * rentA) / 10000;
-      const totalCostA = houseTotalA + rentTotalA;
-      const netUnitPriceA = netAreaA > 0 ? (totalCostA * 10000) / netAreaA : 0;
-
-      document.getElementById('resNetAreaA').innerText = netAreaA.toFixed(1);
-      document.getElementById('resRawTotalA').innerText = rawTotalA.toFixed(1);
-      document.getElementById('resPackTotalA').innerText = packTotalA.toFixed(1);
-      document.getElementById('resHouseTotalA').innerText = houseTotalA.toFixed(1);
-      document.getElementById('resRentTotalA').innerText = rentTotalA.toFixed(1);
-      document.getElementById('resTotalCostA').innerText = totalCostA.toFixed(1);
-      document.getElementById('resNetUnitPriceA').innerText = Math.round(netUnitPriceA).toLocaleString();
-
-      // 方案 B: 次新房
-      const areaB = parseFloat(document.getElementById('calcAreaB').value) || 130;
-      const priceB = parseFloat(document.getElementById('calcPriceB').value) || 29800;
-      const rateB = (parseFloat(document.getElementById('calcRateB').value) || 84) / 100;
-      const renoB = parseFloat(document.getElementById('calcRenoB').value) || 8.0;
-      const agencyRateB = (parseFloat(document.getElementById('calcAgencyB').value) || 1.2) / 100;
-
-      const netAreaB = areaB * rateB;
-      const houseTotalB = (areaB * priceB) / 10000;
-      const agencyTotalB = houseTotalB * agencyRateB;
-      const extraTotalB = agencyTotalB + renoB;
-      const totalCostB = houseTotalB + extraTotalB;
-      const netUnitPriceB = netAreaB > 0 ? (totalCostB * 10000) / netAreaB : 0;
-
-      document.getElementById('resNetAreaB').innerText = netAreaB.toFixed(1);
-      document.getElementById('resHouseTotalB').innerText = houseTotalB.toFixed(1);
-      document.getElementById('resAgencyTotalB').innerText = agencyTotalB.toFixed(1);
-      document.getElementById('resRenoTotalB').innerText = renoB.toFixed(1);
-      document.getElementById('resExtraTotalB').innerText = extraTotalB.toFixed(1);
-      document.getElementById('resTotalCostB').innerText = totalCostB.toFixed(1);
-      document.getElementById('resNetUnitPriceB').innerText = Math.round(netUnitPriceB).toLocaleString();
-
-      // 差额总结
-      const diffArea = netAreaB - netAreaA;
-      const diffCost = totalCostA - totalCostB;
-      const diffUnitPrice = Math.abs(netUnitPriceA - netUnitPriceB);
-
-      document.getElementById('diffAreaBadge').innerText = `${diffArea >= 0 ? '+' : ''}${diffArea.toFixed(1)} ㎡`;
-      document.getElementById('diffCostBadge').innerText = `~${Math.abs(diffCost).toFixed(1)} 万元 (${diffCost >= 0 ? '次新更省' : '新盘更省'})`;
-      document.getElementById('diffUnitPriceBadge').innerText = `${Math.round(diffUnitPrice).toLocaleString()} 元/㎡`;
-
-      const conclusionEl = document.getElementById('diffConclusionText');
-      if (diffArea >= 0 && diffCost >= 0) {
-        conclusionEl.innerHTML = `💡 <strong>换算结果</strong>：同样购买 130㎡，标杆次新 (洋房/小高层) 实际使用面积多出 <strong>${diffArea.toFixed(1)} ㎡</strong>（相当于多出一整间次卧），且全口径落地总支出比新盘节省约 <strong>${diffCost.toFixed(1)} 万元</strong>！真实套内单价新盘高达 ${Math.round(netUnitPriceA).toLocaleString()} 元/㎡，溢价明显。`;
-      } else {
-        conclusionEl.innerHTML = `💡 <strong>换算结果</strong>：新盘与次新房在公摊、装包及中介费上各有侧重，建议购房家庭根据对“全新铝板立面会所”与“大套内使用面积”的实际偏好做出权衡。`;
-      }
     }
 
     // ==========================================
@@ -3663,62 +3409,6 @@
         }
       });
 
-      // 模块 2: 新房二手房隐藏成本换算器事件监听
-      ['calcAreaA', 'calcPriceA', 'calcRateA', 'calcPackA', 'calcWaitA', 'calcRentA',
-       'calcAreaB', 'calcPriceB', 'calcRateB', 'calcRenoB', 'calcAgencyB'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.addEventListener('input', calculateHiddenCost);
-          el.addEventListener('change', calculateHiddenCost);
-        }
-      });
-
-      const btnPreset1 = document.getElementById('btnPresetCase1');
-      if (btnPreset1) {
-        btnPreset1.addEventListener('click', () => {
-          document.getElementById('calcAreaA').value = 130;
-          document.getElementById('calcPriceA').value = 32500;
-          document.getElementById('calcRateA').value = "74";
-          document.getElementById('calcPackA').value = 2500;
-          document.getElementById('calcWaitA').value = 18;
-          document.getElementById('calcRentA').value = 3500;
-
-          document.getElementById('calcAreaB').value = 130;
-          document.getElementById('calcPriceB').value = 29800;
-          document.getElementById('calcRateB').value = "84";
-          document.getElementById('calcRenoB').value = 8;
-          document.getElementById('calcAgencyB').value = 1.2;
-
-          btnPreset1.className = "px-2.5 py-1 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs";
-          const btn2 = document.getElementById('btnPresetCase2');
-          if (btn2) btn2.className = "px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900";
-          calculateHiddenCost();
-        });
-      }
-
-      const btnPreset2 = document.getElementById('btnPresetCase2');
-      if (btnPreset2) {
-        btnPreset2.addEventListener('click', () => {
-          document.getElementById('calcAreaA').value = 140;
-          document.getElementById('calcPriceA').value = 34000;
-          document.getElementById('calcRateA').value = "72";
-          document.getElementById('calcPackA').value = 3000;
-          document.getElementById('calcWaitA').value = 24;
-          document.getElementById('calcRentA').value = 4000;
-
-          document.getElementById('calcAreaB').value = 138;
-          document.getElementById('calcPriceB').value = 26500;
-          document.getElementById('calcRateB').value = "88";
-          document.getElementById('calcRenoB').value = 10;
-          document.getElementById('calcAgencyB').value = 1.0;
-
-          btnPreset2.className = "px-2.5 py-1 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs";
-          const btn1 = document.getElementById('btnPresetCase1');
-          if (btn1) btn1.className = "px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900";
-          calculateHiddenCost();
-        });
-      }
-
       // 模块 4: 雷达图切换楼盘与滑块打分事件
       document.querySelectorAll('.radar-tab-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -3784,7 +3474,6 @@
       renderCommunityTable();
       calculateMortgage();
       calculateDTI();
-      calculateHiddenCost();
       renderRadarChart();
       setupEvents();
     }
