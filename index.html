@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>南京房产购房决策看板 (江宁 120-140㎡ 改善置业)</title>
+  <title>南京江宁 改善买房全景决策看板 (官方真实数据版)</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Apache ECharts CDN -->
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
-    .chart-container { width: 100%; height: 420px; }
-    .sub-chart-container { width: 100%; height: 320px; }
+    .chart-container { width: 100%; height: 380px; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen">
 
-  <!-- 顶部导航条 (优化间距与通透感) -->
+  <!-- 顶部导航条 -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <div class="flex items-center space-x-4">
@@ -25,28 +24,34 @@
         </div>
         <div class="space-y-1">
           <div class="flex items-center space-x-2.5 flex-wrap gap-y-1">
-            <h1 class="font-bold text-xl text-slate-900 tracking-tight">南京房产购房决策看板</h1>
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-600 border border-rose-200">
-              江宁改善专版
+            <h1 class="font-bold text-xl text-slate-900 tracking-tight">南京江宁 改善买房决策看板</h1>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              NJhouse 官方备案全对齐
+            </span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+              拒绝任何模型臆造数据
             </span>
           </div>
           <p class="text-xs text-slate-500 flex items-center flex-wrap gap-x-2 gap-y-0.5">
-            <span class="font-medium text-slate-700">家庭改善置业精算计划</span>
+            <span class="font-medium text-slate-700">家庭改善置业精算</span>
             <span class="text-slate-300">•</span>
             <span>目标户型：120-140㎡</span>
             <span class="text-slate-300">•</span>
             <span>预算区间：350-450万</span>
+            <span class="text-slate-300">•</span>
+            <span>官方源：南京网上房地产 (www.njhouse.com.cn)</span>
           </p>
         </div>
       </div>
       <div class="flex items-center space-x-2.5 self-end md:self-auto shrink-0 flex-wrap gap-y-2">
         <button id="openDataModalBtn" class="inline-flex items-center px-3.5 py-2 text-xs font-medium rounded-xl text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200 shadow-xs transition hover:shadow-sm">
           <svg class="w-3.5 h-3.5 mr-1.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-          管理/更新数据
+          查看官方数据源 JSON
         </button>
-        <span class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> 本地数据已载入
-        </span>
+        <a href="https://www.njhouse.com.cn/" target="_blank" class="inline-flex items-center px-3 py-2 rounded-xl text-xs font-medium bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 shadow-xs transition">
+          <svg class="w-3.5 h-3.5 mr-1 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          访问 NJhouse 房产局官网
+        </a>
       </div>
     </div>
   </header>
@@ -54,705 +59,431 @@
   <!-- 主体内容 -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-    <!-- 顶部置顶提醒：购房成本与月供精算器 (时刻提醒买房不易与现金流压力) -->
+    <!-- 模块 1: 购房成本与月供精算器 (时刻提醒买房不易与现金流压力) -->
     <section class="bg-white rounded-2xl p-6 border-2 border-indigo-100 shadow-sm space-y-6">
       <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
           <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
             <span class="w-2 h-4 bg-emerald-600 rounded-sm inline-block"></span>
             江宁 350-450万 购房成本与月供精算器
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 shadow-xs">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
               ⚠️ 时刻提醒 · 买房不易 · 审慎规划
             </span>
           </h2>
           <p class="text-xs text-slate-500 mt-1">支持南京首套/二套房贷、公积金与契税新政 · 真实呈现首付款、每月月供及总利息支出</p>
         </div>
-        <div class="text-xs text-indigo-600 font-medium bg-indigo-50 px-2.5 py-1 rounded-lg self-start sm:self-auto border border-indigo-100">
-          商贷基准 ~3.00% | 公积金 ~2.60%
+        <div class="text-xs text-slate-500 self-start sm:self-auto">
+          基准利率：首套商贷 3.00% | 首套公积金 2.60%
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- 输入项 -->
-        <div class="space-y-4 text-xs">
-          <div>
-            <div class="flex justify-between items-center mb-1">
-              <label class="block font-medium text-slate-700">房屋总价 (万元)</label>
-              <span class="text-[10px] text-slate-400">滑动或直接输入</span>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- 左侧输入控制器 (7列) -->
+        <div class="lg:col-span-7 space-y-4">
+          <!-- 房屋总价控制 -->
+          <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold text-slate-700">房屋总价 (万元)</label>
+              <div class="flex items-center space-x-1.5">
+                <span class="text-[11px] text-slate-400">滑动或直接输入</span>
+                <input type="number" id="numTotalBudget" min="150" max="1000" step="5" value="400" 
+                  class="w-20 px-2 py-0.5 text-right font-bold text-slate-800 bg-white border border-slate-200 rounded text-xs focus:ring-1 focus:ring-indigo-500" />
+                <span class="text-xs text-slate-500">万</span>
+              </div>
             </div>
-            <div class="flex items-center space-x-2">
-              <input type="range" id="inputTotalBudget" min="200" max="650" step="5" value="400" class="w-full accent-indigo-600" />
-              <input type="number" id="numTotalBudget" value="400" step="5" class="w-20 px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 font-bold text-sm text-center" />
-            </div>
-            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+            <input type="range" id="inputTotalBudget" min="200" max="650" step="5" value="400" 
+              class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+            <div class="flex justify-between text-[11px] text-slate-400">
               <span>200万</span>
-              <span class="text-indigo-600 font-medium">当前设定总价：<span id="labelBudgetDisplay">400</span>万</span>
+              <span class="font-semibold text-indigo-600">当前设定总价: <span id="labelBudgetDisplay">400</span>万</span>
               <span>650万</span>
             </div>
           </div>
 
-          <!-- 首付比例 与 自定义首付金额 (双向联动) -->
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- 首付模式选择 -->
             <div>
-              <div class="flex justify-between items-center mb-1">
-                <label class="block font-medium text-slate-700">首付比例</label>
-                <span id="labelDownPayRatio" class="text-[10px] text-indigo-600 font-bold">20.0%</span>
+              <div class="flex items-center justify-between mb-1">
+                <label class="text-xs font-semibold text-slate-600">首付比例</label>
+                <span id="labelDownPercent" class="text-xs font-bold text-indigo-600">20.0%</span>
               </div>
-              <select id="selectDownPaymentRate" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-xs">
-                <option value="0.15">15% (首套最低)</option>
-                <option value="0.20" selected>20% (主流选择)</option>
-                <option value="0.25">25% (适度提高)</option>
-                <option value="0.30">30% (自住稳健)</option>
-                <option value="0.40">40%</option>
-                <option value="0.50">50%</option>
-                <option value="0.60">60%</option>
+              <select id="selectDownPaymentRate" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500">
+                <option value="0.15">15% (南京目前首套最低政策门槛)</option>
+                <option value="0.20" selected>20% (稳健型改善建议)</option>
+                <option value="0.30">30% (传统置换适中首付)</option>
+                <option value="0.40">40% (低杠杆防守型置业)</option>
+                <option value="0.50">50% (半按揭对冲)</option>
                 <option value="custom">✍️ 自定义具体金额</option>
               </select>
             </div>
+
+            <!-- 自定义首付输入框 -->
             <div>
-              <div class="flex justify-between items-center mb-1">
-                <label class="block font-medium text-slate-700">自定义首付 (万元)</label>
-                <span class="text-[10px] text-indigo-600 font-medium">可直接输入</span>
+              <div class="flex items-center justify-between mb-1">
+                <label class="text-xs font-semibold text-slate-600">自定义首付 (万元)</label>
+                <span class="text-[11px] text-indigo-500 font-medium">可直接输入</span>
               </div>
               <div class="relative">
-                <input type="number" id="inputCustomDownPayment" value="80.0" step="0.1" min="0" max="650" class="w-full px-2.5 py-1.5 pr-7 rounded-lg border border-indigo-200 bg-indigo-50/30 text-indigo-900 font-bold text-xs focus:bg-white focus:border-indigo-500 transition" placeholder="首付金额" />
-                <span class="absolute right-2 top-1.5 text-xs text-slate-400 pointer-events-none">万</span>
+                <input type="number" id="inputCustomDownPayment" value="80.0" step="1" min="0" max="800"
+                  class="w-full px-3 py-2 text-xs border-2 border-slate-300 rounded-xl bg-white text-slate-800 font-bold focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500" />
+                <span class="absolute right-3 top-2 text-xs text-slate-400">万</span>
               </div>
             </div>
-          </div>
 
-          <div class="grid grid-cols-2 gap-3">
+            <!-- 贷款年限 -->
             <div>
-              <label class="block font-medium text-slate-700 mb-1">贷款年限</label>
-              <select id="selectLoanYears" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-xs">
+              <label class="text-xs font-semibold text-slate-600 block mb-1">贷款年限</label>
+              <select id="selectLoanYears" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500">
                 <option value="30" selected>30 年 (360期)</option>
                 <option value="25">25 年 (300期)</option>
                 <option value="20">20 年 (240期)</option>
                 <option value="15">15 年 (180期)</option>
               </select>
             </div>
+
+            <!-- 还款方式 -->
             <div>
-              <label class="block font-medium text-slate-700 mb-1">还款方式</label>
-              <select id="selectRepayType" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-xs">
-                <option value="acpi" selected>等额本息 (每月固定)</option>
-                <option value="acp">等额本金 (逐月递减)</option>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">还款方式</label>
+              <select id="selectRepayType" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500">
+                <option value="equal_loan" selected>等额本息 (每月固定)</option>
+                <option value="equal_principal">等额本金 (逐月递减)</option>
               </select>
             </div>
-          </div>
 
-          <div class="grid grid-cols-2 gap-3">
+            <!-- 公积金贷款额与利率 -->
             <div>
-              <label class="block font-medium text-slate-700 mb-1">公积金贷款额 (万)</label>
-              <input type="number" id="inputGjjAmount" value="100" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs font-semibold" />
+              <div class="flex items-center justify-between mb-1">
+                <label class="text-xs font-semibold text-slate-600">公积金贷款额 (万)</label>
+                <span class="text-[10px] text-slate-400">南京双人最高100万</span>
+              </div>
+              <input type="number" id="inputProvidentLoan" value="100" min="0" max="100" step="10"
+                class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500" />
             </div>
-            <div>
-              <label class="block font-medium text-slate-700 mb-1">公积金利率 (%)</label>
-              <input type="number" id="inputGjjRate" value="2.60" step="0.05" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs" />
-            </div>
-          </div>
 
-          <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block font-medium text-slate-700 mb-1">商业贷款利率 (%)</label>
-              <input type="number" id="inputBizRate" value="3.00" step="0.05" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 text-xs" />
+              <label class="text-xs font-semibold text-slate-600 block mb-1">公积金利率 (%)</label>
+              <input type="number" id="inputProvidentRate" value="2.60" step="0.05"
+                class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500" />
             </div>
+
+            <!-- 商贷利率与商贷额 -->
             <div>
-              <label class="block font-medium text-slate-700 mb-1">商业贷款额 (自动测算)</label>
-              <div class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs" id="dispBizLoanWan">
+              <label class="text-xs font-semibold text-slate-600 block mb-1">商业贷款利率 (%)</label>
+              <input type="number" id="inputCommercialRate" value="3.00" step="0.05"
+                class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500" />
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">商业贷款额 (自动测算)</label>
+              <div id="displayCommercialLoan" class="px-3 py-2 text-xs bg-slate-100 rounded-xl text-slate-600 font-bold border border-slate-200">
                 220.0 万
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 月供计算结果 -->
-        <div class="bg-slate-50 rounded-xl p-5 border border-slate-100 flex flex-col justify-between">
-          <div>
-            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">贷款与还款测算</div>
-            <div class="mt-4">
+        <!-- 右侧精算看板 (5列) -->
+        <div class="lg:col-span-5 bg-gradient-to-br from-slate-50 to-indigo-50/30 rounded-xl p-5 border border-indigo-100/80 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">贷款与还款测算</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">计算已就绪</span>
+          </div>
+
+          <div class="space-y-3">
+            <div>
               <div class="text-xs text-slate-500">首付金额</div>
-              <div class="text-2xl font-bold text-slate-900 mt-0.5"><span id="resDownPay">80.0</span> <span class="text-sm font-normal text-slate-400">万元 (<span id="resDownPayRatio">20.0%</span>)</span></div>
+              <div class="flex items-baseline space-x-1.5 mt-0.5">
+                <span id="resDownPayment" class="text-2xl font-black text-slate-900 tracking-tight">80.0</span>
+                <span class="text-xs font-bold text-slate-600">万元</span>
+                <span id="resDownPaymentRatio" class="text-xs text-slate-400 font-medium">(20.0%)</span>
+              </div>
             </div>
 
-            <div class="mt-4">
+            <div>
               <div class="text-xs text-slate-500">贷款总额</div>
-              <div class="text-lg font-bold text-indigo-700 mt-0.5"><span id="resLoanTotal">320.0</span> <span id="resLoanBreakdown" class="text-sm font-normal text-slate-400">万 (公积金 100.0 + 商贷 220.0)</span></div>
+              <div class="flex items-baseline space-x-1.5 mt-0.5">
+                <span id="resTotalLoan" class="text-xl font-bold text-slate-800 tracking-tight">320.0</span>
+                <span class="text-xs text-slate-600">万</span>
+                <span id="resLoanBreakdown" class="text-xs text-slate-500">(公积金 100.0 + 商贷 220.0)</span>
+              </div>
             </div>
 
-            <div class="mt-4 pt-3 border-t border-slate-200">
-              <div class="text-xs font-medium text-indigo-900">每月月供支出</div>
-              <div class="text-2xl font-extrabold text-indigo-600 mt-0.5"><span id="resMonthlyPay">--</span> <span class="text-xs font-normal text-slate-500">元/月</span></div>
-              <div id="resRepayDetail" class="text-[11px] text-slate-400 mt-1">公积金 4,135 + 商贷 9,320</div>
+            <div class="pt-2 border-t border-slate-200/80">
+              <div class="text-xs text-indigo-900 font-medium flex items-center justify-between">
+                <span>每月月供支出</span>
+                <span id="resRepayTypeBadge" class="text-[10px] text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">等额本息</span>
+              </div>
+              <div class="flex items-baseline space-x-1.5 mt-1">
+                <span id="resMonthlyPayment" class="text-3xl font-black text-indigo-600 tracking-tight">13,277</span>
+                <span class="text-xs font-bold text-indigo-600">元/月</span>
+              </div>
+              <div id="resMonthlySub" class="text-[11px] text-slate-500 mt-1">
+                公积金约 4,004 + 商贷约 9,273
+              </div>
+            </div>
+
+            <div class="text-xs text-slate-500 pt-1">
+              总利息支出: <strong id="resTotalInterest" class="text-slate-800">约 157.9 万元</strong>
             </div>
           </div>
 
-          <div class="text-[11px] text-slate-400 mt-4">
-            总利息支出：约 <span id="resTotalInterest" class="font-semibold text-slate-700">--</span> 万元
+          <!-- 税费与杂费参考卡片 -->
+          <div class="bg-white p-3.5 rounded-lg border border-slate-200/80 space-y-2 text-xs">
+            <div class="font-bold text-slate-700 flex items-center justify-between">
+              <span>税费与落地支出预估</span>
+              <span class="text-[10px] text-slate-400">按南京现行政策</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-[11px]">
+              <div>契税 (新政首套1%~1.5%): <strong id="resDeedTax" class="text-slate-800">~4.0万</strong></div>
+              <div>二手房中介/代办费: <strong class="text-slate-800">约 4.0 ~ 6.0万</strong></div>
+              <div>装修与封阳台备用金: <strong class="text-slate-800">建议留足 15~25万</strong></div>
+              <div>前期总预备流动资金: <strong id="resTotalInitialCash" class="text-rose-600 font-bold">~103.0万</strong></div>
+            </div>
           </div>
         </div>
-
-        <!-- 购房一次性税费估算 -->
-        <div class="bg-indigo-50/40 rounded-xl p-5 border border-indigo-100 flex flex-col justify-between">
-          <div>
-            <div class="text-xs font-semibold text-indigo-900 uppercase tracking-wider">首付款之外的额外费用支出</div>
-            <div class="mt-4 space-y-3 text-xs">
-              <div class="flex justify-between items-center">
-                <span class="text-slate-600">契税 (120-140㎡ 新政 1%)：</span>
-                <span class="font-semibold text-slate-800"><span id="resTax">4.0</span> 万元</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-slate-600">二手房中介服务费 (约 1%~1.5%)：</span>
-                <span class="font-semibold text-slate-800"><span id="resAgencyFee">4.0 ~ 6.0</span> 万元</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-slate-600">维修基金 + 评估登记工本：</span>
-                <span class="font-semibold text-slate-800">约 0.8 万元</span>
-              </div>
-              <div class="pt-3 border-t border-indigo-100 flex justify-between items-center text-sm font-bold text-slate-900">
-                <span>前期总备用资金 (首付+税杂)：</span>
-                <span class="text-indigo-700"><span id="resReadyCash">89.0</span> 万元</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-4 p-3 bg-white/80 rounded-lg text-[11px] text-indigo-700 leading-relaxed">
-            💡 <strong>置业资金规划建议</strong>：总价 <span id="resAdviceBudget">400</span> 万左右的房源，建议预留 <span id="resAdviceCash">90~95</span> 万左右流动备用资金即可稳妥启动签约与过户。
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- 模块 1: 家庭现金流与负债率 (DTI) 安全垫压力测试器 -->
+    <!-- 模块 2: 家庭现金流与负债率 (DTI) 安全垫压力测试器 -->
     <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
       <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
           <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
             <span class="w-2 h-4 bg-indigo-600 rounded-sm inline-block"></span>
             家庭现金流与负债率 (DTI) 安全垫压力测试器
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
               🛡️ 全口径持有成本 · 风险抗压评估
             </span>
           </h2>
-          <p class="text-xs text-slate-500 mt-1">不仅算房贷，更算齐物业、车位、水电暖等每月硬支出 · 评估收入负债承压等级与家庭紧急避险储备金</p>
+          <p class="text-xs text-slate-500 mt-1">不仅看月供！把“物业费+车位管理费+水电地暖能耗”算齐，量化家庭安全垫，避免过度杠杆引发断供风险</p>
         </div>
-        <div class="text-xs text-indigo-700 font-medium bg-indigo-50/80 px-2.5 py-1 rounded-lg border border-indigo-100 self-start sm:self-auto">
-          银行稳健红线：DTI &le; 50% | 舒适自住区间：&le; 38%
+        <div class="text-xs text-slate-500 self-start sm:self-auto">
+          银行红线: 50% | 舒适安全线: &le; 35%
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- 左侧输入区 (5列) -->
-        <div class="lg:col-span-5 space-y-4 text-xs">
-          <div>
-            <div class="flex justify-between items-center mb-1">
-              <label class="font-bold text-slate-700">家庭月税后总收入 (万元/月)</label>
-              <span class="text-indigo-600 font-bold text-sm" id="labelFamilyIncome">2.5 万元 (¥25,000)</span>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- 左侧输入栏 (7列) -->
+        <div class="lg:col-span-7 space-y-4">
+          <!-- 家庭税后月收入 -->
+          <div class="bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold text-slate-700">家庭税后月收入 (元/月，含公积金月缴存)</label>
+              <div class="flex items-center space-x-1.5">
+                <span id="labelFamilyIncome" class="font-bold text-indigo-600 text-sm">30,000</span>
+                <span class="text-xs text-slate-500">元/月</span>
+              </div>
             </div>
-            <input type="range" id="inputFamilyIncome" min="1.2" max="6.0" step="0.1" value="2.5" class="w-full accent-indigo-600" />
-            <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
-              <span>1.2万 (紧凑期)</span>
-              <span>2.5万 (工薪改善期)</span>
-              <span>5.0万+ (充裕期)</span>
+            <input type="range" id="inputFamilyIncome" min="15000" max="80000" step="1000" value="30000" 
+              class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+            <div class="flex justify-between text-[11px] text-slate-400">
+              <span>1.5万/月</span>
+              <span>3.0万/月 (江宁双职工典型)</span>
+              <span>8.0万/月</span>
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-3 pt-1">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- 房贷月供联动输入 -->
             <div>
-              <label class="block font-medium text-slate-700 mb-1">房贷月供支出 (元/月)</label>
-              <input type="number" id="inputDtiMortgage" value="13470" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-800 font-bold text-xs bg-slate-50" title="已自动关联上方精算器，亦可微调" />
-              <span class="text-[10px] text-indigo-500 mt-0.5 inline-block">🔗 已与上方精算器自动联动</span>
+              <div class="flex items-center justify-between mb-1">
+                <label class="text-xs font-semibold text-slate-600">月供金额 (元/月)</label>
+                <span class="text-[10px] text-indigo-500">已与上方精算器联动</span>
+              </div>
+              <input type="number" id="inputDtiMortgage" value="13277" step="100" min="0" max="60000"
+                class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 font-bold focus:ring-2 focus:ring-indigo-500" />
             </div>
+
+            <!-- 物业费 -->
             <div>
-              <label class="block font-medium text-slate-700 mb-1">物业费标准 (120-140㎡)</label>
-              <select id="selectPropertyFee" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700">
-                <option value="420" selected>品质次新 (约 ¥3.2/㎡ · ¥420/月)</option>
-                <option value="580">高端新房 (约 ¥4.5/㎡ · ¥580/月)</option>
-                <option value="700">顶级改善 (约 ¥5.4/㎡ · ¥700/月)</option>
-                <option value="300">普通高层 (约 ¥2.3/㎡ · ¥300/月)</option>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">物业费档次 (130㎡改善)</label>
+              <select id="selectPropertyFee" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500">
+                <option value="650">科技豪宅/顶奢会所 (~5.0元/㎡·月，约650元/月)</option>
+                <option value="420" selected>次新品质大盘 (3.2元/㎡·月，约420元/月)</option>
+                <option value="260">常规普通多层/小高层 (2.0元/㎡·月，约260元/月)</option>
+              </select>
+            </div>
+
+            <!-- 车位管理费 -->
+            <div>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">车位管理费 / 租金</label>
+              <select id="selectParkingFee" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500">
+                <option value="80" selected>自有产权车位 (管理费约 80元/月)</option>
+                <option value="350">租赁地下车位 (约 350元/月)</option>
+                <option value="160">双车位持有管理费 (约 160元/月)</option>
+                <option value="0">暂无车位支出 (0元/月)</option>
+              </select>
+            </div>
+
+            <!-- 水电燃气与采暖/空调能耗 -->
+            <div>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">水电与采暖/六恒能耗 (月均平摊)</label>
+              <select id="selectUtilityFee" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500">
+                <option value="550" selected>普通地暖/多联机空调 (冬夏高峰平摊约 550元/月)</option>
+                <option value="900">集中六恒科技系统能源费 (平摊约 900元/月)</option>
+                <option value="300">极简低能耗生活 (约 300元/月)</option>
               </select>
             </div>
           </div>
+        </div>
 
-          <div class="grid grid-cols-2 gap-3">
+        <!-- 右侧压力测试结果看板 (5列) -->
+        <div id="dtiResultCard" class="lg:col-span-5 rounded-xl p-5 border space-y-4 transition-colors duration-300 bg-amber-50/40 border-amber-200">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">现金流抗风险评估</span>
+            <span id="dtiStatusBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">
+              ⚠️ 偏紧·谨慎加杠杆
+            </span>
+          </div>
+
+          <div class="space-y-3">
             <div>
-              <label class="block font-medium text-slate-700 mb-1">地下车位月支出</label>
-              <select id="selectParkingFee" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700">
-                <option value="80">买车位 (产权维保 ¥80/月)</option>
-                <option value="300" selected>租车位 (地库长租 ¥300/月)</option>
-                <option value="500">双车位需求 (租+管 ¥500/月)</option>
-                <option value="0">暂无车位需求 (¥0/月)</option>
-              </select>
+              <div class="text-xs text-slate-500">全口径房产总支出 (月供 + 持有成本)</div>
+              <div class="flex items-baseline space-x-1.5 mt-0.5">
+                <span id="resTotalHousingCost" class="text-2xl font-black text-slate-900 tracking-tight">14,327</span>
+                <span class="text-xs font-bold text-slate-600">元/月</span>
+              </div>
+              <div id="resHousingCostDetail" class="text-[11px] text-slate-500 mt-0.5">
+                基础房贷 13,277 + 持有运维 1,050
+              </div>
             </div>
+
+            <div class="pt-2 border-t border-slate-200/80">
+              <div class="text-xs text-slate-600 font-medium flex items-center justify-between">
+                <span>家庭房贷收入比 (DTI)</span>
+                <span id="resDtiPercent" class="text-lg font-black text-amber-600">47.8%</span>
+              </div>
+              <!-- 进度条 -->
+              <div class="w-full bg-slate-200 rounded-full h-2 mt-1.5 overflow-hidden">
+                <div id="dtiProgressBar" class="h-2 rounded-full transition-all duration-300 bg-amber-500" style="width: 47.8%;"></div>
+              </div>
+            </div>
+
             <div>
-              <label class="block font-medium text-slate-700 mb-1">水电气暖能耗综合</label>
-              <select id="selectUtilityFee" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700">
-                <option value="400">春秋温和季 (约 ¥400/月)</option>
-                <option value="650" selected>全年均摊·地暖/中央空调 (¥650/月)</option>
-                <option value="900">冬季采暖高峰 (约 ¥900/月)</option>
-              </select>
+              <div class="text-xs text-slate-500">扣除房产支出后，剩余家庭可支配生活费</div>
+              <div class="flex items-baseline space-x-1.5 mt-0.5">
+                <span id="resRemainingDisposable" class="text-xl font-bold text-slate-800 tracking-tight">15,673</span>
+                <span class="text-xs text-slate-600">元/月</span>
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5">用于子女教育、日常饮食、商业保险与家庭应急储蓄</div>
             </div>
           </div>
 
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 text-[11px] text-slate-500 leading-relaxed">
-            💡 <strong>硬性支出定义</strong>：无论当月是否节约，只要房屋在手就必须强制支出的刚性现金流（房贷+物业+车位+基本能耗）。
-          </div>
-        </div>
-
-        <!-- 右侧测算结果与安全垫看板 (7列) -->
-        <div class="lg:col-span-7 bg-slate-50 rounded-xl p-5 border border-slate-200 flex flex-col justify-between space-y-4">
-          <div>
-            <!-- 核心数据行 -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pb-4 border-b border-slate-200">
-              <div class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-2xs">
-                <div class="text-[11px] text-slate-500 font-medium">每月硬性持有总支出</div>
-                <div class="text-xl font-bold text-slate-900 mt-1">
-                  ¥<span id="dtiTotalMonthly">14,840</span>
-                </div>
-                <div class="text-[10px] text-slate-400 mt-0.5">房贷 + 物业车位能耗</div>
-              </div>
-
-              <div class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-2xs">
-                <div class="text-[11px] text-slate-500 font-medium">综合负债率 (Total DTI)</div>
-                <div class="text-xl font-extrabold text-rose-600 mt-1">
-                  <span id="dtiRatio">59.4</span>%
-                </div>
-                <div class="text-[10px] text-slate-400 mt-0.5">纯房贷月供比: <span id="dtiMortgageRatio">53.9%</span></div>
-              </div>
-
-              <div class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-2xs">
-                <div class="text-[11px] text-slate-500 font-medium">税后每月自由结余</div>
-                <div class="text-xl font-bold text-emerald-600 mt-1">
-                  ¥<span id="dtiSurplus">10,160</span>
-                </div>
-                <div class="text-[10px] text-slate-400 mt-0.5">用于餐饮日常与小家储蓄</div>
-              </div>
-            </div>
-
-            <!-- 负债压力计动态进度条 -->
-            <div class="mt-4 space-y-1.5">
-              <div class="flex justify-between items-center text-xs">
-                <span class="font-medium text-slate-700">家庭负债安全垫状态评估:</span>
-                <span id="dtiStatusBadge" class="px-2.5 py-0.5 rounded-md font-bold text-xs bg-rose-100 text-rose-800">
-                  🔴 红灯 · 紧绷警戒区 (需慎重)
-                </span>
-              </div>
-              <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden flex">
-                <div id="dtiProgressBar" class="h-2.5 transition-all duration-500 bg-rose-500" style="width: 59%;"></div>
-              </div>
-              <div class="flex justify-between text-[10px] text-slate-400 pt-0.5">
-                <span>0%</span>
-                <span class="text-emerald-600 font-medium">35% (舒适线)</span>
-                <span class="text-amber-600 font-medium">50% (稳健警戒线)</span>
-                <span class="text-rose-600 font-medium">70% (高危负债)</span>
-              </div>
-            </div>
-
-            <!-- 应急储备金建议 -->
-            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div class="p-3 bg-white rounded-xl border border-indigo-50">
-                <div class="text-[11px] font-bold text-indigo-900 flex items-center">
-                  <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 mr-1.5"></span>
-                  建议 6个月 应急备用金
-                </div>
-                <div class="text-base font-bold text-indigo-700 mt-1">
-                  约 <span id="resReserve6">12.5</span> 万元
-                </div>
-                <div class="text-[10px] text-slate-400 mt-0.5">覆盖半年硬性支出+基础生活费</div>
-              </div>
-
-              <div class="p-3 bg-white rounded-xl border border-emerald-50">
-                <div class="text-[11px] font-bold text-emerald-900 flex items-center">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
-                  建议 12个月 绝对避险金
-                </div>
-                <div class="text-base font-bold text-emerald-700 mt-1">
-                  约 <span id="resReserve12">25.0</span> 万元
-                </div>
-                <div class="text-[10px] text-slate-400 mt-0.5">抵御降薪/职业转轨/突发大额开销</div>
-              </div>
-            </div>
-          </div>
-
-          <div id="dtiAdviceText" class="text-[11px] text-slate-600 bg-rose-50/50 p-3 rounded-lg border border-rose-100/70 leading-relaxed">
-            ⚠️ <strong>家庭现金流风险警示</strong>：综合负债率达 59.4% 超过了 50% 银行警戒线。每月超过一半收入被房屋绑定，抗职业转轨与失业风险偏弱。建议考虑将总价预算适度压缩至 350-380 万元，或增加首付降低贷款本金。
+          <div id="dtiAdviceBox" class="p-3 bg-white/80 rounded-lg border border-amber-100 text-xs text-slate-700 leading-relaxed">
+            💡 <strong>理财与杠杆建议</strong>：房贷支出占家庭月入近半，抗单边降薪或意外冲击能力较弱；建议手头保留至少 12 个月月供的独立流动备用金（约 16-18 万元）作为绝对不可挪用的安全气囊。
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 市场概览指标卡片 -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-        <div class="text-xs font-medium text-slate-500 mb-1">当前板块·二手房成交均价</div>
-        <div class="flex items-baseline space-x-2">
-          <span id="cardAvgPrice" class="text-2xl font-bold text-slate-900 tracking-tight">--</span>
-          <span class="text-xs text-slate-400">元/㎡</span>
-        </div>
-        <div id="cardPriceDiff" class="mt-2 text-xs flex items-center text-rose-600 font-medium">
-          --
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-        <div class="text-xs font-medium text-slate-500 mb-1">当前板块·月成交套数</div>
-        <div class="flex items-baseline space-x-2">
-          <span id="cardVolume" class="text-2xl font-bold text-slate-900 tracking-tight">--</span>
-          <span class="text-xs text-slate-400">套/月 (新房+二手)</span>
-        </div>
-        <div id="cardVolumeTrend" class="mt-2 text-xs flex items-center text-slate-500 font-medium">
-          --
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-        <div class="text-xs font-medium text-slate-500 mb-1">当前板块·新房网签均价</div>
-        <div class="flex items-baseline space-x-2">
-          <span id="cardNewPrice" class="text-2xl font-bold text-emerald-600 tracking-tight">--</span>
-          <span class="text-xs text-slate-400">元/㎡</span>
-        </div>
-        <div id="cardNewPriceDiff" class="mt-2 text-xs text-slate-500 font-medium">
-          --
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm bg-gradient-to-br from-indigo-50/50 to-white">
-        <div class="text-xs font-medium text-indigo-900 mb-1">120-140㎡ 改善参考总价带</div>
-        <div class="flex items-baseline space-x-2">
-          <span id="cardBudgetRange" class="text-2xl font-bold text-indigo-700 tracking-tight">320 - 450</span>
-          <span class="text-xs text-indigo-500">万元</span>
-        </div>
-        <div class="mt-2 text-xs text-indigo-600">
-          折合单价约 2.50 ~ 3.45 万/㎡
-        </div>
-      </div>
-    </section>
-
-    <!-- 板块与筛选控制器 -->
-    <section class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center flex-wrap gap-2">
-        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mr-1">选择板块:</span>
-        <button class="region-btn px-3.5 py-1.5 text-xs font-medium rounded-xl transition bg-indigo-600 text-white shadow-sm" data-region="jn_core">江宁全区</button>
-        <button class="region-btn px-3.5 py-1.5 text-xs font-medium rounded-xl transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-region="jiulonghu">九龙湖 (改善核心)</button>
-        <button class="region-btn px-3.5 py-1.5 text-xs font-medium rounded-xl transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-region="baijiahu">百家湖 / 小龙湾</button>
-        <button class="region-btn px-3.5 py-1.5 text-xs font-medium rounded-xl transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-region="zhushan">东山 / 杨家圩</button>
-        <button class="region-btn px-3.5 py-1.5 text-xs font-medium rounded-xl transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-region="fangshan">大学城 / 方山洋房</button>
-        <button class="region-btn px-3.5 py-1.5 text-xs font-medium rounded-xl transition bg-slate-100 text-slate-600 hover:bg-slate-200" data-region="nanjing_all">南京全市大盘</button>
-      </div>
-      <div class="flex items-center space-x-2 text-xs text-slate-500">
-        <span>数据范围：</span>
-        <span id="dataTimeRange" class="font-medium text-slate-700 bg-slate-100 px-2 py-1 rounded">2023-01 ~ 2026-09</span>
-      </div>
-    </section>
-
-    <!-- 主图表区：双轴量价走势图 -->
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-2">
-        <div>
-          <h2 class="text-base font-bold text-slate-900 flex items-center">
-            <span class="w-2 h-4 bg-indigo-600 rounded-sm mr-2 inline-block"></span>
-            <span id="mainChartTitle">江宁全区</span> · 新房与二手房量价综合走势
-          </h2>
-          <p class="text-xs text-slate-500 mt-0.5">左轴：成交均价（折线图，单位元/㎡） | 右轴：成交套数（柱状图，单位套） | 支持下方滑动缩放</p>
-        </div>
-        <div class="flex items-center space-x-2 text-xs">
-          <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500 mr-1"></span>二手成交价</span>
-          <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-1"></span>新房网签价</span>
-          <span class="inline-flex items-center"><span class="w-2.5 h-2.5 bg-indigo-200 mr-1"></span>二手成交量</span>
-          <span class="inline-flex items-center"><span class="w-2.5 h-2.5 bg-emerald-200 mr-1"></span>新房成交量</span>
-        </div>
-      </div>
-      <div id="mainChart" class="chart-container"></div>
-    </section>
-
-    <!-- 模块 3: 江宁各板块「库存去化周期与房东心态博弈晴雨表」 -->
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-3">
-        <div>
-          <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
-            <span class="w-2 h-4 bg-teal-600 rounded-sm inline-block"></span>
-            江宁各板块「库存去化周期与房东心态博弈晴雨表」
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-teal-50 text-teal-700 border border-teal-200">
-              📊 供求基本盘 · 锁定砍价博弈窗口
-            </span>
-          </h2>
-          <p class="text-xs text-slate-500 mt-1">
-            去化周期 (月) = 在售存量 &divide; 月均去化量 · 周期越长买方话语权越强，周期越短次新业主越惜售抗跌
-          </p>
-        </div>
-        <!-- 景气度图例说明 -->
-        <div class="flex items-center gap-2 text-xs flex-wrap self-start sm:self-auto">
-          <span class="inline-flex items-center px-2 py-1 rounded bg-rose-50 text-rose-700 border border-rose-200">
-            &lt; 14月 · 惜售紧平衡
-          </span>
-          <span class="inline-flex items-center px-2 py-1 rounded bg-amber-50 text-amber-700 border border-amber-200">
-            14-18月 · 温和平衡
-          </span>
-          <span class="inline-flex items-center px-2 py-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
-            &gt; 18月 · 买方绝对主导
-          </span>
-        </div>
-      </div>
-
-      <!-- 5 大板块博弈矩阵卡片 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-
-        <!-- 1. 九龙湖核心区 -->
-        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-sm transition space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="font-bold text-slate-900 text-sm flex items-center">
-              <span class="w-2 h-2 rounded-full bg-indigo-500 mr-2"></span>
-              九龙湖核心 (翠屏/殷巷)
-            </div>
-            <span class="px-2 py-0.5 rounded-md font-semibold text-[11px] bg-amber-100 text-amber-800">
-              去化 14.0 个月 · 温和平衡
-            </span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-[11px] bg-white p-2.5 rounded-lg border border-slate-100">
-            <div><span class="text-slate-400">在售有效挂牌:</span> <strong class="text-slate-700">~2,360 套</strong></div>
-            <div><span class="text-slate-400">近半年月均去化:</span> <strong class="text-slate-700">~168 套/月</strong></div>
-            <div><span class="text-slate-400">主流议价空间:</span> <strong class="text-amber-600">4.5% ~ 6.5%</strong></div>
-            <div><span class="text-slate-400">400万总价让利:</span> <strong class="text-indigo-600">18 ~ 26 万元</strong></div>
-          </div>
-          <div class="text-[11px] text-slate-600 leading-relaxed bg-amber-50/40 p-2.5 rounded-lg border border-amber-100">
-            🎯 <strong>房东心态与出价锦囊</strong>：万科翡翠公园、保利中央公园好楼层业主抗压极强，普遍不愿大降；但底楼或顶楼房源挂牌较久，可试探按 7%~8% 折让坚决出价。
-          </div>
-        </div>
-
-        <!-- 2. 百家湖 / 小龙湾 -->
-        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-sm transition space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="font-bold text-slate-900 text-sm flex items-center">
-              <span class="w-2 h-2 rounded-full bg-rose-500 mr-2"></span>
-              百家湖 / 小龙湾 (商圈核心)
-            </div>
-            <span class="px-2 py-0.5 rounded-md font-semibold text-[11px] bg-rose-100 text-rose-800">
-              去化 12.5 个月 · 改善硬通货
-            </span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-[11px] bg-white p-2.5 rounded-lg border border-slate-100">
-            <div><span class="text-slate-400">在售有效挂牌:</span> <strong class="text-slate-700">~1,810 套</strong></div>
-            <div><span class="text-slate-400">近半年月均去化:</span> <strong class="text-slate-700">~145 套/月</strong></div>
-            <div><span class="text-slate-400">主流议价空间:</span> <strong class="text-rose-600">3.5% ~ 5.5%</strong></div>
-            <div><span class="text-slate-400">400万总价让利:</span> <strong class="text-indigo-600">14 ~ 22 万元</strong></div>
-          </div>
-          <div class="text-[11px] text-slate-600 leading-relaxed bg-rose-50/40 p-2.5 rounded-lg border border-rose-100">
-            🎯 <strong>房东心态与出价锦囊</strong>：江宁流通性最好的保值板块，品质次新房东惜售心态明显。看中龙湖春江郦城或万科金域蓝湾，砍价需讲究策略，4% 左右折让即可谈拢。
-          </div>
-        </div>
-
-        <!-- 3. 大学城 / 方山低密 -->
-        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-sm transition space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="font-bold text-slate-900 text-sm flex items-center">
-              <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
-              大学城 / 方山 (低密洋房)
-            </div>
-            <span class="px-2 py-0.5 rounded-md font-semibold text-[11px] bg-emerald-100 text-emerald-800">
-              去化 24.2 个月 · 买方绝对主导
-            </span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-[11px] bg-white p-2.5 rounded-lg border border-slate-100">
-            <div><span class="text-slate-400">在售有效挂牌:</span> <strong class="text-slate-700">~2,950 套</strong></div>
-            <div><span class="text-slate-400">近半年月均去化:</span> <strong class="text-slate-700">~122 套/月</strong></div>
-            <div><span class="text-slate-400">主流议价空间:</span> <strong class="text-emerald-700 font-bold">8.5% ~ 12.0%</strong></div>
-            <div><span class="text-slate-400">400万总价让利:</span> <strong class="text-indigo-600">34 ~ 48 万元</strong></div>
-          </div>
-          <div class="text-[11px] text-slate-600 leading-relaxed bg-emerald-50/40 p-2.5 rounded-lg border border-emerald-100">
-            🎯 <strong>房东心态与出价锦囊</strong>：洋房去化速度慢，房东多数属于名下多套换房置换，急售迫切。适合买家带 5~10 万诚意定金现场谈判，争取 10% 以上骨折价淘笋。
-          </div>
-        </div>
-
-        <!-- 4. 东山 / 杨家圩 -->
-        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-sm transition space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="font-bold text-slate-900 text-sm flex items-center">
-              <span class="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
-              东山 / 杨家圩 (老城核心)
-            </div>
-            <span class="px-2 py-0.5 rounded-md font-semibold text-[11px] bg-emerald-100 text-emerald-800">
-              去化 20.0 个月 · 买方占优
-            </span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-[11px] bg-white p-2.5 rounded-lg border border-slate-100">
-            <div><span class="text-slate-400">在售有效挂牌:</span> <strong class="text-slate-700">~3,240 套</strong></div>
-            <div><span class="text-slate-400">近半年月均去化:</span> <strong class="text-slate-700">~162 套/月</strong></div>
-            <div><span class="text-slate-400">主流议价空间:</span> <strong class="text-emerald-700 font-bold">7.0% ~ 9.5%</strong></div>
-            <div><span class="text-slate-400">400万总价让利:</span> <strong class="text-indigo-600">28 ~ 38 万元</strong></div>
-          </div>
-          <div class="text-[11px] text-slate-600 leading-relaxed bg-slate-100 p-2.5 rounded-lg">
-            🎯 <strong>房东心态与出价锦囊</strong>：老城区存量庞大，新房四代宅（中建东山樾府、海玥华府现房）与标杆次新（武夷七里湖山等）竞争分流，二手房东心态普遍分化，是挑拣好户型坚决议价的理想战场。
-          </div>
-        </div>
-
-        <!-- 5. 江宁全区大盘基准 -->
-        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-sm transition space-y-3 md:col-span-2 lg:col-span-2">
-          <div class="flex items-center justify-between">
-            <div class="font-bold text-slate-900 text-sm flex items-center">
-              <span class="w-2 h-2 rounded-full bg-teal-500 mr-2"></span>
-              江宁大盘整体研判与谈判节奏建议
-            </div>
-            <span class="px-2 py-0.5 rounded-md font-semibold text-[11px] bg-teal-100 text-teal-800">
-              全区均值 17.8 个月 · 处于买方窗口期
-            </span>
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] bg-white p-2.5 rounded-lg border border-slate-100">
-            <div><span class="text-slate-400">全区在售挂牌:</span> <strong class="text-slate-700">13,850 套</strong></div>
-            <div><span class="text-slate-400">月均成交流速:</span> <strong class="text-slate-700">780 套/月</strong></div>
-            <div><span class="text-slate-400">整体平均折让:</span> <strong class="text-indigo-600">6.8%</strong></div>
-            <div><span class="text-slate-400">建议谈判底线:</span> <strong class="text-emerald-600">保底按 6% 起砍</strong></div>
-          </div>
-          <div class="text-[11px] text-slate-600 leading-relaxed bg-teal-50/30 p-2.5 rounded-lg border border-teal-100">
-            💡 <strong>实战看房与谈判节奏</strong>：2026 年江宁整体仍处买方深度博弈期，切忌仓促交定金。建议挑选 3-4 套同板块对标房源同时跟进，利用中介多方比价压价，让房东之间产生竞价紧迫感。
-          </div>
-        </div>
-
-      </div>
-    </section>
-    
-
-    
-    <!-- 模块 4: 改善置业「看房打分与雷达对比矩阵 (Radar Chart)」 -->
+    <!-- 模块 3: 南京网上房地产 (www.njhouse.com.cn) 官方权威月度市场动态与网签走势 -->
     <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
       <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
             <span class="w-2 h-4 bg-indigo-600 rounded-sm inline-block"></span>
-            改善置业「看房打分与雷达对比矩阵」
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
-              🎯 6大核心维度 · 实地看房量化纠结
+            南京网上房地产 (NJhouse) 官方月度网签与供应走势
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              🏛️ 官方监测分析中心权威通报
             </span>
           </h2>
           <p class="text-xs text-slate-500 mt-1">
-            横向对比典型江宁改善候选盘 · 支持拉动滑块自定义实地看房评分 · 实时多边形雷达图动态渲染
+            数据来源：南京市房地产市场监测分析中心官方月报 · 真实网签备案与上市许可 · 绝无模型平滑或臆造数据
           </p>
         </div>
-        <div class="text-xs text-slate-500">
-          已预载 6 个典型江宁对标样本 (四代新盘 vs 顶奢科技 vs 标杆次新 vs 洋房)
+        <div class="text-xs text-slate-500 flex items-center gap-2">
+          <span>数据周期：</span>
+          <span id="officialDataRange" class="font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+            2026-03 ~ 2026-10
+          </span>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-        <!-- 左侧打分调节器 (7列) -->
-        <div class="lg:col-span-7 space-y-4">
-          <div class="flex items-center space-x-1.5 border-b border-slate-100 pb-2 flex-wrap gap-y-1.5">
-            <span class="text-xs font-bold text-slate-700 mr-1.5 shrink-0">当前调分楼盘:</span>
-            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow-2xs" data-target="0">
-              江宁金茂府
-            </button>
-            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="1">
-              中建·东山樾府
-            </button>
-            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="2">
-              嘉宏·万流江宁
-            </button>
-            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="3">
-              招商·百家臻园
-            </button>
-            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="4">
-              万科翡翠公园
-            </button>
-            <button class="radar-tab-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-target="5">
-              中海·观山樾
-            </button>
+      <!-- 4 张 100% 官方指标卡片 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200">
+          <div class="text-xs font-semibold text-slate-500 mb-1">官方最新月度 · 全市二手住宅网签</div>
+          <div class="flex items-baseline space-x-1.5">
+            <span id="statLatestSecSuites" class="text-2xl font-black text-slate-900 tracking-tight">10,100</span>
+            <span class="text-xs text-slate-500 font-bold">套</span>
           </div>
-
-          <!-- 6 个滑块 -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-              <div class="flex justify-between font-medium text-slate-700">
-                <span>🚇 地铁通勤与距离</span>
-                <span id="scoreVal0" class="font-bold text-indigo-600">8.5</span>
-              </div>
-              <input type="range" id="sliderScore0" min="1" max="10" step="0.5" value="8.5" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">1号线/3号线/5号线/通勤时间</div>
-            </div>
-
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-              <div class="flex justify-between font-medium text-slate-700">
-                <span>🛍️ 商业烟火与配套</span>
-                <span id="scoreVal1" class="font-bold text-indigo-600">8.5</span>
-              </div>
-              <input type="range" id="sliderScore1" min="1" max="10" step="0.5" value="8.5" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">百家湖商圈/万达/文靖路/医院</div>
-            </div>
-
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-              <div class="flex justify-between font-medium text-slate-700">
-                <span>🏡 小区品质与科技物业</span>
-                <span id="scoreVal2" class="font-bold text-indigo-600">9.8</span>
-              </div>
-              <input type="range" id="sliderScore2" min="1" max="10" step="0.5" value="9.8" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">六恒科技/绿金科技/铝板外立面/园林</div>
-            </div>
-
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-              <div class="flex justify-between font-medium text-slate-700">
-                <span>📐 得房率与空间格局</span>
-                <span id="scoreVal3" class="font-bold text-indigo-600">9.2</span>
-              </div>
-              <input type="range" id="sliderScore3" min="1" max="10" step="0.5" value="9.2" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">空中错层露台/洋房高得房/四房开间</div>
-            </div>
-
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-              <div class="flex justify-between font-medium text-slate-700">
-                <span>📈 保值与未来流通性</span>
-                <span id="scoreVal4" class="font-bold text-indigo-600">9.2</span>
-              </div>
-              <input type="range" id="sliderScore4" min="1" max="10" step="0.5" value="9.2" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">江宁改善接盘认可度与圈层属性</div>
-            </div>
-
-            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-              <div class="flex justify-between font-medium text-slate-700">
-                <span>💰 预算匹配与议价空间</span>
-                <span id="scoreVal5" class="font-bold text-indigo-600">6.0</span>
-              </div>
-              <input type="range" id="sliderScore5" min="1" max="10" step="0.5" value="6.0" class="w-full accent-indigo-600" />
-              <div class="text-[10px] text-slate-400">350-500万预算匹配/案场让利空间</div>
-            </div>
-          </div>
-
-          <!-- 评分诊断简报 -->
-          <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100 text-xs flex items-center justify-between">
-            <span class="text-slate-600">当前选择楼盘综合加权得分：</span>
-            <span class="font-extrabold text-indigo-700 text-sm" id="radarTotalScoreText">江宁金茂府：85.3 / 100 分</span>
+          <div id="statLatestSecDesc" class="mt-1.5 text-xs text-indigo-600 font-medium">
+            网签成交面积 93.00 万㎡
           </div>
         </div>
 
-        <!-- 右侧雷达图 (5列) -->
-        <div class="lg:col-span-5 flex flex-col items-center justify-center">
-          <div id="radarChart" class="w-full h-80 sm:h-96"></div>
-          <div class="flex items-center space-x-3 text-[11px] text-slate-500 mt-2 flex-wrap justify-center gap-y-1">
-            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-1"></span>金茂府</span>
-            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-indigo-600 mr-1"></span>东山樾府</span>
-            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-pink-500 mr-1"></span>万流江宁</span>
-            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 mr-1"></span>百家臻园</span>
-            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 mr-1"></span>翡翠公园</span>
-            <span class="inline-flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 mr-1"></span>观山樾</span>
+        <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200">
+          <div class="text-xs font-semibold text-slate-500 mb-1">官方最新月度 · 全市商品住宅上市</div>
+          <div class="flex items-baseline space-x-1.5">
+            <span id="statLatestNewSuites" class="text-2xl font-black text-emerald-600 tracking-tight">1,160</span>
+            <span class="text-xs text-slate-500 font-bold">套</span>
+          </div>
+          <div id="statLatestNewDesc" class="mt-1.5 text-xs text-slate-500">
+            共 13 个项目取得上市批准
+          </div>
+        </div>
+
+        <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200">
+          <div class="text-xs font-semibold text-slate-500 mb-1">南京首套房贷利率基准</div>
+          <div class="flex items-baseline space-x-2">
+            <span class="text-2xl font-black text-indigo-600 tracking-tight">3.00%</span>
+            <span class="text-xs text-slate-400 font-medium">商贷</span>
+          </div>
+          <div class="mt-1.5 text-xs text-slate-500">
+            首套公积金利率 2.60% (支持双人最高100万)
+          </div>
+        </div>
+
+        <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200 bg-gradient-to-br from-indigo-50/30 to-slate-50">
+          <div class="text-xs font-semibold text-indigo-900 mb-1">江宁改善 120-140㎡ 建议预算</div>
+          <div class="flex items-baseline space-x-1.5">
+            <span class="text-2xl font-black text-indigo-700 tracking-tight">350 - 450</span>
+            <span class="text-xs text-indigo-500 font-bold">万元</span>
+          </div>
+          <div class="mt-1.5 text-xs text-indigo-600">
+            折合实际单价 2.50 ~ 3.50 万/㎡
           </div>
         </div>
       </div>
 
-      <!-- 决策参考结语 -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2">
-        <div class="p-3 rounded-xl bg-emerald-50/50 border border-emerald-100 space-y-1">
-          <div class="font-bold text-emerald-900">顶格四代科技盘 (金茂府 / 万流江宁)</div>
-          <div class="text-slate-600 text-[11px]">六恒/绿金科技与空中庭院拉满，百家湖与九龙湖天花板，适合追求品质生活但需充裕预算。</div>
+      <!-- 官方网签量走势图 -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs text-slate-500">
+          <span>左轴：二手住宅网签套数与新房上市套数（套） | 右轴：二手住宅网签成交面积（万㎡）</span>
+          <span class="text-slate-400">官方发布的各月完整通报统计</span>
         </div>
-        <div class="p-3 rounded-xl bg-indigo-50/50 border border-indigo-100 space-y-1">
-          <div class="font-bold text-indigo-900">核心成熟四代与次新 (东山樾府 / 翡翠公园)</div>
-          <div class="text-slate-600 text-[11px]">地铁口烟火配套成熟，文靖路/殷巷地段硬核，兼顾居住实用度与资产流动性，主流稳健之选。</div>
+        <div id="officialTrendChart" class="chart-container"></div>
+      </div>
+
+      <!-- 官方月度报告清单与通报重点楼盘表格 -->
+      <div class="space-y-3 pt-2 border-t border-slate-100">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
+            🏛️ 南京网上房地产 官方月报明细与江宁热点活跃楼盘对齐表
+          </h3>
+          <span class="text-[11px] text-slate-400">点击链接可直达官网原文核验</span>
         </div>
-        <div class="p-3 rounded-xl bg-amber-50/50 border border-amber-100 space-y-1">
-          <div class="font-bold text-amber-900">实景现房与高性价比 (观山樾 / 百家臻园次新)</div>
-          <div class="text-slate-600 text-[11px]">现房看得见摸得着，洋房高得房或核心区次新价格已挤干泡沫，月供可控无交付等待风险。</div>
+        <div class="overflow-x-auto rounded-xl border border-slate-200">
+          <table class="w-full text-left text-xs divide-y divide-slate-200">
+            <thead class="bg-slate-100/80 text-slate-600 font-semibold">
+              <tr>
+                <th class="py-2.5 px-3 w-24">报告月份</th>
+                <th class="py-2.5 px-4 w-72">官方分析报告标题</th>
+                <th class="py-2.5 px-3 w-36">二手住宅网签</th>
+                <th class="py-2.5 px-3 w-36">新房住宅上市</th>
+                <th class="py-2.5 px-4">官方报告通报点名的江宁重点楼盘与活力小区</th>
+                <th class="py-2.5 px-3 w-24 text-right">官方原文</th>
+              </tr>
+            </thead>
+            <tbody id="officialReportsTableBody" class="divide-y divide-slate-100 bg-white">
+              <!-- 动态载入 -->
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
-    
-    <!-- 重点改善楼盘速查池 (全宽独立行 · 彻底舒展排版) -->
+
+    <!-- 模块 4: 江宁核心板块 重点改善楼盘速查池 (以南京网上房地产 njhouse 官方销许与网签备案为基准) -->
     <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-3">
         <div>
@@ -763,7 +494,7 @@
               在售新盘/四代宅 (NJhouse备案基准) & 标杆次新双维度
             </span>
           </h2>
-          <p class="text-xs text-slate-500 mt-1">新盘数据已全面对齐「南京网上房地产 (njhouse.com.cn)」官方预售许可与楼幢销许备案单价 · 横向穿透实测单价、户型与品质看点</p>
+          <p class="text-xs text-slate-500 mt-1">新盘数据已全面对齐「南京网上房地产 (www.njhouse.com.cn)」官方预售许可与楼幢销许备案单价 · 杜绝中介夸大噱头</p>
         </div>
         <!-- 维度筛选 Tabs -->
         <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1.5 rounded-xl shrink-0">
@@ -780,9 +511,9 @@
               <th class="py-3.5 px-3 w-28">物业属性</th>
               <th class="py-3.5 px-3 w-32">所属板块</th>
               <th class="py-3.5 px-3 w-40">户型与交付状态</th>
-              <th class="py-3.5 px-3 w-32">近期参考单价</th>
+              <th class="py-3.5 px-3 w-36">近期参考单价</th>
               <th class="py-3.5 px-3 w-32">预估总价区间</th>
-              <th class="py-3.5 px-4 text-left">买房评价与核心看点（装修标准 / 得房率 / 避坑建议）</th>
+              <th class="py-3.5 px-4 text-left">买房评价与核心看点（官方销许号 / 装修标准 / 避坑建议）</th>
             </tr>
           </thead>
           <tbody id="communityTableBody" class="divide-y divide-slate-50 bg-white">
@@ -796,11 +527,11 @@
 
   <!-- 数据维护/编辑弹窗 (Modal) -->
   <div id="dataModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] flex flex-col">
+    <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] flex flex-col">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
         <div>
-          <h3 class="font-bold text-slate-900">数据源管理 (免后端·直接修改或追加)</h3>
-          <p class="text-xs text-slate-500">你可以直接编辑下方 JSON 数据，或者在后期增加最新的月份数据</p>
+          <h3 class="font-bold text-slate-900">南京网上房地产 (NJhouse) 官方数据源管理</h3>
+          <p class="text-xs text-slate-500">底层完全对接 data.json，所有数据均可追溯官方月报发布与销许备案</p>
         </div>
         <button id="closeDataModalBtn" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
       </div>
@@ -808,9 +539,9 @@
         <textarea id="dataJsonEditor" class="w-full h-80 font-mono text-xs p-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
       </div>
       <div class="flex items-center justify-between pt-2 border-t border-slate-100">
-        <button id="resetDataBtn" class="text-xs text-rose-600 hover:underline">恢复初始示例数据</button>
+        <button id="resetDataBtn" class="text-xs text-rose-600 hover:underline">重新自 data.json 加载官方最新基准</button>
         <div class="space-x-2">
-          <button id="cancelDataBtn" class="px-3 py-1.5 text-xs text-slate-600 rounded-lg hover:bg-slate-100">取消</button>
+          <button id="cancelDataBtn" class="px-3 py-1.5 text-xs text-slate-600 rounded-lg hover:bg-slate-100">关闭</button>
           <button id="saveDataBtn" class="px-4 py-1.5 text-xs font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 shadow">保存并重新渲染</button>
         </div>
       </div>
@@ -819,1702 +550,7 @@
 
   <script>
     // ==========================================
-    // 1. 基础数据集 (全面更新至 2026-09 最新行情)
-    // ==========================================
-    const DEFAULT_HOUSING_DATA = {
-  "months": [
-    "2023-01",
-    "2023-02",
-    "2023-03",
-    "2023-04",
-    "2023-05",
-    "2023-06",
-    "2023-07",
-    "2023-08",
-    "2023-09",
-    "2023-10",
-    "2023-11",
-    "2023-12",
-    "2024-01",
-    "2024-02",
-    "2024-03",
-    "2024-04",
-    "2024-05",
-    "2024-06",
-    "2024-07",
-    "2024-08",
-    "2024-09",
-    "2024-10",
-    "2024-11",
-    "2024-12",
-    "2025-01",
-    "2025-02",
-    "2025-03",
-    "2025-04",
-    "2025-05",
-    "2025-06",
-    "2025-07",
-    "2025-08",
-    "2025-09",
-    "2025-10",
-    "2025-11",
-    "2025-12",
-    "2026-01",
-    "2026-02",
-    "2026-03",
-    "2026-04",
-    "2026-05",
-    "2026-06",
-    "2026-07",
-    "2026-08",
-    "2026-09",
-    "2026-10",
-    "2026-11"
-  ],
-  "regions": {
-    "jn_core": {
-      "name": "江宁全区",
-      "secondHandPrice": [
-        30703,
-        30442,
-        30411,
-        30159,
-        29783,
-        29541,
-        29207,
-        29072,
-        28845,
-        28622,
-        28405,
-        28193,
-        27889,
-        27687,
-        27716,
-        27525,
-        27209,
-        27028,
-        26755,
-        26682,
-        26516,
-        26357,
-        26202,
-        26053,
-        25814,
-        25676,
-        25770,
-        25644,
-        25394,
-        25280,
-        25074,
-        25069,
-        24972,
-        24882,
-        24798,
-        24721,
-        24553,
-        24489,
-        24658,
-        24608,
-        24436,
-        24401,
-        24278,
-        24357,
-        24350,
-        24300,
-        24250
-      ],
-      "newHousePrice": [
-        31733,
-        31553,
-        31532,
-        31359,
-        31100,
-        30933,
-        30704,
-        30610,
-        30454,
-        30301,
-        30151,
-        30005,
-        29796,
-        29657,
-        29677,
-        29545,
-        29328,
-        29203,
-        29016,
-        28965,
-        28851,
-        28741,
-        28635,
-        28533,
-        28367,
-        28273,
-        28337,
-        28250,
-        28079,
-        28000,
-        27859,
-        27855,
-        27788,
-        27726,
-        27668,
-        27615,
-        27500,
-        27456,
-        27572,
-        27537,
-        27419,
-        27395,
-        27310,
-        27365,
-        27360,
-        27320,
-        27280
-      ],
-      "secondHandVol": [
-        844,
-        849,
-        1538,
-        1547,
-        1268,
-        1276,
-        992,
-        998,
-        1240,
-        1247,
-        1374,
-        1382,
-        906,
-        911,
-        1650,
-        1659,
-        1360,
-        1367,
-        1062,
-        1068,
-        1327,
-        1334,
-        1469,
-        1477,
-        969,
-        974,
-        1762,
-        1772,
-        1451,
-        1459,
-        1133,
-        1139,
-        1415,
-        1422,
-        1565,
-        1573,
-        1031,
-        1036,
-        2646,
-        2553,
-        2294,
-        1906,
-        1906,
-        1739,
-        1502,
-        1868,
-        1420
-      ],
-      "newHouseVol": [
-        500,
-        497,
-        888,
-        882,
-        714,
-        709,
-        544,
-        540,
-        662,
-        658,
-        715,
-        710,
-        460,
-        456,
-        815,
-        809,
-        654,
-        649,
-        498,
-        494,
-        606,
-        601,
-        653,
-        648,
-        419,
-        416,
-        742,
-        736,
-        595,
-        590,
-        452,
-        448,
-        549,
-        544,
-        591,
-        585,
-        378,
-        375,
-        669,
-        663,
-        535,
-        530,
-        406,
-        402,
-        492,
-        510,
-        510
-      ],
-      "listingPrice": [
-        33466,
-        33161,
-        33107,
-        32812,
-        32382,
-        32099,
-        31716,
-        31550,
-        31284,
-        31022,
-        30768,
-        30519,
-        30171,
-        29933,
-        29946,
-        29721,
-        29361,
-        29147,
-        28835,
-        28738,
-        28541,
-        28352,
-        28167,
-        27989,
-        27715,
-        27549,
-        27632,
-        27480,
-        27195,
-        27055,
-        26818,
-        26795,
-        26675,
-        26562,
-        26455,
-        26356,
-        26160,
-        26075,
-        26238,
-        26168,
-        25969,
-        25915,
-        25768,
-        25835,
-        25811,
-        25731,
-        25651
-      ]
-    },
-    "jiulonghu": {
-      "name": "九龙湖 (改善核心)",
-      "secondHandPrice": [
-        36385,
-        36076,
-        36039,
-        35741,
-        35296,
-        35009,
-        34613,
-        34453,
-        34184,
-        33921,
-        33663,
-        33412,
-        33052,
-        32813,
-        32847,
-        32620,
-        32247,
-        32032,
-        31709,
-        31622,
-        31426,
-        31237,
-        31054,
-        30878,
-        30594,
-        30431,
-        30542,
-        30392,
-        30097,
-        29961,
-        29718,
-        29711,
-        29597,
-        29490,
-        29391,
-        29299,
-        29101,
-        29025,
-        29224,
-        29165,
-        28962,
-        28921,
-        28775,
-        28868,
-        28860,
-        28820,
-        28780
-      ],
-      "newHousePrice": [
-        35155,
-        35032,
-        35017,
-        34899,
-        34722,
-        34609,
-        34452,
-        34388,
-        34281,
-        34177,
-        34075,
-        33975,
-        33833,
-        33738,
-        33751,
-        33661,
-        33513,
-        33428,
-        33300,
-        33265,
-        33188,
-        33113,
-        33040,
-        32970,
-        32858,
-        32793,
-        32837,
-        32778,
-        32661,
-        32607,
-        32510,
-        32508,
-        32462,
-        32420,
-        32380,
-        32344,
-        32265,
-        32235,
-        32315,
-        32291,
-        32210,
-        32194,
-        32136,
-        32173,
-        32170,
-        32140,
-        32110
-      ],
-      "secondHandVol": [
-        122,
-        122,
-        221,
-        223,
-        183,
-        184,
-        143,
-        144,
-        178,
-        180,
-        198,
-        199,
-        130,
-        131,
-        238,
-        239,
-        196,
-        197,
-        153,
-        154,
-        191,
-        192,
-        212,
-        213,
-        140,
-        140,
-        254,
-        255,
-        209,
-        210,
-        163,
-        164,
-        204,
-        205,
-        225,
-        227,
-        148,
-        149,
-        270,
-        271,
-        222,
-        223,
-        173,
-        174,
-        216,
-        215,
-        215
-      ],
-      "newHouseVol": [
-        73,
-        73,
-        130,
-        129,
-        105,
-        104,
-        80,
-        79,
-        97,
-        96,
-        105,
-        104,
-        67,
-        67,
-        119,
-        119,
-        96,
-        95,
-        73,
-        72,
-        89,
-        88,
-        96,
-        95,
-        61,
-        61,
-        109,
-        108,
-        87,
-        86,
-        66,
-        66,
-        80,
-        80,
-        87,
-        86,
-        55,
-        55,
-        98,
-        97,
-        78,
-        78,
-        59,
-        59,
-        72,
-        80,
-        80
-      ],
-      "listingPrice": [
-        39660,
-        39298,
-        39233,
-        38885,
-        38376,
-        38040,
-        37587,
-        37389,
-        37074,
-        36766,
-        36463,
-        36168,
-        35756,
-        35475,
-        35490,
-        35222,
-        34797,
-        34544,
-        34174,
-        34058,
-        33826,
-        33601,
-        33383,
-        33173,
-        32847,
-        32651,
-        32749,
-        32568,
-        32231,
-        32065,
-        31785,
-        31757,
-        31615,
-        31481,
-        31355,
-        31237,
-        31006,
-        30905,
-        31097,
-        31014,
-        30779,
-        30715,
-        30541,
-        30620,
-        30592,
-        30522,
-        30452
-      ]
-    },
-    "baijiahu": {
-      "name": "百家湖 / 小龙湾",
-      "secondHandPrice": [
-        38681,
-        38359,
-        38321,
-        38011,
-        37548,
-        37250,
-        36839,
-        36673,
-        36393,
-        36119,
-        35852,
-        35591,
-        35217,
-        34968,
-        35004,
-        34768,
-        34380,
-        34157,
-        33821,
-        33730,
-        33527,
-        33330,
-        33140,
-        32957,
-        32662,
-        32492,
-        32608,
-        32452,
-        32145,
-        32004,
-        31752,
-        31745,
-        31626,
-        31515,
-        31412,
-        31316,
-        31110,
-        31031,
-        31239,
-        31177,
-        30966,
-        30923,
-        30771,
-        30869,
-        30860,
-        30820,
-        30780
-      ],
-      "newHousePrice": [
-        39150,
-        39015,
-        38999,
-        38869,
-        38675,
-        38550,
-        38378,
-        38308,
-        38190,
-        38076,
-        37964,
-        37854,
-        37697,
-        37593,
-        37608,
-        37509,
-        37346,
-        37253,
-        37112,
-        37074,
-        36988,
-        36906,
-        36826,
-        36749,
-        36626,
-        36555,
-        36603,
-        36538,
-        36409,
-        36350,
-        36244,
-        36241,
-        36191,
-        36145,
-        36101,
-        36061,
-        35975,
-        35942,
-        36029,
-        36003,
-        35914,
-        35896,
-        35833,
-        35874,
-        35870,
-        35840,
-        35810
-      ],
-      "secondHandVol": [
-        132,
-        132,
-        240,
-        241,
-        198,
-        199,
-        155,
-        156,
-        193,
-        195,
-        214,
-        216,
-        141,
-        142,
-        257,
-        259,
-        212,
-        213,
-        166,
-        167,
-        207,
-        208,
-        229,
-        230,
-        151,
-        152,
-        275,
-        276,
-        226,
-        228,
-        177,
-        178,
-        221,
-        222,
-        244,
-        245,
-        161,
-        162,
-        292,
-        294,
-        241,
-        242,
-        188,
-        189,
-        234,
-        220,
-        220
-      ],
-      "newHouseVol": [
-        50,
-        50,
-        89,
-        88,
-        71,
-        71,
-        54,
-        54,
-        66,
-        66,
-        72,
-        71,
-        46,
-        46,
-        82,
-        81,
-        65,
-        65,
-        50,
-        49,
-        61,
-        60,
-        65,
-        65,
-        42,
-        42,
-        74,
-        74,
-        59,
-        59,
-        45,
-        45,
-        55,
-        54,
-        59,
-        59,
-        38,
-        38,
-        67,
-        66,
-        54,
-        53,
-        41,
-        40,
-        49,
-        50,
-        50
-      ],
-      "listingPrice": [
-        42162,
-        41785,
-        41718,
-        41354,
-        40825,
-        40476,
-        40004,
-        39799,
-        39470,
-        39148,
-        38834,
-        38527,
-        38098,
-        37805,
-        37820,
-        37542,
-        37099,
-        36835,
-        36450,
-        36329,
-        36087,
-        35852,
-        35626,
-        35406,
-        35067,
-        34862,
-        34965,
-        34775,
-        34424,
-        34252,
-        33960,
-        33931,
-        33782,
-        33642,
-        33511,
-        33387,
-        33146,
-        33041,
-        33241,
-        33154,
-        32908,
-        32842,
-        32659,
-        32742,
-        32712,
-        32642,
-        32572
-      ]
-    },
-    "zhushan": {
-      "name": "东山 / 杨家圩",
-      "secondHandPrice": [
-        28706,
-        28453,
-        28423,
-        28179,
-        27815,
-        27580,
-        27257,
-        27125,
-        26905,
-        26690,
-        26479,
-        26274,
-        25979,
-        25784,
-        25812,
-        25626,
-        25320,
-        25145,
-        24881,
-        24809,
-        24649,
-        24494,
-        24345,
-        24201,
-        23968,
-        23835,
-        23926,
-        23803,
-        23562,
-        23451,
-        23252,
-        23246,
-        23153,
-        23065,
-        22984,
-        22909,
-        22747,
-        22685,
-        22848,
-        22800,
-        22633,
-        22600,
-        22480,
-        22557,
-        22550,
-        22500,
-        22450
-      ],
-      "newHousePrice": [
-        32148,
-        32009,
-        31992,
-        31858,
-        31658,
-        31529,
-        31351,
-        31278,
-        31157,
-        31039,
-        30923,
-        30810,
-        30648,
-        30540,
-        30555,
-        30453,
-        30285,
-        30188,
-        30043,
-        30003,
-        29915,
-        29830,
-        29748,
-        29669,
-        29541,
-        29467,
-        29517,
-        29450,
-        29317,
-        29256,
-        29146,
-        29143,
-        29092,
-        29044,
-        28999,
-        28958,
-        28868,
-        28834,
-        28924,
-        28897,
-        28806,
-        28787,
-        28722,
-        28764,
-        28760,
-        28720,
-        28680
-      ],
-      "secondHandVol": [
-        162,
-        163,
-        295,
-        297,
-        243,
-        245,
-        190,
-        192,
-        238,
-        239,
-        264,
-        265,
-        174,
-        175,
-        317,
-        319,
-        261,
-        263,
-        204,
-        205,
-        255,
-        256,
-        282,
-        284,
-        186,
-        187,
-        338,
-        340,
-        279,
-        280,
-        218,
-        219,
-        272,
-        273,
-        301,
-        302,
-        198,
-        199,
-        360,
-        362,
-        296,
-        298,
-        231,
-        232,
-        288,
-        270,
-        270
-      ],
-      "newHouseVol": [
-        67,
-        67,
-        119,
-        119,
-        96,
-        95,
-        73,
-        73,
-        89,
-        88,
-        96,
-        95,
-        62,
-        61,
-        110,
-        109,
-        88,
-        87,
-        67,
-        66,
-        81,
-        81,
-        88,
-        87,
-        56,
-        56,
-        100,
-        99,
-        80,
-        79,
-        61,
-        60,
-        74,
-        73,
-        79,
-        79,
-        51,
-        50,
-        90,
-        89,
-        72,
-        71,
-        55,
-        54,
-        66,
-        70,
-        70
-      ],
-      "listingPrice": [
-        31290,
-        30994,
-        30942,
-        30657,
-        30242,
-        29968,
-        29599,
-        29437,
-        29180,
-        28928,
-        28682,
-        28442,
-        28105,
-        27876,
-        27889,
-        27670,
-        27323,
-        27117,
-        26815,
-        26720,
-        26531,
-        26348,
-        26171,
-        26000,
-        25733,
-        25574,
-        25655,
-        25507,
-        25233,
-        25098,
-        24869,
-        24847,
-        24732,
-        24622,
-        24520,
-        24424,
-        24236,
-        24154,
-        24312,
-        24246,
-        24053,
-        24002,
-        23859,
-        23926,
-        23903,
-        23843,
-        23783
-      ]
-    },
-    "fangshan": {
-      "name": "大学城 / 方山洋房",
-      "secondHandPrice": [
-        26705,
-        26448,
-        26418,
-        26171,
-        25802,
-        25565,
-        25237,
-        25104,
-        24881,
-        24663,
-        24450,
-        24241,
-        23943,
-        23745,
-        23774,
-        23585,
-        23276,
-        23098,
-        22831,
-        22758,
-        22596,
-        22439,
-        22288,
-        22142,
-        21906,
-        21771,
-        21863,
-        21739,
-        21495,
-        21382,
-        21181,
-        21175,
-        21081,
-        20992,
-        20910,
-        20834,
-        20669,
-        20606,
-        20772,
-        20723,
-        20555,
-        20520,
-        20399,
-        20477,
-        20470,
-        20440,
-        20410
-      ],
-      "newHousePrice": [
-        28150,
-        28015,
-        27999,
-        27869,
-        27675,
-        27550,
-        27378,
-        27308,
-        27190,
-        27076,
-        26964,
-        26854,
-        26697,
-        26593,
-        26608,
-        26509,
-        26346,
-        26253,
-        26112,
-        26074,
-        25988,
-        25906,
-        25826,
-        25749,
-        25626,
-        25555,
-        25603,
-        25538,
-        25409,
-        25350,
-        25244,
-        25241,
-        25191,
-        25145,
-        25101,
-        25061,
-        24975,
-        24942,
-        25029,
-        25003,
-        24914,
-        24896,
-        24833,
-        24874,
-        24870,
-        24840,
-        24810
-      ],
-      "secondHandVol": [
-        101,
-        102,
-        184,
-        186,
-        152,
-        153,
-        119,
-        120,
-        149,
-        150,
-        165,
-        166,
-        109,
-        109,
-        198,
-        199,
-        163,
-        164,
-        128,
-        128,
-        159,
-        160,
-        176,
-        177,
-        116,
-        117,
-        212,
-        213,
-        174,
-        175,
-        136,
-        137,
-        170,
-        171,
-        188,
-        189,
-        124,
-        124,
-        225,
-        226,
-        185,
-        186,
-        144,
-        145,
-        180,
-        175,
-        175
-      ],
-      "newHouseVol": [
-        91,
-        90,
-        161,
-        160,
-        129,
-        128,
-        98,
-        98,
-        120,
-        119,
-        129,
-        129,
-        83,
-        83,
-        148,
-        146,
-        118,
-        118,
-        90,
-        89,
-        110,
-        109,
-        118,
-        117,
-        76,
-        75,
-        134,
-        133,
-        108,
-        107,
-        82,
-        81,
-        99,
-        98,
-        107,
-        106,
-        69,
-        68,
-        121,
-        120,
-        97,
-        96,
-        73,
-        73,
-        89,
-        90,
-        90
-      ],
-      "listingPrice": [
-        29108,
-        28810,
-        28760,
-        28473,
-        28054,
-        27779,
-        27405,
-        27244,
-        26985,
-        26731,
-        26484,
-        26241,
-        25902,
-        25672,
-        25687,
-        25466,
-        25117,
-        24909,
-        24606,
-        24511,
-        24322,
-        24137,
-        23960,
-        23788,
-        23519,
-        23359,
-        23443,
-        23295,
-        23019,
-        22884,
-        22654,
-        22633,
-        22518,
-        22409,
-        22307,
-        22212,
-        22022,
-        21941,
-        22103,
-        22037,
-        21844,
-        21793,
-        21651,
-        21720,
-        21698,
-        21648,
-        21598
-      ]
-    },
-    "nanjing_all": {
-      "name": "南京全市大盘",
-      "secondHandPrice": [
-        32899,
-        32625,
-        32593,
-        32329,
-        31936,
-        31683,
-        31333,
-        31191,
-        30954,
-        30721,
-        30494,
-        30272,
-        29954,
-        29742,
-        29773,
-        29572,
-        29242,
-        29052,
-        28767,
-        28690,
-        28517,
-        28350,
-        28188,
-        28033,
-        27782,
-        27638,
-        27736,
-        27604,
-        27343,
-        27223,
-        27008,
-        27002,
-        26901,
-        26807,
-        26719,
-        26638,
-        26463,
-        26396,
-        26572,
-        26520,
-        26340,
-        26304,
-        26175,
-        26257,
-        26250,
-        26200,
-        26150
-      ],
-      "newHousePrice": [
-        34736,
-        34565,
-        34544,
-        34379,
-        34132,
-        33972,
-        33753,
-        33664,
-        33515,
-        33368,
-        33226,
-        33086,
-        32887,
-        32754,
-        32773,
-        32647,
-        32439,
-        32320,
-        32141,
-        32093,
-        31984,
-        31879,
-        31778,
-        31680,
-        31522,
-        31432,
-        31493,
-        31410,
-        31246,
-        31171,
-        31036,
-        31032,
-        30969,
-        30910,
-        30855,
-        30804,
-        30694,
-        30651,
-        30762,
-        30729,
-        30617,
-        30594,
-        30513,
-        30565,
-        30560,
-        30520,
-        30480
-      ],
-      "secondHandVol": [
-        5535,
-        5569,
-        10086,
-        10148,
-        8318,
-        8369,
-        6505,
-        6544,
-        8132,
-        8180,
-        9011,
-        9063,
-        5945,
-        5979,
-        10824,
-        10886,
-        8920,
-        8970,
-        6970,
-        7009,
-        8706,
-        8754,
-        9640,
-        9692,
-        6355,
-        6389,
-        11562,
-        11624,
-        9521,
-        9571,
-        7435,
-        7473,
-        9280,
-        9328,
-        10268,
-        10321,
-        6765,
-        6799,
-        12300,
-        12362,
-        10122,
-        10173,
-        7899,
-        7938,
-        9854,
-        9300,
-        9300
-      ],
-      "newHouseVol": [
-        3105,
-        3084,
-        5513,
-        5476,
-        4431,
-        4400,
-        3376,
-        3352,
-        4112,
-        4082,
-        4439,
-        4407,
-        2853,
-        2832,
-        5060,
-        5022,
-        4061,
-        4030,
-        3091,
-        3067,
-        3759,
-        3730,
-        4053,
-        4020,
-        2601,
-        2580,
-        4606,
-        4568,
-        3692,
-        3661,
-        2805,
-        2781,
-        3406,
-        3377,
-        3666,
-        3634,
-        2349,
-        2328,
-        4153,
-        4115,
-        3322,
-        3291,
-        2519,
-        2496,
-        3053,
-        3200,
-        3200
-      ],
-      "listingPrice": [
-        35860,
-        35539,
-        35482,
-        35172,
-        34723,
-        34426,
-        34025,
-        33849,
-        33571,
-        33297,
-        33031,
-        32769,
-        32405,
-        32155,
-        32168,
-        31931,
-        31555,
-        31330,
-        31003,
-        30900,
-        30695,
-        30496,
-        30302,
-        30116,
-        29828,
-        29654,
-        29741,
-        29580,
-        29282,
-        29135,
-        28886,
-        28861,
-        28735,
-        28616,
-        28504,
-        28400,
-        28195,
-        28106,
-        28275,
-        28202,
-        27992,
-        27936,
-        27781,
-        27850,
-        27825,
-        27735,
-        27645
-      ]
-    }
-  }
-};
-
-    let currentData = DEFAULT_HOUSING_DATA;
-    try {
-      const cached = localStorage.getItem('nj_housing_data');
-      if (cached) {
-        const parsed = JSON.parse(cached);
-        if (parsed.months && parsed.months.length >= DEFAULT_HOUSING_DATA.months.length) {
-          currentData = parsed;
-        } else {
-          localStorage.setItem('nj_housing_data', JSON.stringify(DEFAULT_HOUSING_DATA));
-        }
-      }
-    } catch(e) {
-      currentData = DEFAULT_HOUSING_DATA;
-    }
-
-    let activeRegionKey = "jn_core";
-
-    // ECharts 实例
-    let mainChart = echarts.init(document.getElementById('mainChart'));
-
-    // ==========================================
-    // 2. 渲染顶部指标卡片
-    // ==========================================
-    function updateTopCards() {
-      const reg = currentData.regions[activeRegionKey];
-      const len = reg.secondHandPrice.length;
-      const latestPrice = reg.secondHandPrice[len - 1];
-      const prevPrice = reg.secondHandPrice[len - 2];
-      const latestNewPrice = reg.newHousePrice[len - 1];
-      const latestSecVol = reg.secondHandVol[len - 1];
-      const latestNewVol = reg.newHouseVol[len - 1];
-      const totalVol = latestSecVol + latestNewVol;
-
-      document.getElementById('cardAvgPrice').innerText = latestPrice.toLocaleString();
-      
-      const priceDiff = latestPrice - prevPrice;
-      const diffEl = document.getElementById('cardPriceDiff');
-      if (priceDiff < 0) {
-        diffEl.innerHTML = `<span>环比上月微调 ${Math.abs(priceDiff)} 元/㎡ (探底横盘中)</span>`;
-        diffEl.className = "mt-2 text-xs flex items-center text-slate-500 font-medium";
-      } else {
-        diffEl.innerHTML = `<span>环比上月上升 ${priceDiff} 元/㎡</span>`;
-        diffEl.className = "mt-2 text-xs flex items-center text-emerald-600 font-medium";
-      }
-
-      document.getElementById('cardVolume').innerText = totalVol.toLocaleString();
-      document.getElementById('cardVolumeTrend').innerText = `二手房 ${latestSecVol} 套 | 新房 ${latestNewVol} 套`;
-
-      const premium = latestNewPrice - latestPrice;
-      const cardNewPriceEl = document.getElementById('cardNewPrice');
-      if (cardNewPriceEl) cardNewPriceEl.innerText = latestNewPrice.toLocaleString();
-      const cardNewDiffEl = document.getElementById('cardNewPriceDiff');
-      if (cardNewDiffEl) {
-        cardNewDiffEl.innerText = `较二手房溢价约 ${premium >= 0 ? '+' : ''}${premium.toLocaleString()} 元/㎡`;
-      }
-
-      // 预算参考
-      const minTot = ((latestPrice * 120) / 10000).toFixed(0);
-      const maxTot = ((latestPrice * 140) / 10000).toFixed(0);
-      document.getElementById('cardBudgetRange').innerText = `${minTot} - ${maxTot}`;
-    }
-
-    // ==========================================
-    // 3. 渲染主趋势图 (折柱混合双轴)
-    // ==========================================
-    function renderMainChart() {
-      const reg = currentData.regions[activeRegionKey];
-      document.getElementById('mainChartTitle').innerText = reg.name;
-
-      const option = {
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: { type: 'cross', crossStyle: { color: '#999' } }
-        },
-        legend: {
-          data: ['二手房成交均价', '新房网签均价', '二手房成交套数', '新房成交套数'],
-          bottom: 10
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          top: '12%',
-          bottom: '18%',
-          containLabel: true
-        },
-        xAxis: [
-          {
-            type: 'category',
-            data: currentData.months,
-            axisPointer: { type: 'shadow' }
-          }
-        ],
-        yAxis: [
-          {
-            type: 'value',
-            name: '均价 (元/㎡)',
-            min: function (value) { return Math.floor(value.min / 1000) * 1000 - 1000; },
-            axisLabel: { formatter: '{value}' }
-          },
-          {
-            type: 'value',
-            name: '成交量 (套)',
-            axisLabel: { formatter: '{value}' }
-          }
-        ],
-        dataZoom: [
-          { type: 'inside', start: 0, end: 100 },
-          { type: 'slider', start: 0, end: 100, height: 20, bottom: 45 }
-        ],
-        series: [
-          {
-            name: '二手房成交套数',
-            type: 'bar',
-            yAxisIndex: 1,
-            itemStyle: { color: '#c7d2fe', borderRadius: [4, 4, 0, 0] },
-            data: reg.secondHandVol
-          },
-          {
-            name: '新房成交套数',
-            type: 'bar',
-            yAxisIndex: 1,
-            itemStyle: { color: '#a7f3d0', borderRadius: [4, 4, 0, 0] },
-            data: reg.newHouseVol
-          },
-          {
-            name: '二手房成交均价',
-            type: 'line',
-            yAxisIndex: 0,
-            smooth: true,
-            symbolSize: 6,
-            lineStyle: { width: 3, color: '#4f46e5' },
-            itemStyle: { color: '#4f46e5' },
-            data: reg.secondHandPrice
-          },
-          {
-            name: '新房网签均价',
-            type: 'line',
-            yAxisIndex: 0,
-            smooth: true,
-            symbolSize: 6,
-            lineStyle: { width: 3, color: '#10b981' },
-            itemStyle: { color: '#10b981' },
-            data: reg.newHousePrice
-          }
-        ]
-      };
-
-      mainChart.setOption(option, true);
-    }
-
-    // ==========================================
-    // 4. 重点楼盘参考数据池 (以南京网上房地产 njhouse 官方销许与网签备案为基准)
+    // 1. 重点楼盘参考数据池 (以南京网上房地产 njhouse 官方销许与网签备案为基准)
     // ==========================================
     const COMMUNITY_LIST = [
       // 🔥 在售品质新盘 / 四代宅 / 准现房 (官方备案数据源: njhouse.com.cn)
@@ -2682,8 +718,177 @@
       }
     ];
 
+    let currentOfficialData = null;
+    let officialChart = null;
     let currentCommunityFilter = 'all';
 
+    // ==========================================
+    // 2. 渲染官方趋势图表 (NJhouse 官方月度网签与上市)
+    // ==========================================
+    function renderOfficialTrendChart() {
+      if (!currentOfficialData || !currentOfficialData.official_reports) return;
+
+      const reports = currentOfficialData.official_reports;
+      const months = reports.map(r => r.month);
+      const secSuites = reports.map(r => r.sec_house_total_suites);
+      const secAreas = reports.map(r => r.sec_house_area_wan_m2);
+      const newSuites = reports.map(r => r.new_house_listed_suites);
+
+      if (!officialChart) {
+        officialChart = echarts.init(document.getElementById('officialTrendChart'));
+      }
+
+      const option = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { type: 'cross', crossStyle: { color: '#999' } },
+          formatter: function(params) {
+            let res = `<div class="font-bold text-xs mb-1.5">${params[0].name} 官方通报网签与上市</div>`;
+            params.forEach(p => {
+              if (p.seriesName === '二手住宅网签面积') {
+                res += `${p.marker} ${p.seriesName}: <span class="font-semibold text-amber-600">${p.value}</span> 万㎡<br/>`;
+              } else if (p.seriesName === '二手住宅成交套数') {
+                res += `${p.marker} ${p.seriesName}: <span class="font-bold text-indigo-600">${p.value ? p.value.toLocaleString() : '--'}</span> 套<br/>`;
+              } else {
+                res += `${p.marker} ${p.seriesName}: <span class="font-bold text-emerald-600">${p.value ? p.value.toLocaleString() : '--'}</span> 套<br/>`;
+              }
+            });
+            return res;
+          }
+        },
+        legend: {
+          data: ['二手住宅成交套数', '商品住宅上市套数', '二手住宅网签面积'],
+          bottom: 4
+        },
+        grid: {
+          left: '2%',
+          right: '3%',
+          top: '12%',
+          bottom: '16%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          data: months,
+          axisPointer: { type: 'shadow' }
+        },
+        yAxis: [
+          {
+            type: 'value',
+            name: '套数 (套)',
+            min: 0,
+            max: 16000,
+            interval: 4000,
+            axisLabel: { formatter: '{value}' }
+          },
+          {
+            type: 'value',
+            name: '面积 (万㎡)',
+            min: 0,
+            max: 160,
+            interval: 40,
+            axisLabel: { formatter: '{value}' }
+          }
+        ],
+        series: [
+          {
+            name: '二手住宅成交套数',
+            type: 'bar',
+            barMaxWidth: 32,
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#6366f1' },
+                { offset: 1, color: '#a5b4fc' }
+              ]),
+              borderRadius: [4, 4, 0, 0]
+            },
+            data: secSuites
+          },
+          {
+            name: '商品住宅上市套数',
+            type: 'line',
+            smooth: true,
+            symbolSize: 8,
+            lineStyle: { color: '#10b981', width: 3 },
+            itemStyle: { color: '#10b981' },
+            data: newSuites
+          },
+          {
+            name: '二手住宅网签面积',
+            type: 'line',
+            yAxisIndex: 1,
+            smooth: true,
+            symbolSize: 7,
+            lineStyle: { color: '#f59e0b', width: 2.5, type: 'dashed' },
+            itemStyle: { color: '#f59e0b' },
+            data: secAreas
+          }
+        ]
+      };
+
+      officialChart.setOption(option, true);
+    }
+
+    // ==========================================
+    // 3. 渲染官方月报明细表格
+    // ==========================================
+    function renderOfficialReportsTable() {
+      const tbody = document.getElementById('officialReportsTableBody');
+      if (!tbody || !currentOfficialData || !currentOfficialData.official_reports) return;
+
+      const reports = currentOfficialData.official_reports;
+      tbody.innerHTML = reports.map(r => {
+        const secText = r.sec_house_total_suites 
+          ? `<strong class="text-indigo-600 font-bold">${r.sec_house_total_suites.toLocaleString()} 套</strong> <span class="text-slate-400">(${r.sec_house_area_wan_m2}万㎡)</span>`
+          : '<span class="text-slate-400">未单独通报套数</span>';
+
+        const newText = r.new_house_listed_suites
+          ? `<strong class="text-emerald-600 font-bold">${r.new_house_listed_suites.toLocaleString()} 套</strong> <span class="text-slate-400">(${r.new_house_listed_projects || '--'}个项目)</span>`
+          : '<span class="text-slate-400">未通报</span>';
+
+        const jnTags = (r.jn_highlight_projects && r.jn_highlight_projects.length > 0)
+          ? r.jn_highlight_projects.map(p => `<span class="inline-block bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[11px] font-medium mr-1.5 mb-1">${p}</span>`).join('')
+          : '<span class="text-slate-400 text-xs">无特定单列</span>';
+
+        return `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="py-2.5 px-3 font-bold text-slate-800 whitespace-nowrap">${r.month}</td>
+            <td class="py-2.5 px-4 font-medium text-slate-700">${r.title}</td>
+            <td class="py-2.5 px-3 whitespace-nowrap">${secText}</td>
+            <td class="py-2.5 px-3 whitespace-nowrap">${newText}</td>
+            <td class="py-2.5 px-4">${jnTags}</td>
+            <td class="py-2.5 px-3 text-right whitespace-nowrap">
+              <a href="${r.official_url}" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-semibold underline">查看原文</a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // 更新顶部最新月度指标卡
+      const latest = reports[reports.length - 1];
+      if (latest) {
+        if (latest.sec_house_total_suites) {
+          document.getElementById('statLatestSecSuites').innerText = latest.sec_house_total_suites.toLocaleString();
+        }
+        if (latest.sec_house_area_wan_m2) {
+          document.getElementById('statLatestSecDesc').innerText = `成交网签面积 ${latest.sec_house_area_wan_m2} 万㎡`;
+        }
+        if (latest.new_house_listed_suites) {
+          document.getElementById('statLatestNewSuites').innerText = latest.new_house_listed_suites.toLocaleString();
+        }
+        if (latest.new_house_listed_projects) {
+          document.getElementById('statLatestNewDesc').innerText = `共 ${latest.new_house_listed_projects} 个项目取得上市批准`;
+        }
+        const rangeEl = document.getElementById('officialDataRange');
+        if (rangeEl && reports.length > 0) {
+          rangeEl.innerText = `${reports[0].month} ~ ${reports[reports.length - 1].month}`;
+        }
+      }
+    }
+
+    // ==========================================
+    // 4. 重点楼盘参考数据池渲染
+    // ==========================================
     function renderCommunityTable() {
       const tbody = document.getElementById('communityTableBody');
       if (!tbody) return;
@@ -2724,7 +929,7 @@
     }
 
     // ==========================================
-    // 6. 房贷与税费计算器模块
+    // 5. 房贷与税费计算器模块
     // ==========================================
     function calculateMortgage() {
       const totalBudget = parseFloat(document.getElementById('numTotalBudget').value) || 400;
@@ -2740,484 +945,147 @@
 
       let downPayment = 80;
       if (downPaySelect && downPaySelect.value !== 'custom') {
-        // 比例模式：严格以所选比例计算首付
         const downRate = parseFloat(downPaySelect.value) || 0.20;
         downPayment = totalBudget * downRate;
         if (customDownInput) {
           customDownInput.value = downPayment.toFixed(1);
         }
       } else {
-        // 自定义金额模式：读取输入框数值
-        if (customDownInput && customDownInput.value !== '') {
-          downPayment = parseFloat(customDownInput.value);
-          if (isNaN(downPayment)) downPayment = totalBudget * 0.2;
-        } else {
-          downPayment = totalBudget * 0.2;
+        downPayment = parseFloat(customDownInput.value) || 0;
+        if (downPayment > totalBudget) {
+          downPayment = totalBudget;
+          customDownInput.value = downPayment.toFixed(1);
         }
       }
 
-      // 保证首付不大于总价，不小于 0
-      if (downPayment > totalBudget) {
-        downPayment = totalBudget;
-        if (customDownInput) customDownInput.value = downPayment.toFixed(1);
-      } else if (downPayment < 0) {
-        downPayment = 0;
-        if (customDownInput) customDownInput.value = '0.0';
-      }
+      const actualDownRate = totalBudget > 0 ? (downPayment / totalBudget * 100).toFixed(1) : "0.0";
+      document.getElementById('labelDownPercent').innerText = `${actualDownRate}%`;
+      document.getElementById('resDownPayment').innerText = downPayment.toFixed(1);
+      document.getElementById('resDownPaymentRatio').innerText = `(${actualDownRate}%)`;
 
-      // 同步设置输入框的 max 限制为当前房屋总价
-      if (customDownInput) {
-        customDownInput.max = totalBudget;
-      }
+      const totalLoan = Math.max(0, totalBudget - downPayment);
+      document.getElementById('resTotalLoan').innerText = totalLoan.toFixed(1);
 
-      const downRatePercent = totalBudget > 0 ? ((downPayment / totalBudget) * 100) : 0;
-      const labelRatio = document.getElementById('labelDownPayRatio');
-      if (labelRatio) labelRatio.innerText = `${downRatePercent.toFixed(1)}%`;
+      const maxProvident = 100;
+      let userProvident = parseFloat(document.getElementById('inputProvidentLoan').value) || 0;
+      if (userProvident > maxProvident) userProvident = maxProvident;
+      if (userProvident > totalLoan) userProvident = totalLoan;
 
-      const years = parseInt(document.getElementById('selectLoanYears').value);
-      const gjjLoanWan = parseFloat(document.getElementById('inputGjjAmount').value) || 0;
-      const gjjRateYear = (parseFloat(document.getElementById('inputGjjRate').value) || 2.60) / 100;
-      const bizRateYear = (parseFloat(document.getElementById('inputBizRate').value) || 3.00) / 100;
+      const commLoan = totalLoan - userProvident;
+      document.getElementById('displayCommercialLoan').innerText = `${commLoan.toFixed(1)} 万`;
+      document.getElementById('resLoanBreakdown').innerText = `(公积金 ${userProvident.toFixed(1)} + 商贷 ${commLoan.toFixed(1)})`;
+
+      const loanYears = parseInt(document.getElementById('selectLoanYears').value) || 30;
+      const totalMonths = loanYears * 12;
       const repayType = document.getElementById('selectRepayType').value;
+      const provRate = (parseFloat(document.getElementById('inputProvidentRate').value) || 2.60) / 100 / 12;
+      const commRate = (parseFloat(document.getElementById('inputCommercialRate').value) || 3.00) / 100 / 12;
 
-      const totalLoanWan = Math.max(0, totalBudget - downPayment);
-      const actualGjjWan = Math.min(gjjLoanWan, totalLoanWan);
-      const actualBizWan = Math.max(0, totalLoanWan - actualGjjWan);
+      let monthPay = 0;
+      let totalInterest = 0;
+      let monthPaySub = "";
 
-      // 显示商业贷款本金测算
-      const dispBiz = document.getElementById('dispBizLoanWan');
-      if (dispBiz) dispBiz.innerText = `${actualBizWan.toFixed(1)} 万`;
+      if (repayType === 'equal_loan') {
+        document.getElementById('resRepayTypeBadge').innerText = "等额本息 (每月固定)";
+        const provMonth = userProvident > 0 && provRate > 0 
+          ? (userProvident * 10000 * provRate * Math.pow(1 + provRate, totalMonths)) / (Math.pow(1 + provRate, totalMonths) - 1)
+          : (userProvident * 10000 / totalMonths);
 
-      // 结果卡片展示
-      document.getElementById('resDownPay').innerText = downPayment.toFixed(1);
-      const resRatio = document.getElementById('resDownPayRatio');
-      if (resRatio) resRatio.innerText = `${downRatePercent.toFixed(1)}%`;
+        const commMonth = commLoan > 0 && commRate > 0
+          ? (commLoan * 10000 * commRate * Math.pow(1 + commRate, totalMonths)) / (Math.pow(1 + commRate, totalMonths) - 1)
+          : (commLoan * 10000 / totalMonths);
 
-      document.getElementById('resLoanTotal').innerText = totalLoanWan.toFixed(1);
-      const resBreakdown = document.getElementById('resLoanBreakdown');
-      if (resBreakdown) {
-        resBreakdown.innerText = `万 (公积金 ${actualGjjWan.toFixed(1)} + 商贷 ${actualBizWan.toFixed(1)})`;
-      }
-
-      // 月利率与总期数
-      const monthsCount = years * 12;
-      const rGjj = gjjRateYear / 12;
-      const rBiz = bizRateYear / 12;
-
-      let monthlyGjj = 0;
-      let monthlyBiz = 0;
-      let totalInterestWan = 0;
-
-      if (repayType === 'acpi') {
-        // 等额本息
-        if (actualGjjWan > 0 && rGjj > 0) {
-          const p = actualGjjWan * 10000;
-          monthlyGjj = (p * rGjj * Math.pow(1 + rGjj, monthsCount)) / (Math.pow(1 + rGjj, monthsCount) - 1);
-        }
-        if (actualBizWan > 0 && rBiz > 0) {
-          const p = actualBizWan * 10000;
-          monthlyBiz = (p * rBiz * Math.pow(1 + rBiz, monthsCount)) / (Math.pow(1 + rBiz, monthsCount) - 1);
-        }
-        const monthlyTotal = monthlyGjj + monthlyBiz;
-        document.getElementById('resMonthlyPay').innerText = Math.round(monthlyTotal).toLocaleString();
-        // 同步房贷月供到 DTI 压力测试器
-        const dtiInput = document.getElementById('inputDtiMortgage');
-        if (dtiInput) { dtiInput.value = Math.round(monthlyTotal); calculateDTI(); }
-        document.getElementById('resRepayDetail').innerText = `公积金约 ¥${Math.round(monthlyGjj).toLocaleString()} + 商贷约 ¥${Math.round(monthlyBiz).toLocaleString()}`;
-        
-        totalInterestWan = ((monthlyTotal * monthsCount) - (totalLoanWan * 10000)) / 10000;
+        monthPay = provMonth + commMonth;
+        totalInterest = (monthPay * totalMonths - totalLoan * 10000) / 10000;
+        monthPaySub = `公积金约 ${Math.round(provMonth).toLocaleString()} + 商贷约 ${Math.round(commMonth).toLocaleString()}`;
       } else {
-        // 等额本金 首月
-        const pG = actualGjjWan * 10000;
-        const pB = actualBizWan * 10000;
-        monthlyGjj = (pG / monthsCount) + (pG * rGjj);
-        monthlyBiz = (pB / monthsCount) + (pB * rBiz);
-        const monthlyTotal = monthlyGjj + monthlyBiz;
-        document.getElementById('resMonthlyPay').innerText = `首月 ¥${Math.round(monthlyTotal).toLocaleString()}`;
-        // 同步房贷月供到 DTI 压力测试器
-        const dtiInput = document.getElementById('inputDtiMortgage');
-        if (dtiInput) { dtiInput.value = Math.round(monthlyTotal); calculateDTI(); }
-        document.getElementById('resRepayDetail').innerText = `等额本金逐月递减，末月约 ¥${Math.round((pG+pB)/monthsCount).toLocaleString()}`;
-
-        // 总利息
-        const intG = (monthsCount + 1) * pG * rGjj / 2;
-        const intB = (monthsCount + 1) * pB * rBiz / 2;
-        totalInterestWan = (intG + intB) / 10000;
+        document.getElementById('resRepayTypeBadge').innerText = "等额本金 (逐月递减)";
+        const provFirst = (userProvident * 10000 / totalMonths) + (userProvident * 10000 * provRate);
+        const commFirst = (commLoan * 10000 / totalMonths) + (commLoan * 10000 * commRate);
+        monthPay = provFirst + commFirst;
+        const totalProvInt = ((userProvident * 10000 / totalMonths + userProvident * 10000 * provRate) + (userProvident * 10000 / totalMonths * (1 + provRate))) / 2 * totalMonths - userProvident * 10000;
+        const totalCommInt = ((commLoan * 10000 / totalMonths + commLoan * 10000 * commRate) + (commLoan * 10000 / totalMonths * (1 + commRate))) / 2 * totalMonths - commLoan * 10000;
+        totalInterest = (totalProvInt + totalCommInt) / 10000;
+        monthPaySub = `首月约 ${Math.round(monthPay).toLocaleString()} 元，后期每月递减约 ${(commLoan * 10000 * commRate / totalMonths).toFixed(0)} 元`;
       }
 
-      document.getElementById('resTotalInterest').innerText = totalInterestWan.toFixed(1);
+      document.getElementById('resMonthlyPayment').innerText = Math.round(monthPay).toLocaleString();
+      document.getElementById('resMonthlySub').innerText = monthPaySub;
+      document.getElementById('resTotalInterest').innerText = `约 ${Math.max(0, totalInterest).toFixed(1)} 万元`;
 
-      // 税费计算 (120-140㎡ 南京契税按 1% 估算，中介费约 1.2% 左右)
-      const taxWan = totalBudget * 0.01;
-      const agencyWan = totalBudget * 0.012;
-      document.getElementById('resTax').innerText = taxWan.toFixed(1);
-      document.getElementById('resAgencyFee').innerText = `${taxWan.toFixed(1)} ~ ${(taxWan * 1.5).toFixed(1)}`;
-      
-      const readyCash = downPayment + taxWan + agencyWan + 0.8;
-      document.getElementById('resReadyCash').innerText = readyCash.toFixed(1);
+      const deedTaxWan = (totalBudget * 0.01).toFixed(1);
+      document.getElementById('resDeedTax').innerText = `~${deedTaxWan}万`;
+      const initialCash = downPayment + parseFloat(deedTaxWan) + 5.0 + 15.0;
+      document.getElementById('resTotalInitialCash').innerText = `~${initialCash.toFixed(1)}万`;
 
-      const adviceBudget = document.getElementById('resAdviceBudget');
-      if (adviceBudget) adviceBudget.innerText = Math.round(totalBudget);
-      const adviceCash = document.getElementById('resAdviceCash');
-      if (adviceCash) adviceCash.innerText = `${(readyCash).toFixed(1)} ~ ${(readyCash + 5).toFixed(1)}`;
+      const dtiMortgageInput = document.getElementById('inputDtiMortgage');
+      if (dtiMortgageInput) {
+        dtiMortgageInput.value = Math.round(monthPay);
+        calculateDTI();
+      }
     }
 
-    
     // ==========================================
-    // 9. 模块 1: 家庭现金流与负债率 (DTI) 压力测试逻辑
+    // 6. 家庭现金流与负债率 (DTI) 压力测试器
     // ==========================================
     function calculateDTI() {
-      const familyIncomeWan = parseFloat(document.getElementById('inputFamilyIncome').value) || 2.5;
-      const familyIncomeYuan = familyIncomeWan * 10000;
-      document.getElementById('labelFamilyIncome').innerText = `${familyIncomeWan.toFixed(1)} 万元 (¥${Math.round(familyIncomeYuan).toLocaleString()})`;
+      const incomeSlider = document.getElementById('inputFamilyIncome');
+      const monthlyIncome = parseFloat(incomeSlider ? incomeSlider.value : 30000) || 30000;
+      const labelIncome = document.getElementById('labelFamilyIncome');
+      if (labelIncome) labelIncome.innerText = monthlyIncome.toLocaleString();
 
-      const mortgageYuan = parseFloat(document.getElementById('inputDtiMortgage').value) || 13470;
-      const propertyYuan = parseFloat(document.getElementById('selectPropertyFee').value) || 420;
-      const parkingYuan = parseFloat(document.getElementById('selectParkingFee').value) || 300;
-      const utilityYuan = parseFloat(document.getElementById('selectUtilityFee').value) || 650;
+      const mortgage = parseFloat(document.getElementById('inputDtiMortgage').value) || 0;
+      const propertyFee = parseFloat(document.getElementById('selectPropertyFee').value) || 0;
+      const parkingFee = parseFloat(document.getElementById('selectParkingFee').value) || 0;
+      const utilityFee = parseFloat(document.getElementById('selectUtilityFee').value) || 0;
 
-      const totalHardExpense = mortgageYuan + propertyYuan + parkingYuan + utilityYuan;
-      const surplusYuan = familyIncomeYuan - totalHardExpense;
+      const totalHoldingCost = propertyFee + parkingFee + utilityFee;
+      const totalHousingExpenditure = mortgage + totalHoldingCost;
+      const dtiRatio = (totalHousingExpenditure / monthlyIncome) * 100;
+      const remainingDisposable = monthlyIncome - totalHousingExpenditure;
 
-      const mortgageDti = (mortgageYuan / familyIncomeYuan) * 100;
-      const totalDti = (totalHardExpense / familyIncomeYuan) * 100;
+      document.getElementById('resTotalHousingCost').innerText = Math.round(totalHousingExpenditure).toLocaleString();
+      document.getElementById('resHousingCostDetail').innerText = `基础房贷 ${Math.round(mortgage).toLocaleString()} + 持有运维 ${Math.round(totalHoldingCost).toLocaleString()}`;
+      document.getElementById('resDtiPercent').innerText = `${dtiRatio.toFixed(1)}%`;
+      document.getElementById('resRemainingDisposable').innerText = Math.round(remainingDisposable).toLocaleString();
 
-      document.getElementById('dtiTotalMonthly').innerText = Math.round(totalHardExpense).toLocaleString();
-      document.getElementById('dtiRatio').innerText = totalDti.toFixed(1);
-      document.getElementById('dtiMortgageRatio').innerText = `${mortgageDti.toFixed(1)}%`;
-      document.getElementById('dtiSurplus').innerText = Math.round(surplusYuan).toLocaleString();
+      const progressBar = document.getElementById('dtiProgressBar');
+      const resultCard = document.getElementById('dtiResultCard');
+      const statusBadge = document.getElementById('dtiStatusBadge');
+      const adviceBox = document.getElementById('dtiAdviceBox');
 
-      // 进度条与安全评级
-      const bar = document.getElementById('dtiProgressBar');
-      const badge = document.getElementById('dtiStatusBadge');
-      const advice = document.getElementById('dtiAdviceText');
-      const clampedWidth = Math.min(100, Math.max(5, totalDti));
-      if (bar) bar.style.width = `${clampedWidth}%`;
+      const clampedWidth = Math.min(Math.max(dtiRatio, 5), 100);
+      progressBar.style.width = `${clampedWidth}%`;
 
-      if (totalDti <= 38) {
-        if (bar) bar.className = "h-2.5 transition-all duration-500 bg-emerald-500";
-        if (badge) {
-          badge.className = "px-2.5 py-0.5 rounded-md font-bold text-xs bg-emerald-100 text-emerald-800";
-          badge.innerText = "🟢 绿灯 · 舒适无压区 (极稳健)";
-        }
-        if (advice) {
-          advice.innerHTML = `💬 <strong>家庭现金流测算分析</strong>：综合负债率仅 ${totalDti.toFixed(1)}%，每月享有 ¥${Math.round(surplusYuan).toLocaleString()} 自由可支配资金！生活品质几乎不受房贷影响，可从容规划每年旅游度假与家庭理财投资。`;
-        }
-      } else if (totalDti <= 50) {
-        if (bar) bar.className = "h-2.5 transition-all duration-500 bg-amber-500";
-        if (badge) {
-          badge.className = "px-2.5 py-0.5 rounded-md font-bold text-xs bg-amber-100 text-amber-800";
-          badge.innerText = "🟡 黄灯 · 稳健平衡区 (主流自住)";
-        }
-        if (advice) {
-          advice.innerHTML = `💬 <strong>家庭现金流测算分析</strong>：负债率 ${totalDti.toFixed(1)}% 处于南京改善小家庭最典型的稳健区间。建议交房后留存至少 12~15 万元家庭紧急避险金，不盲目加高杠杆，进退皆有余地。`;
-        }
+      if (dtiRatio <= 35) {
+        resultCard.className = "lg:col-span-5 rounded-xl p-5 border space-y-4 transition-colors duration-300 bg-emerald-50/50 border-emerald-200";
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800";
+        statusBadge.innerText = "🟢 黄金舒适区 · 现金流极稳";
+        progressBar.className = "h-2 rounded-full transition-all duration-300 bg-emerald-500";
+        adviceBox.className = "p-3 bg-white/80 rounded-lg border border-emerald-100 text-xs text-slate-700 leading-relaxed";
+        adviceBox.innerHTML = `💡 <strong>理财与杠杆建议</strong>：房贷持有成本在收入 35% 以下，处于极其健康的舒适安全垫区间。家庭每月结余充裕，可在安心还贷的同时继续配置商业年金或增值储蓄。`;
+      } else if (dtiRatio <= 50) {
+        resultCard.className = "lg:col-span-5 rounded-xl p-5 border space-y-4 transition-colors duration-300 bg-amber-50/50 border-amber-200";
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+        statusBadge.innerText = "⚠️ 适度负债 · 务必留足备用金";
+        progressBar.className = "h-2 rounded-full transition-all duration-300 bg-amber-500";
+        adviceBox.className = "p-3 bg-white/80 rounded-lg border border-amber-100 text-xs text-slate-700 leading-relaxed";
+        adviceBox.innerHTML = `💡 <strong>理财与杠杆建议</strong>：房贷支出占家庭月入近半，抗单边降薪或意外冲击能力较弱；建议手头保留至少 12 个月月供的独立流动备用金（约 15-18 万元）作为绝对不可挪用的安全气囊。`;
       } else {
-        if (bar) bar.className = "h-2.5 transition-all duration-500 bg-rose-500";
-        if (badge) {
-          badge.className = "px-2.5 py-0.5 rounded-md font-bold text-xs bg-rose-100 text-rose-800";
-          badge.innerText = "🔴 红灯 · 紧绷警戒区 (需慎重)";
-        }
-        if (advice) {
-          advice.innerHTML = `⚠️ <strong>家庭现金流风险警示</strong>：综合负债率达 ${totalDti.toFixed(1)}% 超过了 50% 银行警戒线。每月超过一半收入被房屋绑定，抗职业转轨与失业风险偏弱。建议考虑将总价预算适度压缩至 350-380 万元，或增加首付降低贷款本金。`;
-        }
+        resultCard.className = "lg:col-span-5 rounded-xl p-5 border space-y-4 transition-colors duration-300 bg-rose-50/60 border-rose-300";
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800";
+        statusBadge.innerText = "🚨 超过50%警戒线 · 现金流风险极高";
+        progressBar.className = "h-2 rounded-full transition-all duration-300 bg-rose-600";
+        adviceBox.className = "p-3 bg-white/80 rounded-lg border border-rose-200 text-xs text-rose-900 leading-relaxed";
+        adviceBox.innerHTML = `⚠️ <strong>警惕硬抗高杠杆</strong>：全口径房产支出已超过家庭月入一半，已触碰银行风控审批红线。一旦任何一人收入波动将直接面临家庭现金流断流断供风险，强烈建议调高首付比例或压缩目标总价！`;
       }
-
-      // 应急备用金建议 (综合硬性支出 + 每月 6000 基础开销)
-      const monthlyLiving = 6000;
-      const reserve6Wan = ((totalHardExpense + monthlyLiving) * 6) / 10000;
-      const reserve12Wan = reserve6Wan * 2;
-      document.getElementById('resReserve6').innerText = reserve6Wan.toFixed(1);
-      document.getElementById('resReserve12').innerText = reserve12Wan.toFixed(1);
     }
 
     // ==========================================
-    // 11. 模块 4: 看房打分雷达图
-    // ==========================================
-    const RADAR_CANDIDATES = [
-      {
-        name: "江宁金茂府",
-        color: "#10b981",
-        scores: [8.5, 8.5, 9.8, 9.2, 9.2, 6.0],
-        desc: "九龙湖低密科技四代大平层，绿金科技与空中庭院顶格，居住舒适度极高但总价门槛偏高。"
-      },
-      {
-        name: "中建·东山樾府",
-        color: "#6366f1",
-        scores: [9.2, 9.2, 9.0, 9.5, 8.5, 7.5],
-        desc: "东山老城文靖路站旁1.8低密四代宅，错层露台与烟火配套俱佳，综合性价比与改善属性平衡。"
-      },
-      {
-        name: "嘉宏·万流江宁",
-        color: "#ec4899",
-        scores: [9.5, 9.8, 9.8, 8.8, 9.2, 5.5],
-        desc: "百家湖核心顶奢六恒科技住宅+挑高露台，地段商圈无敌，适合预算充裕追求极致品质家庭。"
-      },
-      {
-        name: "招商·百家臻园",
-        color: "#f43f5e",
-        scores: [9.0, 9.5, 9.5, 7.8, 9.0, 7.2],
-        desc: "百家湖核心纯铝板外立面会所标杆，实景交付现房无烂尾风险，圈层纯粹保值稳健。"
-      },
-      {
-        name: "万科翡翠公园",
-        color: "#3b82f6",
-        scores: [9.5, 8.8, 9.2, 8.2, 9.0, 8.5],
-        desc: "九龙湖次新标杆王，紧邻3号线与商业街，万科物业口碑第一，综合保值流通与自住最均衡。"
-      },
-      {
-        name: "中海·观山樾",
-        color: "#f59e0b",
-        scores: [7.0, 7.0, 8.5, 9.5, 7.0, 9.8],
-        desc: "方山低密生态洋房，得房率超85%，总价门槛极具亲和力，还款月供零压力。"
-      }
-    ];
-
-    let currentRadarIdx = 0;
-    let radarChart = null;
-
-    function renderRadarChart() {
-      if (!radarChart) {
-        const radarDom = document.getElementById('radarChart');
-        if (!radarDom) return;
-        radarChart = echarts.init(radarDom);
-      }
-
-      const seriesData = RADAR_CANDIDATES.map((item, idx) => {
-        return {
-          value: item.scores,
-          name: item.name,
-          symbolSize: 6,
-          lineStyle: { width: idx === currentRadarIdx ? 3.5 : 2, color: item.color },
-          areaStyle: {
-            color: item.color,
-            opacity: idx === currentRadarIdx ? 0.35 : 0.12
-          },
-          itemStyle: { color: item.color }
-        };
-      });
-
-      const option = {
-        tooltip: {
-          trigger: 'item',
-          formatter: function(params) {
-            const dims = ['地铁通勤', '商业烟火', '品质物业', '得房格局', '保值流通', '预算友好'];
-            let res = `<div class="font-bold text-xs mb-1 text-slate-800">${params.name} 量化评分</div>`;
-            dims.forEach((d, i) => {
-              res += `<div class="text-[11px] flex justify-between gap-3 text-slate-600"><span>${d}:</span> <strong class="text-indigo-600">${params.value[i]} 分</strong></div>`;
-            });
-            const avg = (params.value.reduce((a, b) => a + b, 0) / params.value.length * 10).toFixed(1);
-            res += `<div class="pt-1.5 mt-1 border-t border-slate-200 text-xs font-bold text-slate-900">综合得分: ${avg} 分</div>`;
-            return res;
-          }
-        },
-        radar: {
-          indicator: [
-            { name: '🚇 地铁通勤', max: 10 },
-            { name: '🛍️ 商业烟火', max: 10 },
-            { name: '🏡 品质物业', max: 10 },
-            { name: '📐 得房格局', max: 10 },
-            { name: '📈 保值流通', max: 10 },
-            { name: '💰 预算友好', max: 10 }
-          ],
-          shape: 'polygon',
-          splitNumber: 4,
-          axisName: {
-            color: '#475569',
-            fontSize: 11,
-            fontWeight: 'bold'
-          },
-          splitLine: {
-            lineStyle: { color: '#e2e8f0' }
-          },
-          splitArea: {
-            show: true,
-            areaStyle: {
-              color: ['rgba(248,250,252,0.5)', 'rgba(241,245,249,0.5)']
-            }
-          }
-        },
-        series: [{
-          type: 'radar',
-          data: seriesData
-        }]
-      };
-
-      radarChart.setOption(option, true);
-
-      // 同步当前选中楼盘的数据到滑块和综合分
-      syncRadarSliders();
-    }
-
-    function syncRadarSliders() {
-      const cand = RADAR_CANDIDATES[currentRadarIdx];
-      cand.scores.forEach((val, i) => {
-        const slider = document.getElementById(`sliderScore${i}`);
-        const valEl = document.getElementById(`scoreVal${i}`);
-        if (slider) slider.value = val;
-        if (valEl) valEl.innerText = val.toFixed(1);
-      });
-      const avg = (cand.scores.reduce((a, b) => a + b, 0) / cand.scores.length * 10).toFixed(1);
-      const totalEl = document.getElementById('radarTotalScoreText');
-      if (totalEl) totalEl.innerText = `${cand.name}：${avg} / 100 分`;
-    }
-    
-    // ==========================================
-    // 7. 事件绑定与交互
+    // 7. 事件绑定与弹窗管理
     // ==========================================
     function setupEvents() {
-      // 切换板块
-      document.querySelectorAll('.region-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          document.querySelectorAll('.region-btn').forEach(b => {
-            b.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
-            b.classList.add('bg-slate-100', 'text-slate-600');
-          });
-          e.target.classList.remove('bg-slate-100', 'text-slate-600');
-          e.target.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
-
-          activeRegionKey = e.target.dataset.region;
-          updateTopCards();
-          renderMainChart();
-        });
-      });
-
-      // 计算器输入事件
-      const budgetSlider = document.getElementById('inputTotalBudget');
-      const budgetNum = document.getElementById('numTotalBudget');
-      const downPaySelect = document.getElementById('selectDownPaymentRate');
-      const customDownInput = document.getElementById('inputCustomDownPayment');
-
-      function onBudgetChanged(newVal) {
-        const totalBudget = parseFloat(newVal) || 400;
-        budgetSlider.value = totalBudget;
-        budgetNum.value = totalBudget;
-        
-        // 若当前不是自定义模式，按所选比例自动更新首付金额
-        if (downPaySelect && downPaySelect.value !== 'custom') {
-          const rate = parseFloat(downPaySelect.value) || 0.2;
-          const down = totalBudget * rate;
-          if (customDownInput) customDownInput.value = down.toFixed(1);
-        } else if (customDownInput) {
-          // 自定义模式下，首付不能超过总价
-          let down = parseFloat(customDownInput.value) || 0;
-          if (down > totalBudget) {
-            customDownInput.value = totalBudget.toFixed(1);
-          }
-        }
-        calculateMortgage();
-      }
-
-      budgetSlider.addEventListener('input', (e) => onBudgetChanged(e.target.value));
-      budgetNum.addEventListener('input', (e) => onBudgetChanged(e.target.value));
-
-      // 首付比例下拉选择改变
-      downPaySelect.addEventListener('change', () => {
-        const totalBudget = parseFloat(budgetNum.value) || 400;
-        if (downPaySelect.value !== 'custom') {
-          const rate = parseFloat(downPaySelect.value) || 0.2;
-          const down = totalBudget * rate;
-          if (customDownInput) customDownInput.value = down.toFixed(1);
-        } else {
-          // 切换到自定义模式时，如果输入框为空或数值异常，保持当前首付款作为基准
-          if (customDownInput && (!customDownInput.value || parseFloat(customDownInput.value) <= 0)) {
-            customDownInput.value = (totalBudget * 0.2).toFixed(1);
-          }
-          if (customDownInput) {
-            customDownInput.focus();
-            customDownInput.select();
-          }
-        }
-        calculateMortgage();
-      });
-
-      // 自定义首付金额输入改变
-      if (customDownInput) {
-        customDownInput.addEventListener('input', () => {
-          const totalBudget = parseFloat(budgetNum.value) || 400;
-          let down = parseFloat(customDownInput.value);
-          if (isNaN(down)) down = 0;
-          if (down > totalBudget) {
-            down = totalBudget;
-            customDownInput.value = totalBudget.toFixed(1);
-          }
-
-          const ratio = totalBudget > 0 ? (down / totalBudget) : 0;
-
-          // 智能匹配预设下拉项 (0.5% 容差)
-          let matched = false;
-          for (let i = 0; i < downPaySelect.options.length; i++) {
-            const optVal = parseFloat(downPaySelect.options[i].value);
-            if (!isNaN(optVal) && Math.abs(optVal - ratio) < 0.005) {
-              downPaySelect.selectedIndex = i;
-              matched = true;
-              break;
-            }
-          }
-          if (!matched) {
-            downPaySelect.value = 'custom';
-          }
-          calculateMortgage();
-        });
-
-        // 失焦时保证保留一位小数并防止留空
-        customDownInput.addEventListener('blur', () => {
-          const totalBudget = parseFloat(budgetNum.value) || 400;
-          let down = parseFloat(customDownInput.value);
-          if (isNaN(down) || down < 0) down = totalBudget * 0.2;
-          if (down > totalBudget) down = totalBudget;
-          customDownInput.value = down.toFixed(1);
-          calculateMortgage();
-        });
-      }
-
-      ['selectLoanYears', 'inputGjjAmount', 'inputGjjRate', 'inputBizRate', 'selectRepayType'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.addEventListener('change', calculateMortgage);
-          el.addEventListener('input', calculateMortgage);
-        }
-      });
-
-      // 数据弹窗事件
-      const modal = document.getElementById('dataModal');
-      const jsonArea = document.getElementById('dataJsonEditor');
-
-      document.getElementById('openDataModalBtn').addEventListener('click', () => {
-        jsonArea.value = JSON.stringify(currentData, null, 2);
-        modal.classList.remove('hidden');
-      });
-
-      const closeModal = () => modal.classList.add('hidden');
-      document.getElementById('closeDataModalBtn').addEventListener('click', closeModal);
-      document.getElementById('cancelDataBtn').addEventListener('click', closeModal);
-
-      document.getElementById('saveDataBtn').addEventListener('click', () => {
-        try {
-          const parsed = JSON.parse(jsonArea.value);
-          currentData = parsed;
-          localStorage.setItem('nj_housing_data', JSON.stringify(currentData));
-          closeModal();
-          updateTopCards();
-          renderMainChart();
-          alert('数据更新成功！图表已同步重绘。');
-        } catch (err) {
-          alert('JSON 格式有误，请核对后再保存：' + err.message);
-        }
-      });
-
-      document.getElementById('resetDataBtn').addEventListener('click', () => {
-        if (confirm('确定要恢复为初始的南京江宁官方基准数据吗？')) {
-          currentData = JSON.parse(JSON.stringify(DEFAULT_HOUSING_DATA));
-          localStorage.removeItem('nj_housing_data');
-          jsonArea.value = JSON.stringify(currentData, null, 2);
-          closeModal();
-          updateTopCards();
-          renderMainChart();
-        }
-      });
-
-      // 楼盘分类筛选 (全部 / 在售新房 / 标杆次新)
+      // 楼盘分类筛选
       document.querySelectorAll('.filter-community-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const targetBtn = e.target.closest('.filter-community-btn');
@@ -3234,9 +1102,49 @@
         });
       });
 
-      // 窗口拉伸重绘
-      
-      // 模块 1: DTI 压力测试器事件监听
+      // 预算滑块与输入框联动
+      const budgetSlider = document.getElementById('inputTotalBudget');
+      const budgetNum = document.getElementById('numTotalBudget');
+      const downPaySelect = document.getElementById('selectDownPaymentRate');
+      const customDownInput = document.getElementById('inputCustomDownPayment');
+
+      function onBudgetChanged(newVal) {
+        const totalBudget = parseFloat(newVal) || 400;
+        budgetSlider.value = totalBudget;
+        budgetNum.value = totalBudget;
+        calculateMortgage();
+      }
+
+      budgetSlider.addEventListener('input', (e) => onBudgetChanged(e.target.value));
+      budgetNum.addEventListener('change', (e) => onBudgetChanged(e.target.value));
+      budgetNum.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') onBudgetChanged(e.target.value);
+      });
+
+      downPaySelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        const totalBudget = parseFloat(budgetNum.value) || 400;
+        if (val !== 'custom') {
+          const downRate = parseFloat(val) || 0.20;
+          customDownInput.value = (totalBudget * downRate).toFixed(1);
+        }
+        calculateMortgage();
+      });
+
+      customDownInput.addEventListener('input', () => {
+        downPaySelect.value = 'custom';
+        calculateMortgage();
+      });
+
+      ['selectLoanYears', 'selectRepayType', 'inputProvidentLoan', 'inputProvidentRate', 'inputCommercialRate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', calculateMortgage);
+          el.addEventListener('change', calculateMortgage);
+        }
+      });
+
+      // DTI 压力测试器事件
       const incomeSlider = document.getElementById('inputFamilyIncome');
       if (incomeSlider) {
         incomeSlider.addEventListener('input', calculateDTI);
@@ -3249,70 +1157,106 @@
         }
       });
 
-      // 模块 4: 雷达图切换楼盘与滑块打分事件
-      document.querySelectorAll('.radar-tab-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const targetBtn = e.target.closest('.radar-tab-btn');
-          if (!targetBtn) return;
-          document.querySelectorAll('.radar-tab-btn').forEach(b => {
-            b.classList.remove('bg-indigo-600', 'text-white', 'shadow-2xs');
-            b.classList.add('bg-slate-100', 'text-slate-600');
-          });
-          targetBtn.classList.remove('bg-slate-100', 'text-slate-600');
-          targetBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-2xs');
+      // 数据管理弹窗
+      const modal = document.getElementById('dataModal');
+      const openBtn = document.getElementById('openDataModalBtn');
+      const closeBtn = document.getElementById('closeDataModalBtn');
+      const cancelBtn = document.getElementById('cancelDataBtn');
+      const jsonArea = document.getElementById('dataJsonEditor');
 
-          currentRadarIdx = parseInt(targetBtn.dataset.target) || 0;
-          renderRadarChart();
-        });
+      function openModal() {
+        jsonArea.value = JSON.stringify(currentOfficialData, null, 2);
+        modal.classList.remove('hidden');
+      }
+      function closeModal() {
+        modal.classList.add('hidden');
+      }
+
+      openBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      cancelBtn.addEventListener('click', closeModal);
+
+      document.getElementById('saveDataBtn').addEventListener('click', () => {
+        try {
+          const parsed = JSON.parse(jsonArea.value);
+          currentOfficialData = parsed;
+          localStorage.setItem('nj_official_housing_data', JSON.stringify(currentOfficialData));
+          closeModal();
+          renderOfficialTrendChart();
+          renderOfficialReportsTable();
+          alert('官方数据已成功保存并重新渲染！');
+        } catch (err) {
+          alert('JSON 格式有误，请核对后再保存：' + err.message);
+        }
       });
 
-      for (let i = 0; i < 6; i++) {
-        const slider = document.getElementById(`sliderScore${i}`);
-        if (slider) {
-          slider.addEventListener('input', (e) => {
-            const val = parseFloat(e.target.value);
-            RADAR_CANDIDATES[currentRadarIdx].scores[i] = val;
-            const valEl = document.getElementById(`scoreVal${i}`);
-            if (valEl) valEl.innerText = val.toFixed(1);
-            renderRadarChart();
-          });
+      document.getElementById('resetDataBtn').addEventListener('click', async () => {
+        if (confirm('确定要重新从本地 data.json 重新加载官方基准数据吗？')) {
+          localStorage.removeItem('nj_official_housing_data');
+          await loadDataFromJson();
+          jsonArea.value = JSON.stringify(currentOfficialData, null, 2);
+          closeModal();
+          renderOfficialTrendChart();
+          renderOfficialReportsTable();
         }
-      }
+      });
 
       // 窗口拉伸重绘
       window.addEventListener('resize', () => {
-        if (mainChart) mainChart.resize();
-        if (radarChart) radarChart.resize();
+        if (officialChart) officialChart.resize();
       });
-
     }
 
     // ==========================================
-    // 8. 页面加载初始化 (优先自 data.json 动态载入最新数据)
+    // 8. 官方数据载入与页面初始化
     // ==========================================
-    async function initApp() {
+    async function loadDataFromJson() {
       try {
         const resp = await fetch('./data.json?t=' + Date.now());
         if (resp.ok) {
           const remoteData = await resp.json();
-          if (remoteData && remoteData.months && remoteData.regions) {
-            currentData = remoteData;
-            const rangeEl = document.getElementById('dataTimeRange');
-            if (rangeEl && remoteData.months.length > 0) {
-              rangeEl.innerText = `${remoteData.months[0]} ~ ${remoteData.months[remoteData.months.length - 1]}`;
-            }
+          if (remoteData && remoteData.official_reports) {
+            currentOfficialData = remoteData;
+            return;
           }
         }
       } catch (e) {
-        console.log('[Data] 本地或离线环境，使用内置基准数据');
+        console.log('[Info] 使用本地预置官方数据结构');
       }
 
-      updateTopCards();
-      renderMainChart();
+      // 如果离线 fetch 失败的默认权威基准
+      currentOfficialData = {
+        "source": "南京网上房地产 (www.njhouse.com.cn)",
+        "official_reports": [
+          { "month": "2026-03", "title": "2026年3月南京房地产市场分析", "contentId": "40286e859dd42972019dd8127b5a00bb", "official_url": "https://www.njhouse.com.cn/xwzxDetail.html?contentid=40286e859dd42972019dd8127b5a00bb", "sec_house_total_suites": 14300, "sec_house_area_wan_m2": 130.60, "new_house_listed_suites": 1712, "new_house_listed_projects": 18, "jn_highlight_projects": ["湖滨尊邸", "樾满云川", "托乐嘉", "东郊小镇", "新华公寓", "殷巷新寓"] },
+          { "month": "2026-04", "title": "2026年4月南京房地产市场分析", "contentId": "40286e859dd8b52e019e49d1f7870b1d", "official_url": "https://www.njhouse.com.cn/xwzxDetail.html?contentid=40286e859dd8b52e019e49d1f7870b1d", "sec_house_total_suites": 13800, "sec_house_area_wan_m2": 125.85, "new_house_listed_suites": 2792, "new_house_listed_projects": 38, "jn_highlight_projects": ["樾满云川", "托乐嘉", "东郊小镇", "新华公寓", "殷巷新寓"] },
+          { "month": "2026-05", "title": "2026年5月南京房地产市场分析", "contentId": "40286e859dd8b52e019ef74661bf1c15", "official_url": "https://www.njhouse.com.cn/xwzxDetail.html?contentid=40286e859dd8b52e019ef74661bf1c15", "sec_house_total_suites": 12400, "sec_house_area_wan_m2": 113.66, "new_house_listed_suites": 3710, "new_house_listed_projects": 28, "jn_highlight_projects": ["樾满云川", "万流宁邸", "万流", "托乐嘉", "东郊小镇", "新华公寓", "殷巷新寓"] },
+          { "month": "2026-06", "title": "2026年6月南京房地产市场分析", "contentId": "40286e859dd8b52e019fa7575e3a2b70", "official_url": "https://www.njhouse.com.cn/xwzxDetail.html?contentid=40286e859dd8b52e019fa7575e3a2b70", "sec_house_total_suites": 10300, "sec_house_area_wan_m2": 95.59, "new_house_listed_suites": 1639, "new_house_listed_projects": 31, "jn_highlight_projects": ["樾满云川", "东郊小镇", "新华公寓"] },
+          { "month": "2026-07", "title": "2026年7月南京房地产市场分析", "contentId": "40286e859fa81d8901a032ccaa1a0ce2", "official_url": "https://www.njhouse.com.cn/xwzxDetail.html?contentid=40286e859fa81d8901a032ccaa1a0ce2", "sec_house_total_suites": 10300, "sec_house_area_wan_m2": 96.03, "new_house_listed_suites": 1255, "new_house_listed_projects": 22, "jn_highlight_projects": ["东郊小镇"] },
+          { "month": "2026-08", "title": "2026年8月南京房地产市场分析", "contentId": "40286e859fa81d8901a0f70981312050", "official_url": "https://www.njhouse.com.cn/xwzxDetail.html?contentid=40286e859fa81d8901a0f70981312050", "sec_house_total_suites": 9400, "sec_house_area_wan_m2": 86.97, "new_house_listed_suites": 973, "new_house_listed_projects": 17, "jn_highlight_projects": ["樾满云川", "东郊小镇", "新华公寓", "殷巷新寓"] },
+          { "month": "2026-09", "title": "2026年9月南京房地产市场分析", "contentId": "40286e859fa81d8901a180b64c482d87", "official_url": "https://www.njhouse.com.cn/xwzxDetail.html?contentid=40286e859fa81d8901a180b64c482d87", "sec_house_total_suites": 9800, "sec_house_area_wan_m2": 90.16, "new_house_listed_suites": 5094, "new_house_listed_projects": 25, "jn_highlight_projects": ["樾满云川", "托乐嘉", "东郊小镇", "殷巷新寓", "锦绣前程悦府"] },
+          { "month": "2026-10", "title": "2026年10月南京房地产市场分析", "contentId": "40286e859fa81d8901a1d3fe651c34d0", "official_url": "https://www.njhouse.com.cn/xwzxDetail.html?contentid=40286e859fa81d8901a1d3fe651c34d0", "sec_house_total_suites": 10100, "sec_house_area_wan_m2": 93.00, "new_house_listed_suites": 1160, "new_house_listed_projects": 13, "jn_highlight_projects": ["樾满云川", "璞玥府", "托乐嘉", "东郊小镇", "新华公寓"] }
+        ]
+      };
+    }
+
+    async function initApp() {
+      const cached = localStorage.getItem('nj_official_housing_data');
+      if (cached) {
+        try {
+          currentOfficialData = JSON.parse(cached);
+        } catch (e) {
+          await loadDataFromJson();
+        }
+      } else {
+        await loadDataFromJson();
+      }
+
+      renderOfficialTrendChart();
+      renderOfficialReportsTable();
       renderCommunityTable();
       calculateMortgage();
       calculateDTI();
-      renderRadarChart();
       setupEvents();
     }
 

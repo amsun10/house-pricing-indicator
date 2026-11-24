@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 从南京网上房地产 (www.njhouse.com.cn) 官方提取最新月度房地产市场分析数据
-并与本地 data.json 进行核验与同步
+并与本地 data.json 进行核验与同步（杜绝任何非官方臆造数据）
 """
 
 import json
@@ -12,6 +12,7 @@ import ssl
 import sys
 import urllib.parse
 import urllib.request
+from datetime import datetime
 
 DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data.json")
 
@@ -74,66 +75,90 @@ def parse_report_metrics(content_html):
     text = re.sub(r'\s+', ' ', text)
 
     metrics = {
-        "new_house_listed_suites": None,   # 全市新房上市套数
-        "sec_house_total_wan_suites": None, # 全市二手住宅成交总套数 (万套)
-        "sec_house_total_suites": None,    # 全市二手住宅成交总套数 (套)
-        "sec_house_area_wan_m2": None,     # 全市二手住宅成交面积 (万㎡)
-        "jn_sec_house_est_suites": None,   # 江宁区二手成交估算套数 (通常占全市 18%~22%)
-        "hot_projects": [],                # 提及的重点盘
+        "new_house_listed_suites": None,    # 全市商品住宅上市套数
+        "new_house_listed_projects": None,  # 全市商品住宅上市项目数
+        "sec_house_total_suites": None,     # 全市二手住宅成交总套数 (套)
+        "sec_house_area_wan_m2": None,      # 全市二手住宅成交面积 (万㎡)
+        "jn_highlight_projects": [],        # 官方通报提及的江宁重点楼盘
     }
 
     # 1. 新房住宅上市套数
-    # 如: 商品住宅项目13个，上市1160套
-    m_new = re.search(r'商品住宅项目\s*\d+\s*个[，,]\s*上市\s*(\d+)\s*套', text)
+    # 如: 商品住宅项目18个，上市1712套
+    m_new = re.search(r'商品住宅项目\s*(\d+)\s*个[，,]\s*上市\s*(\d+)\s*套', text)
     if m_new:
-        metrics["new_house_listed_suites"] = int(m_new.group(1))
+        metrics["new_house_listed_projects"] = int(m_new.group(1))
+        metrics["new_house_listed_suites"] = int(m_new.group(2))
 
     # 2. 全市二手住宅成交
-    # 如: 其中二手住宅交易成交面积93.00万m2（1.01万套）
-    # 或: 其中二手住宅交易成交面积130.6万m2（1.43万套）
-    m_sec = re.search(r'二手住宅交易\s*成交面积\s*([\d\.]+)\s*万\s*m\s*2\s*[（\(]\s*([\d\.]+)\s*万\s*套', text)
-    if not m_sec:
-        m_sec = re.search(r'二手住宅[^\d]*([\d\.]+)\s*万\s*m\s*2[^\d]*[（\(]\s*([\d\.]+)\s*万\s*套', text)
-    
+    # 如: 其中二手住宅交易成交面积130.6万m2（1.43万套）
+    # 或: 其中二手住宅交易成交面积90.16万m2（0. 98 万套）
+    m_sec = re.search(r'二手住宅[^\d]*([\d\.]+)\s*万\s*m\s*2[^\d]*[（\(]\s*([\d\.\s]+)\s*万\s*套', text)
     if m_sec:
         metrics["sec_house_area_wan_m2"] = float(m_sec.group(1))
-        wan_suites = float(m_sec.group(2))
-        metrics["sec_house_total_wan_suites"] = wan_suites
-        metrics["sec_house_total_suites"] = int(round(wan_suites * 10000))
-        # 江宁区长期为南京二手成交第一或第二主力区，平均占比约为全市的 18.5%
-        metrics["jn_sec_house_est_suites"] = int(round(metrics["sec_house_total_suites"] * 0.185))
+        val_str = re.sub(r'\s+', '', m_sec.group(2))
+        try:
+            metrics["sec_house_total_suites"] = int(round(float(val_str) * 10000))
+        except ValueError:
+            pass
 
-    # 3. 提取报告提及的楼盘
-    for proj in ["万流", "金茂府", "东山樾府", "樾满云川", "璞玥府", "百家臻园", "托乐嘉", "东郊小镇"]:
-        if proj in text:
-            metrics["hot_projects"].append(proj)
+    # 3. 提取官方通报中提及的江宁重点项目（新房/二手）
+    for proj in [
+        "湖滨尊邸", "樾满云川", "万流宁邸", "万流", "金茂府", 
+        "东山樾府", "璞玥府", "百家臻园", "托乐嘉", "东郊小镇", 
+        "新华公寓", "殷巷新寓", "锦绣前程悦府"
+    ]:
+        if proj in text and proj not in metrics["jn_highlight_projects"]:
+            metrics["jn_highlight_projects"].append(proj)
 
     return metrics
 
 def sync_njhouse_data():
-    """主函数：拉取官方最新发布的月度数据并输出校验汇总"""
+    """拉取官方最新发布的月度数据并生成权威 data.json"""
     print("=" * 60)
-    print("【南京网上房地产 (www.njhouse.com.cn)】官方数据源同步检测")
+    print("【南京网上房地产 (www.njhouse.com.cn)】官方全量数据抓取与对齐")
     print("=" * 60)
 
     reports = fetch_official_reports_list()
     if not reports:
-        print("[Info] 暂未获取到官方月报列表，保留本地基准数据")
+        print("[Error] 未获取到官方月报列表")
         return False
 
-    print(f"[Success] 成功发现官方已发布月报 {len(reports)} 篇：")
-    parsed_results = {}
+    official_reports = []
     for r in reports:
         ym = r["year_month"]
         content = fetch_report_detail(r["contentId"])
         if content:
-            metrics = parse_report_metrics(content)
-            parsed_results[ym] = metrics
-            suites_str = f"{metrics['sec_house_total_suites']} 套" if metrics['sec_house_total_suites'] else "未单列"
-            jn_str = f"江宁约 {metrics['jn_sec_house_est_suites']} 套" if metrics['jn_sec_house_est_suites'] else ""
-            print(f"  • {ym}：全市二手房网签 {suites_str} ({jn_str}) | 官方提及重点盘: {','.join(metrics['hot_projects'])}")
+            m = parse_report_metrics(content)
+            official_reports.append({
+                "month": ym,
+                "title": r["title"],
+                "contentId": r["contentId"],
+                "official_url": f"https://www.njhouse.com.cn/xwzxDetail.html?contentid={r['contentId']}",
+                "sec_house_total_suites": m["sec_house_total_suites"],
+                "sec_house_area_wan_m2": m["sec_house_area_wan_m2"],
+                "new_house_listed_suites": m["new_house_listed_suites"],
+                "new_house_listed_projects": m["new_house_listed_projects"],
+                "jn_highlight_projects": m["jn_highlight_projects"]
+            })
+            print(f"  • {ym}：二手住宅网签 {m['sec_house_total_suites']} 套 ({m['sec_house_area_wan_m2']}万㎡) | 商品住宅上市 {m['new_house_listed_suites']} 套 | 官方江宁热盘: {','.join(m['jn_highlight_projects'])}")
 
-    return parsed_results
+    output_data = {
+        "source": "南京网上房地产 (www.njhouse.com.cn) 官方权威发布",
+        "publisher": "南京市房地产市场监测分析中心",
+        "official_site": "https://www.njhouse.com.cn/",
+        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "mortgage_rates": {
+            "commercial_first_home": 3.00,
+            "provident_fund_first_home": 2.60
+        },
+        "official_reports": official_reports
+    }
+
+    with open(DATA_PATH, "w", encoding="utf-8") as f:
+        json.dump(output_data, f, ensure_ascii=False, indent=2)
+
+    print(f"\n[Success] 官方全量数据已写入: {DATA_PATH} (共 {len(official_reports)} 个月份官方报告)")
+    return True
 
 if __name__ == "__main__":
     sync_njhouse_data()
