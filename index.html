@@ -259,14 +259,14 @@
             <div class="flex items-center justify-between">
               <label class="text-xs font-bold text-slate-700">家庭税后月收入 (元/月，含公积金月缴存)</label>
               <div class="flex items-center space-x-1.5">
-                <span id="labelFamilyIncome" class="font-bold text-indigo-600 text-sm">30,000</span>
+                <span id="labelFamilyIncome" class="font-bold text-indigo-600 text-sm">15,000</span>
                 <span class="text-xs text-slate-500">元/月</span>
               </div>
             </div>
-            <input type="range" id="inputFamilyIncome" min="15000" max="80000" step="1000" value="30000" 
+            <input type="range" id="inputFamilyIncome" min="15000" max="80000" step="1000" value="15000" 
               class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
             <div class="flex justify-between text-[11px] text-slate-400">
-              <span>1.5万/月</span>
+              <span>1.5万/月 (默认)</span>
               <span>3.0万/月 (双职工参考)</span>
               <span>8.0万/月</span>
             </div>
@@ -373,7 +373,7 @@
             <span class="w-2 h-4 bg-rose-600 rounded-sm inline-block"></span>
             嘉宏·万流宁邸 (万流江宁) · 每日销售去化监控
             <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
-              📡 GitHub Actions 每晚 21:00 自动抓取官网
+              📡 GitHub Actions 每晚 23:00 自动抓取官网
             </span>
           </h2>
           <p class="text-xs text-slate-500 mt-1">
@@ -436,7 +436,7 @@
       <!-- 万流每日去化趋势图 -->
       <div class="space-y-2">
         <div class="flex items-center justify-between text-xs text-slate-500">
-          <span>累计成交、累计认购与剩余未售套数日度走势（每晚 21:00 自动记录一个快照点）</span>
+          <span>累计成交、累计认购与剩余未售套数日度走势（每晚 23:00 自动记录一个快照点）</span>
           <span class="text-slate-400">数据源：wanliu_daily.json</span>
         </div>
         <div id="wanliuDailyChart" class="w-full h-72"></div>
@@ -475,7 +475,7 @@
       <div class="space-y-2 pt-2 border-t border-slate-100">
         <div class="flex items-center justify-between">
           <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
-            📅 万流宁邸每日 21:00 官方销售快照日志
+            📅 万流宁邸每日 23:00 官方销售快照日志
           </h3>
           <span class="text-[11px] text-slate-400">按日期倒序排列，净变动 = 较前一日未售套数减少量</span>
         </div>
@@ -1105,7 +1105,7 @@
     // ==========================================
     function calculateDTI() {
       const incomeSlider = document.getElementById('inputFamilyIncome');
-      const monthlyIncome = parseFloat(incomeSlider ? incomeSlider.value : 30000) || 30000;
+      const monthlyIncome = parseFloat(incomeSlider ? incomeSlider.value : 15000) || 15000;
       const labelIncome = document.getElementById('labelFamilyIncome');
       if (labelIncome) labelIncome.innerText = monthlyIncome.toLocaleString();
 

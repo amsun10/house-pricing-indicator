@@ -2,8 +2,8 @@ name: Daily Update Wanliu Jiangning Sales
 
 on:
   schedule:
-    # 每天北京时间 21:00 自动执行 (对应 UTC 13:00)
-    - cron: '0 13 * * *'
+    # 每天北京时间 23:00 自动执行 (对应 UTC 15:00)
+    - cron: '0 15 * * *'
   workflow_dispatch: # 支持在 GitHub Actions 页面手动一键触发
 
 permissions:
@@ -17,16 +17,31 @@ jobs:
       - name: 检出仓库代码
         uses: actions/checkout@v4
 
+      - name: 检查今日是否已执行过采集
+        id: check_today
+        run: |
+          TODAY=$(TZ=Asia/Shanghai date +%Y-%m-%d)
+          if [ -f wanliu_daily.json ] && grep -q "\"date\": \"$TODAY\"" wanliu_daily.json; then
+            echo "already_done=true" >> "$GITHUB_OUTPUT"
+            echo "今日 ($TODAY) 已执行过采集，本次跳过执行。"
+          else
+            echo "already_done=false" >> "$GITHUB_OUTPUT"
+            echo "今日 ($TODAY) 尚未采集，准备执行。"
+          fi
+
       - name: 配置 Python 环境
+        if: steps.check_today.outputs.already_done != 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: 执行万流宁邸官网数据采集脚本
+        if: steps.check_today.outputs.already_done != 'true'
         run: |
           python scripts/fetch_wanliu_daily.py
 
       - name: 提交并推送每日销售快照
+        if: steps.check_today.outputs.already_done != 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
