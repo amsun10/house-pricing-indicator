@@ -155,16 +155,9 @@ def main():
     print(f"【{PROJECT_NAME}】NJhouse 每日销售数据（含分楼栋）采集")
     print("=" * 60)
 
-    force = "--force" in sys.argv
     now_cn = datetime.now(TZ_CN)
     today_str = now_cn.strftime("%Y-%m-%d")
     timestamp_str = now_cn.strftime("%Y-%m-%d %H:%M:%S")
-
-    data = load_existing_data()
-    records = data.get("daily_records", [])
-    if not force and any(item.get("date") == today_str for item in records):
-        print(f"[Skip] 今日 ({today_str}) 已执行过数据采集，直接跳过（如需强制重抓请加 --force）。")
-        return
 
     home_html = fetch_html(OFFICIAL_URL, "项目整体销售情况")
     metrics = parse_project_summary(home_html)
@@ -179,6 +172,7 @@ def main():
         "updated_at": timestamp_str,
     }
 
+    data = load_existing_data()
     data["project_id"] = PROJECT_ID
     data["project_name"] = PROJECT_NAME
     data["official_url"] = OFFICIAL_URL
@@ -186,6 +180,7 @@ def main():
     data["source"] = "南京网上房地产 (www.njhouse.com.cn)"
     data["updated_at"] = timestamp_str
 
+    records = data.get("daily_records", [])
     updated = False
     for idx, item in enumerate(records):
         if item.get("date") == today_str:
