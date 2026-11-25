@@ -442,6 +442,35 @@
         <div id="wanliuDailyChart" class="w-full h-72"></div>
       </div>
 
+      <!-- 万流分楼栋实时去化明细表 -->
+      <div class="space-y-2 pt-2 border-t border-slate-100">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
+            🏢 万流宁邸 · 分楼栋实时去化明细（追踪具体楼栋认购与成交）
+          </h3>
+          <span class="text-[11px] text-slate-400">点击楼栋号可直达 NJhouse 官方逐户一房一价销控表</span>
+        </div>
+        <div class="overflow-x-auto rounded-xl border border-slate-200">
+          <table class="w-full text-left text-xs divide-y divide-slate-200">
+            <thead class="bg-slate-100/90 text-slate-600 font-semibold">
+              <tr>
+                <th class="py-2.5 px-3 w-24">楼栋号</th>
+                <th class="py-2.5 px-3 w-28">领证/开盘日期</th>
+                <th class="py-2.5 px-3 w-20">入网套数</th>
+                <th class="py-2.5 px-3 w-24">累计成交</th>
+                <th class="py-2.5 px-3 w-24">累计认购</th>
+                <th class="py-2.5 px-3 w-24">剩余未售</th>
+                <th class="py-2.5 px-3 w-44">楼栋去化进度</th>
+                <th class="py-2.5 px-3">较前日 / 今日瞬时变动</th>
+              </tr>
+            </thead>
+            <tbody id="wanliuBuildingTableBody" class="divide-y divide-slate-100 bg-white">
+              <!-- 动态载入 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- 万流每日快照记录表 -->
       <div class="space-y-2 pt-2 border-t border-slate-100">
         <div class="flex items-center justify-between">
@@ -461,6 +490,7 @@
                 <th class="py-2.5 px-3">剩余未售</th>
                 <th class="py-2.5 px-3">综合去化率</th>
                 <th class="py-2.5 px-3">较前日净变动</th>
+                <th class="py-2.5 px-3">产生变动楼栋明细</th>
                 <th class="py-2.5 px-3 text-right">官网快照时间</th>
               </tr>
             </thead>
@@ -1273,7 +1303,7 @@
       currentWanliuData = {
         "project_id": "4600200",
         "project_name": "嘉宏·万流宁邸 (万流江宁)",
-        "updated_at": "2026-11-25 20:40:12",
+        "updated_at": "2026-11-25 20:47:54",
         "daily_records": [
           {
             "date": "2026-11-25",
@@ -1287,10 +1317,37 @@
             "unsold_area": 27057.88,
             "today_subscribed": 0,
             "today_sold": 0,
-            "updated_at": "2026-11-25 20:40:12"
+            "buildings": [
+              { "build_id": "220260036096", "name": "1#", "sale_date": "2026-05-05", "total_suites": 64, "sold_suites": 46, "subscribed_suites": 16, "unsold_suites": 2, "today_subscribed": 0, "today_sold": 0, "building_url": "https://www.njhouse.com.cn/project/info/4600200/buildingInfo.html?projectId=4600200&buildId=220260036096" },
+              { "build_id": "220260036117", "name": "2#", "sale_date": "2026-05-05", "total_suites": 15, "sold_suites": 6, "subscribed_suites": 6, "unsold_suites": 3, "today_subscribed": 0, "today_sold": 0, "building_url": "https://www.njhouse.com.cn/project/info/4600200/buildingInfo.html?projectId=4600200&buildId=220260036117" },
+              { "build_id": "220260038145", "name": "3#", "sale_date": "2026-10-22", "total_suites": 64, "sold_suites": 0, "subscribed_suites": 0, "unsold_suites": 64, "today_subscribed": 0, "today_sold": 0, "building_url": "https://www.njhouse.com.cn/project/info/4600200/buildingInfo.html?projectId=4600200&buildId=220260038145" },
+              { "build_id": "220260036121", "name": "5#", "sale_date": "2026-08-01", "total_suites": 32, "sold_suites": 0, "subscribed_suites": 0, "unsold_suites": 32, "today_subscribed": 0, "today_sold": 0, "building_url": "https://www.njhouse.com.cn/project/info/4600200/buildingInfo.html?projectId=4600200&buildId=220260036121" },
+              { "build_id": "220260036122", "name": "6#", "sale_date": "2026-05-05", "total_suites": 32, "sold_suites": 12, "subscribed_suites": 13, "unsold_suites": 7, "today_subscribed": 0, "today_sold": 0, "building_url": "https://www.njhouse.com.cn/project/info/4600200/buildingInfo.html?projectId=4600200&buildId=220260036122" },
+              { "build_id": "220260038146", "name": "7#", "sale_date": "2026-09-19", "total_suites": 32, "sold_suites": 0, "subscribed_suites": 0, "unsold_suites": 32, "today_subscribed": 0, "today_sold": 0, "building_url": "https://www.njhouse.com.cn/project/info/4600200/buildingInfo.html?projectId=4600200&buildId=220260038146" },
+              { "build_id": "220260038147", "name": "8#", "sale_date": "2026-09-30", "total_suites": 30, "sold_suites": 0, "subscribed_suites": 0, "unsold_suites": 30, "today_subscribed": 0, "today_sold": 0, "building_url": "https://www.njhouse.com.cn/project/info/4600200/buildingInfo.html?projectId=4600200&buildId=220260038147" }
+            ],
+            "updated_at": "2026-11-25 20:47:54"
           }
         ]
       };
+    }
+
+    function computeBuildingDiffs(curBuildings, prevBuildings) {
+      if (!Array.isArray(curBuildings) || !Array.isArray(prevBuildings)) return [];
+      const prevMap = {};
+      prevBuildings.forEach(b => { prevMap[b.name] = b; });
+      const diffs = [];
+      curBuildings.forEach(cur => {
+        const pb = prevMap[cur.name];
+        if (!pb) return;
+        const dSold = cur.sold_suites - pb.sold_suites;
+        const dSub = cur.subscribed_suites - pb.subscribed_suites;
+        const net = pb.unsold_suites - cur.unsold_suites;
+        if (dSold !== 0 || dSub !== 0 || net !== 0) {
+          diffs.push({ name: cur.name, dSold, dSub, net });
+        }
+      });
+      return diffs;
     }
 
     function renderWanliuMonitor() {
@@ -1299,6 +1356,7 @@
       const records = [...currentWanliuData.daily_records].sort((a, b) => a.date.localeCompare(b.date));
       const latest = records[records.length - 1];
       const prev = records.length > 1 ? records[records.length - 2] : null;
+      const latestDiffs = prev ? computeBuildingDiffs(latest.buildings, prev.buildings) : [];
 
       document.getElementById('wanliuUpdatedAt').innerText = currentWanliuData.updated_at || latest.updated_at || latest.date;
       document.getElementById('wanliuTotalSuites').innerText = latest.total_suites.toLocaleString();
@@ -1320,7 +1378,10 @@
         const deltaSub = latest.subscribed_suites - prev.subscribed_suites;
         const sign = netDepleted > 0 ? '+' : '';
         deltaEl.innerText = netDepleted === 0 ? '今日无净变动 (0 套)' : `净去化 ${sign}${netDepleted} 套`;
-        document.getElementById('wanliuTodayInstant').innerText = `较前日：成交 ${deltaSold >= 0 ? '+' : ''}${deltaSold} | 认购 ${deltaSub >= 0 ? '+' : ''}${deltaSub} · 当日瞬时(${latest.today_subscribed}认购/${latest.today_sold}成交)`;
+        const bldStr = latestDiffs.length > 0
+          ? ' · 涉及楼栋: ' + latestDiffs.map(d => `${d.name}(成交${d.dSold >= 0 ? '+' : ''}${d.dSold}/认购${d.dSub >= 0 ? '+' : ''}${d.dSub})`).join(', ')
+          : '';
+        document.getElementById('wanliuTodayInstant').innerText = `较前日：成交 ${deltaSold >= 0 ? '+' : ''}${deltaSold} | 认购 ${deltaSub >= 0 ? '+' : ''}${deltaSub}${bldStr}`;
       } else {
         deltaEl.innerText = '首日基准已建立';
         document.getElementById('wanliuTodayInstant').innerText = `官网当日瞬时：认购 ${latest.today_subscribed} 套 | 成交 ${latest.today_sold} 套`;
@@ -1391,6 +1452,57 @@
         wanliuChart.setOption(option, true);
       }
 
+      // 渲染分楼栋实时去化明细表
+      const bldTbody = document.getElementById('wanliuBuildingTableBody');
+      if (bldTbody && Array.isArray(latest.buildings)) {
+        const diffMap = {};
+        latestDiffs.forEach(d => { diffMap[d.name] = d; });
+
+        bldTbody.innerHTML = latest.buildings.map(b => {
+          const bTotal = b.total_suites || 1;
+          const pctSold = (b.sold_suites / bTotal * 100).toFixed(1);
+          const pctSub = (b.subscribed_suites / bTotal * 100).toFixed(1);
+          const pctClear = ((b.sold_suites + b.subscribed_suites) / bTotal * 100).toFixed(1);
+
+          const diff = diffMap[b.name];
+          const hasTodayInstant = (b.today_subscribed > 0 || b.today_sold > 0);
+          let changeHtml = '<span class="text-slate-400">暂无变动</span>';
+          if (diff) {
+            const parts = [];
+            if (diff.dSold !== 0) parts.push(`<span class="text-emerald-700 font-bold">成交 ${diff.dSold > 0 ? '+' : ''}${diff.dSold}</span>`);
+            if (diff.dSub !== 0) parts.push(`<span class="text-amber-700 font-bold">认购 ${diff.dSub > 0 ? '+' : ''}${diff.dSub}</span>`);
+            changeHtml = parts.join(' / ');
+          }
+          if (hasTodayInstant) {
+            const inst = `<span class="inline-block ml-1.5 px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 text-[10px] font-bold">今日瞬时: ${b.today_subscribed}认购/${b.today_sold}成交</span>`;
+            changeHtml = diff ? `${changeHtml} ${inst}` : inst;
+          }
+
+          return `
+            <tr class="hover:bg-slate-50 transition ${diff || hasTodayInstant ? 'bg-amber-50/30' : ''}">
+              <td class="py-2.5 px-3 font-bold whitespace-nowrap">
+                <a href="${b.building_url}" target="_blank" class="text-indigo-600 hover:text-indigo-800 underline">${b.name} 幢</a>
+              </td>
+              <td class="py-2.5 px-3 text-slate-600 whitespace-nowrap">${b.sale_date}</td>
+              <td class="py-2.5 px-3 font-semibold text-slate-800 whitespace-nowrap">${b.total_suites} 套</td>
+              <td class="py-2.5 px-3 text-emerald-700 font-bold whitespace-nowrap">${b.sold_suites} 套</td>
+              <td class="py-2.5 px-3 text-amber-700 font-bold whitespace-nowrap">${b.subscribed_suites} 套</td>
+              <td class="py-2.5 px-3 text-indigo-700 font-bold whitespace-nowrap">${b.unsold_suites} 套</td>
+              <td class="py-2.5 px-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-24 bg-slate-200 rounded-full h-2 overflow-hidden flex shrink-0">
+                    <div class="bg-emerald-500 h-2" style="width: ${pctSold}%"></div>
+                    <div class="bg-amber-400 h-2" style="width: ${pctSub}%"></div>
+                  </div>
+                  <span class="text-[11px] font-bold text-slate-700">${pctClear}%</span>
+                </div>
+              </td>
+              <td class="py-2.5 px-3 whitespace-nowrap">${changeHtml}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+
       // 渲染每日快照日志表（倒序）
       const tbody = document.getElementById('wanliuDailyTableBody');
       if (tbody) {
@@ -1402,6 +1514,8 @@
           const rRate = cur.total_suites > 0 ? (rCommitted / cur.total_suites * 100).toFixed(1) : '0.0';
 
           let deltaBadge = '<span class="text-slate-400">基准初始日</span>';
+          let buildingDiffHtml = '<span class="text-slate-400">--</span>';
+
           if (p) {
             const net = p.unsold_suites - cur.unsold_suites;
             const dSold = cur.sold_suites - p.sold_suites;
@@ -1412,6 +1526,18 @@
               deltaBadge = `<span class="text-rose-600 font-bold">回流 ${Math.abs(net)} 套</span> <span class="text-slate-400 text-[11px]">(成交${dSold >= 0 ? '+' : ''}${dSold}/认购${dSub >= 0 ? '+' : ''}${dSub})</span>`;
             } else {
               deltaBadge = `<span class="text-slate-500">0 变动</span> <span class="text-slate-400 text-[11px]">(成交${dSold >= 0 ? '+' : ''}${dSold}/认购${dSub >= 0 ? '+' : ''}${dSub})</span>`;
+            }
+
+            const dayBldDiffs = computeBuildingDiffs(cur.buildings, p.buildings);
+            if (dayBldDiffs.length > 0) {
+              buildingDiffHtml = dayBldDiffs.map(d => {
+                const subParts = [];
+                if (d.dSold !== 0) subParts.push(`成交${d.dSold > 0 ? '+' : ''}${d.dSold}`);
+                if (d.dSub !== 0) subParts.push(`认购${d.dSub > 0 ? '+' : ''}${d.dSub}`);
+                return `<span class="inline-block bg-amber-50 text-amber-800 border border-amber-200 px-1.5 py-0.5 rounded text-[11px] font-semibold mr-1 mb-0.5">${d.name}: ${subParts.join('/')}</span>`;
+              }).join('');
+            } else {
+              buildingDiffHtml = '<span class="text-slate-400">各楼栋无变化</span>';
             }
           }
 
@@ -1424,6 +1550,7 @@
               <td class="py-2.5 px-3 whitespace-nowrap text-indigo-700 font-bold">${cur.unsold_suites} 套 <span class="text-slate-400 font-normal">(${cur.unsold_area}㎡)</span></td>
               <td class="py-2.5 px-3 whitespace-nowrap font-bold text-slate-800">${rRate}%</td>
               <td class="py-2.5 px-3 whitespace-nowrap">${deltaBadge}</td>
+              <td class="py-2.5 px-3">${buildingDiffHtml}</td>
               <td class="py-2.5 px-3 text-right text-slate-400 whitespace-nowrap">${cur.updated_at}</td>
             </tr>
           `);
