@@ -365,6 +365,113 @@
       </div>
     </section>
 
+    <!-- 重点盯盘监控: 嘉宏·万流宁邸 (万流江宁) 每日销售去化监控 -->
+    <section class="bg-white rounded-2xl p-6 border-2 border-rose-100 shadow-sm space-y-6">
+      <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
+            <span class="w-2 h-4 bg-rose-600 rounded-sm inline-block"></span>
+            嘉宏·万流宁邸 (万流江宁) · 每日销售去化监控
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+              📡 GitHub Actions 每晚 21:00 自动抓取官网
+            </span>
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">
+            直连 NJhouse 项目主页 (prjId=4600200) · 记录每日累计成交、认购与未售余量变化，追踪真实净去化与退房回流
+          </p>
+        </div>
+        <div class="flex items-center gap-2 text-xs self-start sm:self-auto">
+          <span class="text-slate-500">最后同步:</span>
+          <span id="wanliuUpdatedAt" class="font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">--</span>
+          <a href="https://www.njhouse.com.cn/project/info/4600200/homePage.html" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-semibold underline ml-1">官网原页</a>
+        </div>
+      </div>
+
+      <!-- 4 张万流实时状态卡 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200">
+          <div class="text-xs font-semibold text-slate-500 mb-1">入网总套数</div>
+          <div class="flex items-baseline space-x-1.5">
+            <span id="wanliuTotalSuites" class="text-2xl font-black text-slate-900 tracking-tight">--</span>
+            <span class="text-xs text-slate-500 font-bold">套</span>
+          </div>
+          <div id="wanliuTotalArea" class="mt-1.5 text-xs text-slate-500">
+            总面积 -- ㎡
+          </div>
+        </div>
+
+        <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200">
+          <div class="text-xs font-semibold text-slate-500 mb-1">累计综合去化率 (成交+认购)</div>
+          <div class="flex items-baseline space-x-1.5">
+            <span id="wanliuClearanceRate" class="text-2xl font-black text-emerald-600 tracking-tight">--%</span>
+            <span id="wanliuCommittedSuites" class="text-xs text-slate-500 font-medium">-- 套</span>
+          </div>
+          <div id="wanliuBreakdown" class="mt-1.5 text-xs text-slate-500">
+            累计成交 -- 套 | 累计认购 -- 套
+          </div>
+        </div>
+
+        <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200">
+          <div class="text-xs font-semibold text-slate-500 mb-1">剩余未售可售房源</div>
+          <div class="flex items-baseline space-x-1.5">
+            <span id="wanliuUnsoldSuites" class="text-2xl font-black text-indigo-600 tracking-tight">--</span>
+            <span class="text-xs text-slate-500 font-bold">套</span>
+          </div>
+          <div id="wanliuUnsoldArea" class="mt-1.5 text-xs text-slate-500">
+            未售面积 -- ㎡
+          </div>
+        </div>
+
+        <div class="bg-rose-50/40 rounded-2xl p-4 border border-rose-200/80">
+          <div class="text-xs font-semibold text-rose-900 mb-1">最新单日变动 (对比前一日)</div>
+          <div class="flex items-baseline space-x-1.5">
+            <span id="wanliuDeltaSummary" class="text-2xl font-black text-rose-600 tracking-tight">--</span>
+          </div>
+          <div id="wanliuTodayInstant" class="mt-1.5 text-xs text-rose-700 font-medium">
+            官网当日瞬时：认购 -- 套 | 成交 -- 套
+          </div>
+        </div>
+      </div>
+
+      <!-- 万流每日去化趋势图 -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs text-slate-500">
+          <span>累计成交、累计认购与剩余未售套数日度走势（每晚 21:00 自动记录一个快照点）</span>
+          <span class="text-slate-400">数据源：wanliu_daily.json</span>
+        </div>
+        <div id="wanliuDailyChart" class="w-full h-72"></div>
+      </div>
+
+      <!-- 万流每日快照记录表 -->
+      <div class="space-y-2 pt-2 border-t border-slate-100">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
+            📅 万流宁邸每日 21:00 官方销售快照日志
+          </h3>
+          <span class="text-[11px] text-slate-400">按日期倒序排列，净变动 = 较前一日未售套数减少量</span>
+        </div>
+        <div class="overflow-x-auto rounded-xl border border-slate-200 max-h-72 overflow-y-auto">
+          <table class="w-full text-left text-xs divide-y divide-slate-200">
+            <thead class="bg-slate-100/90 text-slate-600 font-semibold sticky top-0">
+              <tr>
+                <th class="py-2.5 px-3">记录日期</th>
+                <th class="py-2.5 px-3">入网总套数</th>
+                <th class="py-2.5 px-3">累计总成交</th>
+                <th class="py-2.5 px-3">累计总认购</th>
+                <th class="py-2.5 px-3">剩余未售</th>
+                <th class="py-2.5 px-3">综合去化率</th>
+                <th class="py-2.5 px-3">较前日净变动</th>
+                <th class="py-2.5 px-3 text-right">官网快照时间</th>
+              </tr>
+            </thead>
+            <tbody id="wanliuDailyTableBody" class="divide-y divide-slate-100 bg-white">
+              <!-- 动态载入 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <!-- 核心板块 3: 南京网上房地产 (www.njhouse.com.cn) 官方权威月度市场动态与网签走势 -->
     <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
       <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -653,6 +760,8 @@
 
     let currentOfficialData = null;
     let officialChart = null;
+    let currentWanliuData = null;
+    let wanliuChart = null;
     let currentCommunityFilter = 'all';
 
     // ==========================================
@@ -1140,11 +1249,191 @@
       // 窗口拉伸重绘
       window.addEventListener('resize', () => {
         if (officialChart) officialChart.resize();
+        if (wanliuChart) wanliuChart.resize();
       });
     }
 
     // ==========================================
-    // 7. 官方数据载入与页面初始化
+    // 7. 万流宁邸每日销售数据载入与渲染
+    // ==========================================
+    async function loadWanliuDailyData() {
+      try {
+        const resp = await fetch('./wanliu_daily.json?t=' + Date.now());
+        if (resp.ok) {
+          const remote = await resp.json();
+          if (remote && Array.isArray(remote.daily_records)) {
+            currentWanliuData = remote;
+            return;
+          }
+        }
+      } catch (e) {
+        console.log('[Info] 使用内置万流宁邸初始基准数据');
+      }
+
+      currentWanliuData = {
+        "project_id": "4600200",
+        "project_name": "嘉宏·万流宁邸 (万流江宁)",
+        "updated_at": "2026-11-25 20:40:12",
+        "daily_records": [
+          {
+            "date": "2026-11-25",
+            "total_suites": 269,
+            "total_area": 43180.71,
+            "sold_suites": 64,
+            "sold_area": 10084.54,
+            "subscribed_suites": 35,
+            "subscribed_area": 6038.29,
+            "unsold_suites": 170,
+            "unsold_area": 27057.88,
+            "today_subscribed": 0,
+            "today_sold": 0,
+            "updated_at": "2026-11-25 20:40:12"
+          }
+        ]
+      };
+    }
+
+    function renderWanliuMonitor() {
+      if (!currentWanliuData || !currentWanliuData.daily_records || currentWanliuData.daily_records.length === 0) return;
+
+      const records = [...currentWanliuData.daily_records].sort((a, b) => a.date.localeCompare(b.date));
+      const latest = records[records.length - 1];
+      const prev = records.length > 1 ? records[records.length - 2] : null;
+
+      document.getElementById('wanliuUpdatedAt').innerText = currentWanliuData.updated_at || latest.updated_at || latest.date;
+      document.getElementById('wanliuTotalSuites').innerText = latest.total_suites.toLocaleString();
+      document.getElementById('wanliuTotalArea').innerText = `入网总面积 ${latest.total_area.toLocaleString()} ㎡`;
+
+      const committed = latest.sold_suites + latest.subscribed_suites;
+      const rate = latest.total_suites > 0 ? (committed / latest.total_suites * 100).toFixed(1) : '0.0';
+      document.getElementById('wanliuClearanceRate').innerText = `${rate}%`;
+      document.getElementById('wanliuCommittedSuites').innerText = `(${committed} 套)`;
+      document.getElementById('wanliuBreakdown').innerText = `累计成交 ${latest.sold_suites} 套 | 累计认购 ${latest.subscribed_suites} 套`;
+
+      document.getElementById('wanliuUnsoldSuites').innerText = latest.unsold_suites.toLocaleString();
+      document.getElementById('wanliuUnsoldArea').innerText = `未售面积 ${latest.unsold_area.toLocaleString()} ㎡`;
+
+      const deltaEl = document.getElementById('wanliuDeltaSummary');
+      if (prev) {
+        const netDepleted = prev.unsold_suites - latest.unsold_suites;
+        const deltaSold = latest.sold_suites - prev.sold_suites;
+        const deltaSub = latest.subscribed_suites - prev.subscribed_suites;
+        const sign = netDepleted > 0 ? '+' : '';
+        deltaEl.innerText = netDepleted === 0 ? '今日无净变动 (0 套)' : `净去化 ${sign}${netDepleted} 套`;
+        document.getElementById('wanliuTodayInstant').innerText = `较前日：成交 ${deltaSold >= 0 ? '+' : ''}${deltaSold} | 认购 ${deltaSub >= 0 ? '+' : ''}${deltaSub} · 当日瞬时(${latest.today_subscribed}认购/${latest.today_sold}成交)`;
+      } else {
+        deltaEl.innerText = '首日基准已建立';
+        document.getElementById('wanliuTodayInstant').innerText = `官网当日瞬时：认购 ${latest.today_subscribed} 套 | 成交 ${latest.today_sold} 套`;
+      }
+
+      // ECharts 日度趋势渲染
+      const chartDom = document.getElementById('wanliuDailyChart');
+      if (chartDom) {
+        if (!wanliuChart) {
+          wanliuChart = echarts.init(chartDom);
+        }
+        const dates = records.map(r => r.date);
+        const soldArr = records.map(r => r.sold_suites);
+        const subArr = records.map(r => r.subscribed_suites);
+        const unsoldArr = records.map(r => r.unsold_suites);
+
+        const option = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'shadow' }
+          },
+          legend: {
+            data: ['累计成交', '累计认购', '剩余未售'],
+            bottom: 0
+          },
+          grid: {
+            left: '2%',
+            right: '2%',
+            top: '12%',
+            bottom: '18%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            data: dates
+          },
+          yAxis: {
+            type: 'value',
+            name: '套数 (套)'
+          },
+          series: [
+            {
+              name: '累计成交',
+              type: 'bar',
+              stack: 'total',
+              barMaxWidth: 36,
+              itemStyle: { color: '#10b981' },
+              data: soldArr
+            },
+            {
+              name: '累计认购',
+              type: 'bar',
+              stack: 'total',
+              barMaxWidth: 36,
+              itemStyle: { color: '#f59e0b' },
+              data: subArr
+            },
+            {
+              name: '剩余未售',
+              type: 'bar',
+              stack: 'total',
+              barMaxWidth: 36,
+              itemStyle: { color: '#cbd5e1', borderRadius: [4, 4, 0, 0] },
+              data: unsoldArr
+            }
+          ]
+        };
+        wanliuChart.setOption(option, true);
+      }
+
+      // 渲染每日快照日志表（倒序）
+      const tbody = document.getElementById('wanliuDailyTableBody');
+      if (tbody) {
+        const rows = [];
+        for (let i = records.length - 1; i >= 0; i--) {
+          const cur = records[i];
+          const p = i > 0 ? records[i - 1] : null;
+          const rCommitted = cur.sold_suites + cur.subscribed_suites;
+          const rRate = cur.total_suites > 0 ? (rCommitted / cur.total_suites * 100).toFixed(1) : '0.0';
+
+          let deltaBadge = '<span class="text-slate-400">基准初始日</span>';
+          if (p) {
+            const net = p.unsold_suites - cur.unsold_suites;
+            const dSold = cur.sold_suites - p.sold_suites;
+            const dSub = cur.subscribed_suites - p.subscribed_suites;
+            if (net > 0) {
+              deltaBadge = `<span class="text-emerald-600 font-bold">去化 +${net} 套</span> <span class="text-slate-400 text-[11px]">(成交${dSold >= 0 ? '+' : ''}${dSold}/认购${dSub >= 0 ? '+' : ''}${dSub})</span>`;
+            } else if (net < 0) {
+              deltaBadge = `<span class="text-rose-600 font-bold">回流 ${Math.abs(net)} 套</span> <span class="text-slate-400 text-[11px]">(成交${dSold >= 0 ? '+' : ''}${dSold}/认购${dSub >= 0 ? '+' : ''}${dSub})</span>`;
+            } else {
+              deltaBadge = `<span class="text-slate-500">0 变动</span> <span class="text-slate-400 text-[11px]">(成交${dSold >= 0 ? '+' : ''}${dSold}/认购${dSub >= 0 ? '+' : ''}${dSub})</span>`;
+            }
+          }
+
+          rows.push(`
+            <tr class="hover:bg-slate-50 transition">
+              <td class="py-2.5 px-3 font-bold text-slate-800 whitespace-nowrap">${cur.date}</td>
+              <td class="py-2.5 px-3 whitespace-nowrap">${cur.total_suites} 套</td>
+              <td class="py-2.5 px-3 whitespace-nowrap text-emerald-700 font-semibold">${cur.sold_suites} 套 <span class="text-slate-400 font-normal">(${cur.sold_area}㎡)</span></td>
+              <td class="py-2.5 px-3 whitespace-nowrap text-amber-700 font-semibold">${cur.subscribed_suites} 套 <span class="text-slate-400 font-normal">(${cur.subscribed_area}㎡)</span></td>
+              <td class="py-2.5 px-3 whitespace-nowrap text-indigo-700 font-bold">${cur.unsold_suites} 套 <span class="text-slate-400 font-normal">(${cur.unsold_area}㎡)</span></td>
+              <td class="py-2.5 px-3 whitespace-nowrap font-bold text-slate-800">${rRate}%</td>
+              <td class="py-2.5 px-3 whitespace-nowrap">${deltaBadge}</td>
+              <td class="py-2.5 px-3 text-right text-slate-400 whitespace-nowrap">${cur.updated_at}</td>
+            </tr>
+          `);
+        }
+        tbody.innerHTML = rows.join('');
+      }
+    }
+
+    // ==========================================
+    // 8. 官方数据载入与页面初始化
     // ==========================================
     async function loadDataFromJson() {
       try {
@@ -1188,6 +1477,8 @@
         await loadDataFromJson();
       }
 
+      await loadWanliuDailyData();
+      renderWanliuMonitor();
       renderOfficialTrendChart();
       renderOfficialReportsTable();
       renderCommunityTable();

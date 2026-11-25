@@ -1,0 +1,42 @@
+name: Daily Update Wanliu Jiangning Sales
+
+on:
+  schedule:
+    # 每天北京时间 21:00 自动执行 (对应 UTC 13:00)
+    - cron: '0 13 * * *'
+  workflow_dispatch: # 支持在 GitHub Actions 页面手动一键触发
+
+permissions:
+  contents: write
+
+jobs:
+  update-wanliu-daily:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Python 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 执行万流宁邸官网数据采集脚本
+        run: |
+          python scripts/fetch_wanliu_daily.py
+
+      - name: 提交并推送每日销售快照
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ -n "$(git status --porcelain wanliu_daily.json)" ]; then
+            git add wanliu_daily.json
+            git commit -m "data: daily snapshot for Wanliu Jiangning $(TZ=Asia/Shanghai date +%Y-%m-%d) [skip ci]"
+            git pull --rebase origin main
+            git push origin main
+            echo "万流宁邸今日销售快照已成功推送！"
+          else
+            echo "今日数据无变化，无需重复提交。"
+          fi
