@@ -486,10 +486,11 @@
           <p class="text-xs text-slate-500 mt-1">数据来自「南京网上房地产 (www.njhouse.com.cn)」官方预售/现售许可证及月度市场通报 · 拒绝非官方中介叫价</p>
         </div>
         <!-- 维度筛选 Tabs -->
-        <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1.5 rounded-xl shrink-0">
+        <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1.5 rounded-xl shrink-0 flex-wrap gap-y-1">
           <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs" data-type="all">全部楼盘 (<span id="countAll">13</span>)</button>
-          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="新房">🔥 官方销许在售新盘 (<span id="countNew">8</span>)</button>
-          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="二手">🏢 官方通报活跃小区 (<span id="countSecond">5</span>)</button>
+          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="新房">🔥 2026在售新盘 (<span id="countNew">4</span>)</button>
+          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="尾盘">📦 早期现房/尾盘 (<span id="countTail">4</span>)</button>
+          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="二手">🏢 官方通报二手活跃小区 (<span id="countSecond">5</span>)</button>
         </div>
       </div>
       <div class="overflow-x-auto rounded-xl border border-slate-100 shadow-2xs">
@@ -576,35 +577,35 @@
       },
       { 
         name: "象屿华发·铂萃云湾", 
-        type: "新房", 
+        type: "尾盘", 
         region: "百家湖西/胜太路", 
-        area: "95-135㎡ (科技高层)", 
-        permitPrice: "30,301 ~ 34,529 元/㎡", 
-        comment: "【官方现售许可证 20262013】A-2#楼栋备案均价30,301元/㎡，A-4#均价34,529元/㎡，A-6#均价32,669元/㎡。胜太西路地铁口。" 
+        area: "95-135㎡ (早期已交付/尾盘)", 
+        permitPrice: "30,301 ~ 34,529 元/㎡ (现售尾盘)", 
+        comment: "【早期已交付项目 · 现售尾盘】NJhouse 存在现售许可证 20262013（A-2# 30,301元/㎡、A-4# 34,529元/㎡），实际早已入市交付，现售仅针对剩余少量尾盘，非 2026 全新开盘项目。" 
       },
       { 
         name: "金隅华发·紫京四季", 
-        type: "新房", 
+        type: "尾盘", 
         region: "上秦淮核心", 
-        area: "102-142㎡ (实景现房)", 
-        permitPrice: "19,116 ~ 32,935 元/㎡", 
-        comment: "【官方现售许可证 20262008W】12#均价19,116元/㎡，13#均价19,705元/㎡，3#洋房均价32,935元/㎡（洋房与小高层梯次定价），实景交付现房。" 
+        area: "102-142㎡ (早期已交付/尾盘)", 
+        permitPrice: "19,116 ~ 32,935 元/㎡ (现售尾盘)", 
+        comment: "【早期已交付项目 · 现售尾盘】NJhouse 存在现售许可证 20262008W（12# 19,116元/㎡、3#洋房 32,935元/㎡），实际为早期交房项目转现售清盘，非 2026 全新楼盘。" 
       },
       { 
         name: "上海建工·海玥华府", 
-        type: "新房", 
+        type: "尾盘", 
         region: "东山/杨家圩", 
-        area: "115-135㎡ (科技现房)", 
-        permitPrice: "29,092 ~ 35,254 元/㎡", 
-        comment: "【官方现售许可证 20252026W】8#楼栋均价29,092元/㎡，9#均价35,254元/㎡，4#均价32,350元/㎡。即买即办证，近江宁市民中心与万达。" 
+        area: "115-135㎡ (早期已交付/尾盘)", 
+        permitPrice: "29,092 ~ 35,254 元/㎡ (现售尾盘)", 
+        comment: "【早期已交付项目 · 现售尾盘】NJhouse 存在现售许可证 20252026W（8# 29,092元/㎡、9# 35,254元/㎡），属早期已交付现房，现售记录为剩余尾盘备案。" 
       },
       { 
         name: "招商·百家臻园", 
-        type: "新房", 
+        type: "尾盘", 
         region: "百家湖核心", 
-        area: "125-143㎡ (铝板平层)", 
-        permitPrice: "38,930 ~ 42,890 元/㎡", 
-        comment: "【官方预售销许 2023200063W】1#楼栋均价38,930元/㎡，2#均价42,890元/㎡，5#均价41,938元/㎡。纯铝板立面高品质改善。" 
+        area: "125-143㎡ (2023年老盘/已交付)", 
+        permitPrice: "38,930 ~ 42,890 元/㎡ (2023历史销许)", 
+        comment: "【2023年历史老盘 · 已全面交付】预售销许 2023200063W 为 2023 年开盘历史备案价，该小区已交房入住转为成熟次新二手房，非当前新盘。" 
       },
 
       // 🏢 官方月报点名通报江宁活跃成交小区 (数据源: njhouse.com.cn 官方月度房地产市场分析报告)
@@ -827,9 +828,11 @@
 
       const countAllEl = document.getElementById('countAll');
       const countNewEl = document.getElementById('countNew');
+      const countTailEl = document.getElementById('countTail');
       const countSecondEl = document.getElementById('countSecond');
       if (countAllEl) countAllEl.innerText = COMMUNITY_LIST.length;
       if (countNewEl) countNewEl.innerText = COMMUNITY_LIST.filter(i => i.type === '新房').length;
+      if (countTailEl) countTailEl.innerText = COMMUNITY_LIST.filter(i => i.type === '尾盘').length;
       if (countSecondEl) countSecondEl.innerText = COMMUNITY_LIST.filter(i => i.type === '二手').length;
 
       const list = currentCommunityFilter === 'all' 
@@ -837,13 +840,18 @@
         : COMMUNITY_LIST.filter(item => item.type === currentCommunityFilter);
 
       tbody.innerHTML = list.map(item => {
-        const typeBadge = item.type === '新房'
-          ? `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-600 border border-rose-200">🔥 官方销许新盘</span>`
-          : `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">🏢 官方通报活跃小区</span>`;
-
-        const priceDisplay = item.type === '新房'
-          ? `<strong class="text-rose-600 font-bold">${item.permitPrice}</strong>`
-          : `<span class="text-slate-600 font-semibold bg-slate-100 px-2 py-0.5 rounded text-[11px]">${item.permitPrice}</span>`;
+        let typeBadge = '';
+        let priceDisplay = '';
+        if (item.type === '新房') {
+          typeBadge = `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-600 border border-rose-200">🔥 2026在售新盘</span>`;
+          priceDisplay = `<strong class="text-rose-600 font-bold">${item.permitPrice}</strong>`;
+        } else if (item.type === '尾盘') {
+          typeBadge = `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">📦 早期现房/尾盘</span>`;
+          priceDisplay = `<span class="text-amber-700 font-semibold">${item.permitPrice}</span>`;
+        } else {
+          typeBadge = `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">🏢 官方通报活跃小区</span>`;
+          priceDisplay = `<span class="text-slate-600 font-semibold bg-slate-100 px-2 py-0.5 rounded text-[11px]">${item.permitPrice}</span>`;
+        }
 
         return `
           <tr class="hover:bg-indigo-50/20 transition">
