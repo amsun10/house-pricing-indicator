@@ -617,8 +617,8 @@
     </section>
 
     <!-- 核心板块 2: 江宁核心板块 重点楼盘速查池 (NJhouse 官方销许与网签备案) -->
-    <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-3">
+    <section class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+      <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between pb-3 border-b border-slate-100 gap-3">
         <div>
           <h2 class="text-base font-bold text-slate-900 flex items-center flex-wrap gap-2">
             <span class="w-2 h-4 bg-rose-500 rounded-sm inline-block"></span>
@@ -630,26 +630,30 @@
           <p class="text-xs text-slate-500 mt-1">数据来自「南京网上房地产 (www.njhouse.com.cn)」官方预售/现售许可证及月度市场通报 · 拒绝非官方中介叫价</p>
         </div>
         <!-- 维度筛选 Tabs -->
-        <div class="flex items-center space-x-1.5 self-start sm:self-auto text-xs bg-slate-100 p-1.5 rounded-xl shrink-0 flex-wrap gap-y-1">
-          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs" data-type="all">全部楼盘 (<span id="countAll">13</span>)</button>
-          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="新房">🔥 2026在售新盘 (<span id="countNew">4</span>)</button>
-          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="尾盘">📦 早期现房/尾盘 (<span id="countTail">4</span>)</button>
-          <button class="filter-community-btn px-3.5 py-1.5 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-type="二手">🏢 官方通报二手活跃小区 (<span id="countSecond">5</span>)</button>
+        <div class="flex items-center space-x-1 self-start xl:self-auto text-xs bg-slate-100 p-1 rounded-xl shrink-0 flex-wrap gap-y-1">
+          <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition bg-white text-indigo-700 shadow-xs whitespace-nowrap" data-type="all">全部楼盘 (<span id="countAll">13</span>)</button>
+          <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900 whitespace-nowrap" data-type="新房">🔥 2026在售新盘 (<span id="countNew">4</span>)</button>
+          <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900 whitespace-nowrap" data-type="尾盘">📦 早期现房/尾盘 (<span id="countTail">4</span>)</button>
+          <button class="filter-community-btn px-2.5 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900 whitespace-nowrap" data-type="二手">🏢 官方通报二手活跃小区 (<span id="countSecond">5</span>)</button>
         </div>
       </div>
-      <div class="overflow-x-auto rounded-xl border border-slate-100 shadow-2xs">
-        <table class="w-full text-left text-xs divide-y divide-slate-100">
+      <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
+        <table class="w-full min-w-[820px] text-left text-xs divide-y divide-slate-200">
+          <colgroup>
+            <col class="w-[22%] min-w-[200px]" />
+            <col class="w-[14%] min-w-[125px]" />
+            <col class="w-[18%] min-w-[165px]" />
+            <col class="w-[46%]" />
+          </colgroup>
           <thead class="bg-slate-50 text-slate-500 font-semibold uppercase tracking-wider">
             <tr>
-              <th class="py-3.5 px-4 w-44">小区 / 楼盘名称</th>
-              <th class="py-3.5 px-3 w-32">数据类型</th>
-              <th class="py-3.5 px-3 w-32">所属板块</th>
-              <th class="py-3.5 px-3 w-40">户型与规划面积</th>
-              <th class="py-3.5 px-3 w-44">官方销许备案单价 / 通报属性</th>
-              <th class="py-3.5 px-4 text-left">NJhouse 官方备案明细与月报通报记录</th>
+              <th class="py-2.5 px-3.5">楼盘 / 类型与板块</th>
+              <th class="py-2.5 px-3.5">户型与定位</th>
+              <th class="py-2.5 px-3.5">官方备案价 / 通报属性</th>
+              <th class="py-2.5 px-3.5 text-left">NJhouse 官方备案明细与月报通报记录</th>
             </tr>
           </thead>
-          <tbody id="communityTableBody" class="divide-y divide-slate-50 bg-white">
+          <tbody id="communityTableBody" class="divide-y divide-slate-100 bg-white">
             <!-- 动态载入 -->
           </tbody>
         </table>
@@ -987,29 +991,52 @@
         : COMMUNITY_LIST.filter(item => item.type === currentCommunityFilter);
 
       tbody.innerHTML = list.map(item => {
+        const nameMatch = item.name.match(/^(.+?)\s*(\([^)]+\))$/);
+        const nameHtml = nameMatch
+          ? `<span class="font-bold text-slate-800 text-[13px]">${nameMatch[1]}</span> <span class="text-[11px] font-normal text-slate-400">${nameMatch[2]}</span>`
+          : `<span class="font-bold text-slate-800 text-[13px]">${item.name}</span>`;
+
         let typeBadge = '';
         let priceDisplay = '';
         if (item.type === '新房') {
-          typeBadge = `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-600 border border-rose-200">🔥 2026在售新盘</span>`;
-          priceDisplay = `<strong class="text-rose-600 font-bold">${item.permitPrice}</strong>`;
+          typeBadge = `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-rose-50 text-rose-600 border border-rose-200">🔥 2026新盘</span>`;
+          priceDisplay = `<div class="text-xs font-bold text-rose-600 tabular-nums">${item.permitPrice}</div>`;
         } else if (item.type === '尾盘') {
-          typeBadge = `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">📦 早期现房/尾盘</span>`;
-          priceDisplay = `<span class="text-amber-700 font-semibold">${item.permitPrice}</span>`;
+          typeBadge = `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">📦 现房/尾盘</span>`;
+          const priceMatch = item.permitPrice.match(/^([^(]+?)\s*\((.+)\)$/);
+          priceDisplay = priceMatch
+            ? `<div class="text-xs font-bold text-amber-700 tabular-nums">${priceMatch[1]}</div><div class="text-[11px] text-slate-400 mt-0.5">${priceMatch[2]}</div>`
+            : `<div class="text-xs font-semibold text-amber-700">${item.permitPrice}</div>`;
         } else {
-          typeBadge = `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">🏢 官方通报活跃小区</span>`;
-          priceDisplay = `<span class="text-slate-600 font-semibold bg-slate-100 px-2 py-0.5 rounded text-[11px]">${item.permitPrice}</span>`;
+          typeBadge = `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">🏢 二手活跃</span>`;
+          const attrParts = item.permitPrice.split('：');
+          priceDisplay = attrParts.length > 1
+            ? `<div class="text-[10px] text-slate-400">${attrParts[0]}</div><span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-indigo-50/70 text-indigo-700 border border-indigo-100 font-semibold text-[11px]">${attrParts[1]}</span>`
+            : `<span class="inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-semibold text-[11px]">${item.permitPrice}</span>`;
         }
 
+        const areaMatch = item.area.match(/^([^(]+?)\s*\((.+)\)$/);
+        const areaHtml = areaMatch
+          ? `<div class="text-xs font-bold text-slate-700 tabular-nums">${areaMatch[1]}</div><div class="text-[11px] text-slate-400 mt-0.5">${areaMatch[2]}</div>`
+          : `<div class="text-xs font-semibold text-slate-700">${item.area}</div>`;
+
+        const commentMatch = item.comment.match(/^【([^】]+)】\s*(.*)$/);
+        const commentHtml = commentMatch
+          ? `<span class="inline-block px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold text-[11px] mr-1.5 align-baseline">${commentMatch[1]}</span><span class="text-xs text-slate-600 leading-5">${commentMatch[2]}</span>`
+          : `<span class="text-xs text-slate-600 leading-5">${item.comment}</span>`;
+
         return `
-          <tr class="hover:bg-indigo-50/20 transition">
-            <td class="py-3.5 px-4 font-bold text-slate-800 text-sm whitespace-nowrap">
-              ${item.name}
+          <tr class="odd:bg-white even:bg-slate-50/40 hover:bg-indigo-50/30 transition align-top">
+            <td class="py-2.5 px-3.5">
+              <div class="leading-snug">${nameHtml}</div>
+              <div class="mt-1 flex items-center flex-wrap gap-1.5">
+                ${typeBadge}
+                <span class="text-[11px] text-slate-500 font-medium">${item.region}</span>
+              </div>
             </td>
-            <td class="py-3.5 px-3 whitespace-nowrap">${typeBadge}</td>
-            <td class="py-3.5 px-3 font-semibold text-slate-600 whitespace-nowrap">${item.region}</td>
-            <td class="py-3.5 px-3 whitespace-nowrap font-medium text-slate-700">${item.area}</td>
-            <td class="py-3.5 px-3 whitespace-nowrap text-xs">${priceDisplay}</td>
-            <td class="py-3.5 px-4 text-slate-600 text-xs leading-relaxed">${item.comment}</td>
+            <td class="py-2.5 px-3.5">${areaHtml}</td>
+            <td class="py-2.5 px-3.5">${priceDisplay}</td>
+            <td class="py-2.5 px-3.5">${commentHtml}</td>
           </tr>
         `;
       }).join('');
