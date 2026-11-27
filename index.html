@@ -434,12 +434,19 @@
       </div>
 
       <!-- 万流每日去化趋势图 -->
-      <div class="space-y-2">
-        <div class="flex items-center justify-between text-xs text-slate-500">
-          <span>累计成交、累计认购与剩余未售套数日度走势（日间至 22:47 定时巡检，同日有变动自动覆盖更新）</span>
-          <span class="text-slate-400">数据源：wanliu_daily.json</span>
+      <div class="space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div class="text-xs text-slate-500">
+            <span>累计成交、累计认购、剩余未售与综合去化率走势（日间至 22:47 定时巡检，同日有变动自动覆盖更新）</span>
+            <span class="text-slate-400 ml-1">· 数据源：wanliu_daily.json</span>
+          </div>
+          <div class="flex items-center space-x-1 self-start sm:self-auto text-xs bg-slate-100 p-1 rounded-xl shrink-0">
+            <button class="wanliu-chart-mode-btn px-3 py-1 rounded-lg font-medium transition bg-white text-rose-700 shadow-xs" data-mode="trend">📈 柱线趋势</button>
+            <button class="wanliu-chart-mode-btn px-3 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-mode="delta">⚡ 单日净变动</button>
+            <button class="wanliu-chart-mode-btn px-3 py-1 rounded-lg font-medium transition text-slate-600 hover:text-slate-900" data-mode="stack">🧱 库存堆叠</button>
+          </div>
         </div>
-        <div id="wanliuDailyChart" class="w-full h-72"></div>
+        <div id="wanliuDailyChart" class="w-full h-80"></div>
       </div>
 
       <!-- 万流分楼栋实时去化明细表 -->
@@ -792,6 +799,7 @@
     let officialChart = null;
     let currentWanliuData = null;
     let wanliuChart = null;
+    let currentWanliuChartMode = 'trend';
     let currentCommunityFilter = 'all';
 
     // ==========================================
@@ -1177,6 +1185,26 @@
         });
       });
 
+      // 万流图表视图模式切换
+      document.querySelectorAll('.wanliu-chart-mode-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const targetBtn = e.target.closest('.wanliu-chart-mode-btn');
+          if (!targetBtn) return;
+          document.querySelectorAll('.wanliu-chart-mode-btn').forEach(b => {
+            b.classList.remove('bg-white', 'text-rose-700', 'shadow-xs');
+            b.classList.add('text-slate-600');
+          });
+          targetBtn.classList.remove('text-slate-600');
+          targetBtn.classList.add('bg-white', 'text-rose-700', 'shadow-xs');
+
+          currentWanliuChartMode = targetBtn.dataset.mode;
+          if (currentWanliuData && Array.isArray(currentWanliuData.daily_records)) {
+            const sorted = [...currentWanliuData.daily_records].sort((a, b) => a.date.localeCompare(b.date));
+            renderWanliuChart(sorted);
+          }
+        });
+      });
+
       // 预算滑块与输入框联动
       const budgetSlider = document.getElementById('inputTotalBudget');
       const budgetNum = document.getElementById('numTotalBudget');
@@ -1350,6 +1378,318 @@
       return diffs;
     }
 
+    function renderWanliuChart(records) {
+      const chartDom = document.getElementById('wanliuDailyChart');
+      if (!chartDom || !Array.isArray(records) || records.length === 0) return;
+
+      if (!wanliuChart) {
+        wanliuChart = echarts.init(chartDom);
+      }
+
+      const dates = records.map(r => r.date);
+      const soldArr = records.map(r => r.sold_suites);
+      const subArr = records.map(r => r.subscribed_suites);
+      const committedArr = records.map(r => r.sold_suites + r.subscribed_suites);
+      const unsoldArr = records.map(r => r.unsold_suites);
+      const rateArr = records.map(r => r.total_suites > 0
+        ? +(((r.sold_suites + r.subscribed_suites) / r.total_suites) * 100).toFixed(1)
+        : 0);
+
+      const netDeltaArr = records.map((r, i) => (i === 0 ? 0 : records[i - 1].unsold_suites - r.unsold_suites));
+      const soldDeltaArr = records.map((r, i) => (i === 0 ? 0 : r.sold_suites - records[i - 1].sold_suites));
+      const subDeltaArr = records.map((r, i) => (i === 0 ? 0 : r.subscribed_suites - records[i - 1].subscribed_suites));
+      const dayDiffsArr = records.map((r, i) => (i === 0 ? [] : computeBuildingDiffs(r.buildings, records[i - 1].buildings)));
+
+      const showLabels = records.length <= 14;
+      const useZoom = records.length > 15;
+      const dataZoomConfig = useZoom ? [
+        { type: 'inside', startValue: Math.max(0, records.length - 15), endValue: records.length - 1 },
+        { type: 'slider', height: 18, bottom: 26, startValue: Math.max(0, records.length - 15), endValue: records.length - 1 }
+      ] : [];
+
+      const tooltipFormatter = function(params) {
+        if (!params || !params.length) return '';
+        const idx = params[0].dataIndex;
+        const r = records[idx];
+        const committed = committedArr[idx];
+        const rate = rateArr[idx];
+        const net = netDeltaArr[idx];
+        const dSold = soldDeltaArr[idx];
+        const dSub = subDeltaArr[idx];
+        const diffs = dayDiffsArr[idx];
+
+        let deltaText = '<span class="text-slate-400">基准初始日</span>';
+        if (idx > 0) {
+          const signNet = net > 0 ? '+' : '';
+          const colorCls = net > 0 ? 'text-emerald-600' : (net < 0 ? 'text-rose-600' : 'text-slate-500');
+          const label = net > 0 ? `净去化 +${net} 套` : (net < 0 ? `退房回流 ${Math.abs(net)} 套` : '0 变动');
+          deltaText = `<span class="font-bold ${colorCls}">${label}</span> <span class="text-slate-400">(成交${dSold >= 0 ? '+' : ''}${dSold} / 认购${dSub >= 0 ? '+' : ''}${dSub})</span>`;
+        }
+
+        let bldLine = '';
+        if (diffs && diffs.length > 0) {
+          const items = diffs.map(d => {
+            const parts = [];
+            if (d.dSold !== 0) parts.push(`成交${d.dSold > 0 ? '+' : ''}${d.dSold}`);
+            if (d.dSub !== 0) parts.push(`认购${d.dSub > 0 ? '+' : ''}${d.dSub}`);
+            return `${d.name}(${parts.join('/')})`;
+          }).join('、');
+          bldLine = `<div class="mt-1 pt-1 border-t border-slate-100 text-[11px] text-amber-700">变动楼栋：${items}</div>`;
+        }
+
+        return `
+          <div class="text-xs leading-relaxed min-w-[210px]">
+            <div class="font-bold text-slate-800 border-b border-slate-100 pb-1 mb-1.5 flex items-center justify-between gap-4">
+              <span>${r.date}</span>
+              <span class="text-[11px] font-semibold text-rose-600">去化率 ${rate}%</span>
+            </div>
+            <div>入网总套数：<strong class="text-slate-800">${r.total_suites} 套</strong></div>
+            <div>累计成交：<strong class="text-emerald-600">${r.sold_suites} 套</strong> <span class="text-slate-400">(${r.sold_area}㎡)</span></div>
+            <div>累计认购：<strong class="text-amber-600">${r.subscribed_suites} 套</strong> <span class="text-slate-400">(${r.subscribed_area}㎡)</span></div>
+            <div>已去化合计：<strong class="text-emerald-700">${committed} 套</strong></div>
+            <div>剩余未售：<strong class="text-indigo-600">${r.unsold_suites} 套</strong> <span class="text-slate-400">(${r.unsold_area}㎡)</span></div>
+            <div class="mt-1 pt-1 border-t border-slate-100">较前日：${deltaText}</div>
+            ${bldLine}
+          </div>
+        `;
+      };
+
+      let option;
+      const gridBottom = useZoom ? '22%' : '14%';
+
+      if (currentWanliuChartMode === 'delta') {
+        option = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'cross', crossStyle: { color: '#94a3b8' } },
+            formatter: tooltipFormatter
+          },
+          legend: {
+            data: ['单日净去化', '成交日变动', '认购日变动'],
+            bottom: 0
+          },
+          grid: { left: '2%', right: '3%', top: '12%', bottom: gridBottom, containLabel: true },
+          dataZoom: dataZoomConfig,
+          xAxis: { type: 'category', data: dates, axisPointer: { type: 'shadow' } },
+          yAxis: { type: 'value', name: '单日变动 (套)', minInterval: 1 },
+          series: [
+            {
+              name: '单日净去化',
+              type: 'bar',
+              barMaxWidth: 28,
+              data: netDeltaArr.map(v => ({
+                value: v,
+                itemStyle: {
+                  color: v > 0 ? '#10b981' : (v < 0 ? '#e11d48' : '#cbd5e1'),
+                  borderRadius: v >= 0 ? [4, 4, 0, 0] : [0, 0, 4, 4]
+                }
+              })),
+              label: {
+                show: showLabels,
+                position: 'top',
+                fontSize: 11,
+                fontWeight: 'bold',
+                formatter: p => (p.value > 0 ? `+${p.value}` : `${p.value}`)
+              }
+            },
+            {
+              name: '成交日变动',
+              type: 'line',
+              smooth: 0.2,
+              symbol: 'circle',
+              symbolSize: 7,
+              lineStyle: { color: '#059669', width: 2.5 },
+              itemStyle: { color: '#059669' },
+              data: soldDeltaArr
+            },
+            {
+              name: '认购日变动',
+              type: 'line',
+              smooth: 0.2,
+              symbol: 'circle',
+              symbolSize: 7,
+              lineStyle: { color: '#f59e0b', width: 2.5, type: 'dashed' },
+              itemStyle: { color: '#f59e0b' },
+              data: subDeltaArr
+            }
+          ]
+        };
+      } else if (currentWanliuChartMode === 'stack') {
+        option = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'cross', crossStyle: { color: '#94a3b8' } },
+            formatter: tooltipFormatter
+          },
+          legend: {
+            data: ['累计成交', '累计认购', '剩余未售', '综合去化率'],
+            bottom: 0
+          },
+          grid: { left: '2%', right: '3%', top: '12%', bottom: gridBottom, containLabel: true },
+          dataZoom: dataZoomConfig,
+          xAxis: { type: 'category', data: dates, axisPointer: { type: 'shadow' } },
+          yAxis: [
+            { type: 'value', name: '套数 (套)', min: 0 },
+            { type: 'value', name: '去化率 (%)', min: 0, max: 100, splitLine: { show: false }, axisLabel: { formatter: '{value}%' } }
+          ],
+          series: [
+            {
+              name: '累计成交',
+              type: 'bar',
+              stack: 'total',
+              barMaxWidth: 32,
+              itemStyle: { color: '#10b981' },
+              data: soldArr
+            },
+            {
+              name: '累计认购',
+              type: 'bar',
+              stack: 'total',
+              barMaxWidth: 32,
+              itemStyle: { color: '#f59e0b' },
+              data: subArr
+            },
+            {
+              name: '剩余未售',
+              type: 'bar',
+              stack: 'total',
+              barMaxWidth: 32,
+              itemStyle: { color: '#cbd5e1', borderRadius: [4, 4, 0, 0] },
+              data: unsoldArr
+            },
+            {
+              name: '综合去化率',
+              type: 'line',
+              yAxisIndex: 1,
+              smooth: 0.25,
+              symbol: 'diamond',
+              symbolSize: 9,
+              lineStyle: { color: '#e11d48', width: 3 },
+              itemStyle: { color: '#e11d48' },
+              label: {
+                show: showLabels,
+                position: 'top',
+                fontSize: 11,
+                fontWeight: 'bold',
+                color: '#e11d48',
+                formatter: '{c}%'
+              },
+              data: rateArr
+            }
+          ]
+        };
+      } else {
+        option = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'cross', crossStyle: { color: '#94a3b8' } },
+            formatter: tooltipFormatter
+          },
+          legend: {
+            data: ['累计成交', '累计认购', '已去化合计', '剩余未售', '综合去化率'],
+            bottom: 0
+          },
+          grid: { left: '2%', right: '3%', top: '12%', bottom: gridBottom, containLabel: true },
+          dataZoom: dataZoomConfig,
+          xAxis: { type: 'category', data: dates, axisPointer: { type: 'shadow' } },
+          yAxis: [
+            { type: 'value', name: '套数 (套)', min: 0 },
+            { type: 'value', name: '去化率 (%)', min: 0, max: 100, splitLine: { show: false }, axisLabel: { formatter: '{value}%' } }
+          ],
+          series: [
+            {
+              name: '累计成交',
+              type: 'bar',
+              stack: 'committed',
+              barMaxWidth: 28,
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: '#10b981' },
+                  { offset: 1, color: '#6ee7b7' }
+                ])
+              },
+              data: soldArr
+            },
+            {
+              name: '累计认购',
+              type: 'bar',
+              stack: 'committed',
+              barMaxWidth: 28,
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: '#f59e0b' },
+                  { offset: 1, color: '#fcd34d' }
+                ]),
+                borderRadius: [4, 4, 0, 0]
+              },
+              data: subArr
+            },
+            {
+              name: '已去化合计',
+              type: 'line',
+              smooth: 0.25,
+              symbol: 'circle',
+              symbolSize: 7,
+              lineStyle: { color: '#059669', width: 2.5 },
+              itemStyle: { color: '#059669' },
+              label: {
+                show: showLabels,
+                position: 'top',
+                fontSize: 10,
+                color: '#047857',
+                formatter: '{c}套'
+              },
+              data: committedArr
+            },
+            {
+              name: '剩余未售',
+              type: 'line',
+              smooth: 0.25,
+              symbol: 'emptyCircle',
+              symbolSize: 7,
+              lineStyle: { color: '#6366f1', width: 2.5, type: 'dashed' },
+              itemStyle: { color: '#6366f1' },
+              label: {
+                show: showLabels,
+                position: 'top',
+                fontSize: 10,
+                color: '#4f46e5',
+                formatter: '{c}套'
+              },
+              data: unsoldArr
+            },
+            {
+              name: '综合去化率',
+              type: 'line',
+              yAxisIndex: 1,
+              smooth: 0.25,
+              symbol: 'diamond',
+              symbolSize: 9,
+              lineStyle: { color: '#e11d48', width: 3 },
+              itemStyle: { color: '#e11d48' },
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: 'rgba(225, 29, 72, 0.10)' },
+                  { offset: 1, color: 'rgba(225, 29, 72, 0.0)' }
+                ])
+              },
+              label: {
+                show: showLabels,
+                position: 'top',
+                fontSize: 11,
+                fontWeight: 'bold',
+                color: '#e11d48',
+                formatter: '{c}%'
+              },
+              data: rateArr
+            }
+          ]
+        };
+      }
+
+      wanliuChart.setOption(option, true);
+    }
+
     function renderWanliuMonitor() {
       if (!currentWanliuData || !currentWanliuData.daily_records || currentWanliuData.daily_records.length === 0) return;
 
@@ -1388,69 +1728,7 @@
       }
 
       // ECharts 日度趋势渲染
-      const chartDom = document.getElementById('wanliuDailyChart');
-      if (chartDom) {
-        if (!wanliuChart) {
-          wanliuChart = echarts.init(chartDom);
-        }
-        const dates = records.map(r => r.date);
-        const soldArr = records.map(r => r.sold_suites);
-        const subArr = records.map(r => r.subscribed_suites);
-        const unsoldArr = records.map(r => r.unsold_suites);
-
-        const option = {
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: { type: 'shadow' }
-          },
-          legend: {
-            data: ['累计成交', '累计认购', '剩余未售'],
-            bottom: 0
-          },
-          grid: {
-            left: '2%',
-            right: '2%',
-            top: '12%',
-            bottom: '18%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'category',
-            data: dates
-          },
-          yAxis: {
-            type: 'value',
-            name: '套数 (套)'
-          },
-          series: [
-            {
-              name: '累计成交',
-              type: 'bar',
-              stack: 'total',
-              barMaxWidth: 36,
-              itemStyle: { color: '#10b981' },
-              data: soldArr
-            },
-            {
-              name: '累计认购',
-              type: 'bar',
-              stack: 'total',
-              barMaxWidth: 36,
-              itemStyle: { color: '#f59e0b' },
-              data: subArr
-            },
-            {
-              name: '剩余未售',
-              type: 'bar',
-              stack: 'total',
-              barMaxWidth: 36,
-              itemStyle: { color: '#cbd5e1', borderRadius: [4, 4, 0, 0] },
-              data: unsoldArr
-            }
-          ]
-        };
-        wanliuChart.setOption(option, true);
-      }
+      renderWanliuChart(records);
 
       // 渲染分楼栋实时去化明细表
       const bldTbody = document.getElementById('wanliuBuildingTableBody');
