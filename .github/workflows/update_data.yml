@@ -2,8 +2,9 @@ name: Auto Update Housing Data
 
 on:
   schedule:
-    # 每周一凌晨 03:00 (北京时间) 自动执行 (对应 UTC 周日 19:00)
-    - cron: '0 19 * * 0'
+    # 每周一凌晨 03:17 (北京时间) 自动执行（使用 Asia/Shanghai 时区，避开 :00 整点队列拥堵）
+    - cron: '17 3 * * 1'
+      timezone: 'Asia/Shanghai'
   workflow_dispatch: # 支持在 GitHub Actions 页面手动点击 "Run workflow" 一键触发
 
 permissions:
