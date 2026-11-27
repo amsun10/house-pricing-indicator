@@ -150,6 +150,11 @@ def load_existing_data():
     }
 
 
+def record_payload(rec):
+    """提取用于比对销售数据是否发生实质变化的字段（忽略 updated_at）"""
+    return {k: v for k, v in rec.items() if k != "updated_at"}
+
+
 def main():
     print("=" * 60)
     print(f"【{PROJECT_NAME}】NJhouse 每日销售数据（含分楼栋）采集")
@@ -173,6 +178,27 @@ def main():
     }
 
     data = load_existing_data()
+    records = data.get("daily_records", [])
+    committed = metrics["sold_suites"] + metrics["subscribed_suites"]
+    rate = (committed / metrics["total_suites"] * 100) if metrics["total_suites"] else 0.0
+
+    updated = False
+    for idx, item in enumerate(records):
+        if item.get("date") == today_str:
+            if record_payload(item) == record_payload(record):
+                print(
+                    f"[Skip] {today_str} 销售数据较上次快照（{item.get('updated_at', '--')}）无变化，跳过写入。"
+                )
+                print(
+                    f"  • 整体：入网 {metrics['total_suites']} 套 | 成交 {metrics['sold_suites']} | 认购 {metrics['subscribed_suites']} | 未售 {metrics['unsold_suites']} (去化 {rate:.1f}%)"
+                )
+                return
+            records[idx] = record
+            updated = True
+            break
+    if not updated:
+        records.append(record)
+
     data["project_id"] = PROJECT_ID
     data["project_name"] = PROJECT_NAME
     data["official_url"] = OFFICIAL_URL
@@ -180,24 +206,12 @@ def main():
     data["source"] = "南京网上房地产 (www.njhouse.com.cn)"
     data["updated_at"] = timestamp_str
 
-    records = data.get("daily_records", [])
-    updated = False
-    for idx, item in enumerate(records):
-        if item.get("date") == today_str:
-            records[idx] = record
-            updated = True
-            break
-    if not updated:
-        records.append(record)
-
     records.sort(key=lambda x: x["date"])
     data["daily_records"] = records
 
     with open(DATA_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    committed = metrics["sold_suites"] + metrics["subscribed_suites"]
-    rate = (committed / metrics["total_suites"] * 100) if metrics["total_suites"] else 0.0
     print(f"[Success] {today_str} 快照已保存至 {DATA_PATH} (共 {len(buildings)} 栋楼)")
     print(f"  • 整体：入网 {metrics['total_suites']} 套 | 成交 {metrics['sold_suites']} | 认购 {metrics['subscribed_suites']} | 未售 {metrics['unsold_suites']} (去化 {rate:.1f}%)")
     for b in buildings:

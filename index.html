@@ -373,7 +373,7 @@
             <span class="w-2 h-4 bg-rose-600 rounded-sm inline-block"></span>
             嘉宏·万流宁邸 (万流江宁) · 每日销售去化监控
             <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
-              📡 GitHub Actions 每晚 23:00 自动抓取官网
+              📡 GitHub Actions 每日 4 次定时抓取官网 (10:47~22:47)
             </span>
           </h2>
           <p class="text-xs text-slate-500 mt-1">
@@ -436,7 +436,7 @@
       <!-- 万流每日去化趋势图 -->
       <div class="space-y-2">
         <div class="flex items-center justify-between text-xs text-slate-500">
-          <span>累计成交、累计认购与剩余未售套数日度走势（每晚 23:00 自动记录一个快照点）</span>
+          <span>累计成交、累计认购与剩余未售套数日度走势（日间至 22:47 定时巡检，同日有变动自动覆盖更新）</span>
           <span class="text-slate-400">数据源：wanliu_daily.json</span>
         </div>
         <div id="wanliuDailyChart" class="w-full h-72"></div>
@@ -475,7 +475,7 @@
       <div class="space-y-2 pt-2 border-t border-slate-100">
         <div class="flex items-center justify-between">
           <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
-            📅 万流宁邸每日 23:00 官方销售快照日志
+            📅 万流宁邸每日官方销售快照日志
           </h3>
           <span class="text-[11px] text-slate-400">按日期倒序排列，净变动 = 较前一日未售套数减少量</span>
         </div>

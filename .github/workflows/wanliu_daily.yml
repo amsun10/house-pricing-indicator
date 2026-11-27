@@ -2,8 +2,8 @@ name: Daily Update Wanliu Jiangning Sales
 
 on:
   schedule:
-    # 每天北京时间 22:47 自动执行（使用 Asia/Shanghai 时区，避开 :00 整点队列拥堵并留出缓冲）
-    - cron: '47 22 * * *'
+    # 每天北京时间 10:47 / 14:47 / 18:47 / 22:47 自动巡检（每 4 小时覆盖日间至晚间收盘，避开 :00 整点拥堵）
+    - cron: '47 10,14,18,22 * * *'
       timezone: 'Asia/Shanghai'
   workflow_dispatch: # 支持在 GitHub Actions 页面手动一键触发（同日多次触发将覆盖更新当天快照）
 
